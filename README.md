@@ -1,6 +1,6 @@
 # BEP
 
-Repository for my thesis project. The goal is to develop SEMSANS instruments at cold neutron sources to probe the sub-$\mu$m range and this repository will contain the relevant simulations.
+Repository for my thesis project. The goal is to develop SEMSANS instruments at cold neutron sources to probe the sub-micron range and this repository will contain the relevant simulations.
 
 ## Installation
 
