@@ -28,4 +28,4 @@ mkdir data
 mcrun base.instr --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir data/base_up
 mcrun base.instr --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir data/base_down
 mcrun base_no_sample.instr --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir data/base_no_sample_up
-mcrun base_no_sample.instr --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=0,0.020908 AnaSign=-1 --dir data/base_no_sample_down
+mcrun base_no_sample.instr --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir data/base_no_sample_down
