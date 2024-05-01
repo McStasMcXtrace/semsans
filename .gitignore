@@ -3,3 +3,5 @@
 *.instr
 *.out
 my_instrument*/
+*.zip
+data
