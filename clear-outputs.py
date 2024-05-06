@@ -1,7 +1,6 @@
 import os
 import nbformat
 from nbconvert.preprocessors import ClearOutputPreprocessor
-from nbconvert import HTMLExporter
 
 def clear_notebook_outputs(notebook_path):
     with open(notebook_path, 'r', encoding='utf-8') as f:
