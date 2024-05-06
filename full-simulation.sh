@@ -1,7 +1,10 @@
 #!/bin/bash
+# Example usage for 1e5 neutrons on 4 threads with 5 By field steps from 0 to 0.020908 T (corresponding to z from 0 to 3 um for base.instr)
+# ./full-simulation.sh 100000 4 5 0,0.020908 base.instr base_no_sample.instr
+
 # Check if the number of arguments provided is correct
-if [ "$#" -ne 4 ]; then
-    echo "Usage: $0 <N> <N_steps> <N_threads> <B_min,B_max>"
+if [ "$#" -ne 6 ]; then
+    echo "Usage: $0 <N> <N_threads> <N_steps> <B_min,B_max> <instr_with_sample> <instr_no_sample>"
     exit 1
 fi
 
@@ -10,6 +13,8 @@ N=$1
 N_threads=$2
 N_steps=$3
 By_range=$4
+instr_with_sample=$5
+instr_no_sample=$6
 
 # Generate timestamp
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
@@ -25,7 +30,7 @@ zip -r "${dir_name}_${timestamp}.zip" "${dir_name}_${timestamp}"
 rm -rf "${dir_name}_${timestamp}"
     
 mkdir data
-mcrun base.instr --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir data/base_up
-mcrun base.instr --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir data/base_down
-mcrun base_no_sample.instr --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir data/base_no_sample_up
-mcrun base_no_sample.instr --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir data/base_no_sample_down
+mcrun $instr_with_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir "${dir_name}/up"
+mcrun $instr_with_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir "${dir_name}/down"
+mcrun $instr_no_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir "${dir_name}/no_sample_up"
+mcrun $instr_no_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir "${dir_name}/no_sample_down"
