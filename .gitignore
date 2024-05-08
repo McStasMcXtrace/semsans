@@ -1,6 +1,5 @@
 .ipynb_checkpoints/
 *.c
-*.instr
 *.out
 my_instrument*/
 *.zip
