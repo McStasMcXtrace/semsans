@@ -1,0 +1,56 @@
+DEFINE INSTRUMENT SEMSANS_Delft(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1)
+
+DECLARE
+%{
+%}
+
+INITIALIZE
+%{
+%}
+
+TRACE
+
+COMPONENT origin = Progress_bar()
+AT (0, 0, 0) RELATIVE ABSOLUTE
+
+COMPONENT src = Source_simple(
+    yheight=0.01, 
+    xwidth=0.01, 
+    dist=5, 
+    focus_xw=0.01, 
+    focus_yh=0.01, 
+    lambda0=L0, 
+    dlambda=DL,
+    gauss=1)
+AT (0, 0, 0) RELATIVE PREVIOUS
+
+COMPONENT set_pol = Set_pol(
+    px=1)
+AT (0, 0, 0) RELATIVE PREVIOUS
+
+COMPONENT f1 = Foil_flipper_magnet(
+    xwidth=0.1, 
+    yheight=0.1, 
+    zdepth=0.3, 
+    phi=0.095993, 
+    foilthick=3.0, 
+    Bx=0, 
+    By=By, 
+    Bz=0, 
+    foil_in=1, verbose=0)
+AT (0, 0, 1.0) RELATIVE src
+
+COMPONENT f2 = COPY(f1)(By=2*By)
+AT(0,0,3) RELATIVE src
+
+COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
+AT(0,0,0.18) RELATIVE f2
+
+COMPONENT det = PSD_monitor(xwidth=0.011, yheight=0.011, filename="det",ny=1001, nx=1)
+AT(0,0,5) RELATIVE src
+
+FINALLY
+%{
+%}
+
+END
