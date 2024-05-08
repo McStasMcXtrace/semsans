@@ -53,11 +53,13 @@ COMPONENT f1=Pol_triafield_y(
     B=By, Bguide=0)
 AT (0.0, 0.0, 1.0 - triacoil_depth) RELATIVE src
 
-COMPONENT f2 = COPY(f1)(B=-2 * By)
-AT(0,0,3 - triacoil_depth) RELATIVE src
+COMPONENT f2 = Pol_triafield_y(
+    xwidth=triacoil_width * 0.5,yheight=triacoil_height,zdepth=triacoil_depth,
+    B=-2*By, Bguide=0)
+AT(0,0,3 - triacoil_depth * 0.5) RELATIVE src
 
 COMPONENT flip_4 = COPY(flip_1)
-AT (0.0, 0.0, triacoil_depth + 0.01) RELATIVE f2
+AT (0.0, 0.0, triacoil_depth * 0.5 + 0.01) RELATIVE f2
 
 
 COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
