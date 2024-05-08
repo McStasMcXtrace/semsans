@@ -1,4 +1,4 @@
-DEFINE INSTRUMENT SEMSANS_Delft(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.96750e-01, triacoil_width=3.521412e-02, triacoil_height=0.1)
+DEFINE INSTRUMENT SEMSANS_Delft(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.96750e-01, triacoil_width=0.1, triacoil_height=3.521412e-02)
 
 DECLARE
 %{
@@ -45,7 +45,7 @@ COMPONENT f2 = COPY(f1)(By=2*By)
 AT(0,0,3) RELATIVE src
 */
 
-COMPONENT flip_1 = Pol_pi_2_rotator(xwidth=0.1, yheight=0.1)
+COMPONENT flip_1 = Pol_pi_2_rotator(xwidth=0.3, yheight=0.3)
 AT (0.0, 0.0, 1.0 - 0.3) RELATIVE set_pol
 
 COMPONENT f1=Pol_triafield_y(
@@ -53,17 +53,17 @@ COMPONENT f1=Pol_triafield_y(
     B=By, Bguide=0)
 AT (0.0, 0.0, 1.0 - triacoil_depth) RELATIVE src
 
-COMPONENT flip_2 = Pol_pi_2_rotator(xwidth=0.1, yheight=0.1)
+COMPONENT flip_2 = COPY(flip_1)
 AT (0.0, 0.0, 1.0 + triacoil_depth + 0.01) RELATIVE src
 
-COMPONENT flip_3 = Pol_pi_2_rotator(xwidth=0.1, yheight=0.1)
+COMPONENT flip_3 = COPY(flip_1)
 AT (0.0, 0.0, 3.0 - triacoil_depth - 0.01) RELATIVE src
 
-COMPONENT f2 = COPY(f1)(B=2 * By)
+COMPONENT f2 = COPY(f1)(B=-2 * By)
 AT(0,0,3 - triacoil_depth) RELATIVE src
 
-COMPONENT flip_4 = Pol_pi_2_rotator(xwidth=0.1, yheight=0.1)
-AT (0.0, 0.0, 0.14) RELATIVE f2
+COMPONENT flip_4 = COPY(flip_1)
+AT (0.0, 0.0, triacoil_depth + 0.01) RELATIVE f2
 
 
 COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
