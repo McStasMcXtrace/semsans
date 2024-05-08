@@ -1,4 +1,4 @@
-DEFINE INSTRUMENT SEMSANS_Delft(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=1.935000e-01, triacoil_width=7.042824e-02, triacoil_height=3.000000e-01)
+DEFINE INSTRUMENT SEMSANS_Delft(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=1.935000e-01, triacoil_width=7.042824e-02, triacoil_height=0.1)
 
 DECLARE
 %{
@@ -39,18 +39,25 @@ COMPONENT f1 = Foil_flipper_magnet(
     By=By, 
     Bz=0, 
     foil_in=1, verbose=0)
-*/
-COMPONENT f1=Pol_triafield(
-    xwidth=triacoil_height,yheight=triacoil_width,zdepth=2*triacoil_depth,
-    B=By, Bguide=0)
 AT (0, 0, 1.0) RELATIVE src
 
-COMPONENT f2 = COPY(f1)(B=2*By)
+COMPONENT f2 = COPY(f1)(By=2*By)
 AT(0,0,3) RELATIVE src
+*/
+
+COMPONENT f1=Pol_triafield(
+    xwidth=triacoil_height,yheight=triacoil_width,zdepth=2*triacoil_depth,
+    B=0.2, Bguide=0)
+AT (0.0, 0.0, 1.0 - triacoil_depth) RELATIVE src
+
+COMPONENT f2 = COPY(f1)(B=0.4)
+AT(0,0,3 - triacoil_depth) RELATIVE src
+
+
 
 COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
 AT(0,0,0.18) RELATIVE f2
-
+/*
 COMPONENT sans_spheres = SANS_spheres2(xwidth=0.02, 
     yheight=0.02, 
 	zthick=0.001, 
@@ -63,7 +70,7 @@ COMPONENT sans_spheres = SANS_spheres2(xwidth=0.02,
 	Qmind = 0.00003,
 	Qmaxd = 0.001)
 AT (0, 0, 0.2) RELATIVE f2
-
+*/
 COMPONENT det = PSD_monitor(xwidth=0.011, yheight=0.011, filename="det",ny=1001, nx=1)
 AT(0,0,5) RELATIVE src
 
