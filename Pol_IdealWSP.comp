@@ -1,0 +1,108 @@
+DEFINE COMPONENT Pol_IdealWSP
+SETTING PARAMETERS (xwidth, yheight, zdepth, By=0)
+OUTPUT PARAMETERS()
+/* Neutron parameters: (x,y,z,vx,vy,vz,t,sx,sy,sz,p) */
+
+SHARE
+%{
+double IntersectWall(double pos, double vel, double wallpos) {
+    /* Function to calculate where the neutron hit the wall */
+
+    if(vel==0)
+      return -1;
+    
+    if(vel>0)
+      return (wallpos-pos)/vel;
+    else 
+      return (-wallpos-pos)/vel;
+  }
+%}
+
+DECLARE
+%{
+  /* Larmor frequency */
+  double omegaLplus;
+  double omegaLmin;
+%}
+
+INITIALIZE
+%{
+  omegaLplus = 0;  
+  omegaLmin = 0;  
+
+
+  double velocity = 0, time = 0;
+  
+  if ((xwidth<=0) || (yheight<=0) || (zdepth<=0)) {
+    fprintf(stderr, "Pol_filter: %s: Null or negative volume!\n"
+	    "ERROR      (xwidth, yheight, zdepth). Exiting\n",
+	    NAME_CURRENT_COMP);
+    exit(1);
+  }
+  
+  omegaLmin	  = -1.832472e8 * (-By);
+  omegaLplus = -1.832472e8 * (By);
+  %}
+
+TRACE
+%{
+  double deltaT, deltaTx, deltaTy, sx_in1, sz_in1, sx_in2, sz_in2, iz, denom, deltaTpos, deltaTmin;
+  
+  PROP_Z0;
+  if (!inside_rectangle(x, y, xwidth, yheight))
+    ABSORB;
+  
+  // Time spent in the prism
+  deltaT = zdepth/vz;
+    
+  // This calculates the intersections on the xz-plane between the neutron trajectory and the triangular field boundaries
+  // The neutron trajectory is given by the points    (        x, 0,       0) and (     x+vx, 0,       vz)
+  // The field boundary is given by the points        (-xwidth/2, 0,       0) and ( xwidth/2, 0, zdepth)
+  // iz is the z value of the intersection
+    denom = (-vz)*((-xwidth/2)-xwidth/2)-(x-(x+vx))*(-zdepth);
+    iz    = ((-x*vz)*(-zdepth)-(-vz)*(-(-xwidth/2)*zdepth))/denom;
+    
+    // Time spent in + field (the rest is in - field)
+    deltaTpos	= iz/vz;
+
+  // if the particle is out of bounds after propagating at given velocity (vx,vy) for a time deltaT,
+  // propagate it until it intersects the wall where it is absorbed
+  if (!inside_rectangle(x+vx*deltaT, y+vy*deltaT, xwidth, yheight)) {
+    
+    // Propagate to the wall and absorb
+    deltaTx = IntersectWall(x, vx, xwidth/2);
+    deltaTy = IntersectWall(y, vy, yheight/2);
+
+    if (deltaTx>=0 && deltaTx<deltaTy)
+      deltaT = deltaTx;
+    else
+      deltaT = deltaTy;
+    
+    PROP_DT(deltaT);  
+    
+    ABSORB;
+  }  
+  
+  PROP_DT(deltaT);  
+  
+  // These are the incoming spin directions 
+  sx_in1 = sx;
+  sz_in1 = sz;
+  deltaTmin = deltaT - deltaTpos; 
+  // This calculates the spin rotation caused by the guide/precession field
+  sz_in2 = cos(omegaLplus*deltaT)*sz_in1 - sin(omegaLplus*deltaT)*sx_in1;
+  sx_in2 = sin(omegaLplus*deltaT)*sz_in1 + cos(omegaLplus*deltaT)*sx_in1;
+
+  // This calculated the spin rotation caused by the triangular field
+  sz = cos(omegaLmin*deltaTmin)*sz_in2 - sin(omegaLmin*deltaTmin)*sx_in2;
+  sx = sin(omegaLmin*deltaTmin)*sz_in2 + cos(omegaLmin*deltaTmin)*sx_in2;
+  %}
+
+MCDISPLAY
+%{
+  
+  
+  box(0, 0, 0, xwidth, yheight, zdepth);
+  %}
+
+END
