@@ -1,0 +1,95 @@
+/*******************************************************************************
+* Instrument: <instrument name>
+*
+* %I
+* Written by: <your name (email)>
+* Date: <current date>
+* Origin: <your institution>
+* %INSTRUMENT_SITE: Templates
+*
+* <instrument short description>
+*
+* %D
+* <instrument description>
+*
+* Example: <parameters=values>
+*
+* %P
+* <parameter1>: [<unit>] <parameter1 description>
+* ...
+*
+* %L
+* <reference/HTML link>
+*
+* %E
+*******************************************************************************/
+DEFINE INSTRUMENT FoilFlipTest(L0=2.165, DL=0.00001, By=3e-3, foil=1)
+
+DECLARE
+%{
+%}
+
+INITIALIZE
+%{
+%}
+
+TRACE
+
+COMPONENT origin = Progress_bar()
+AT (0, 0, 0) RELATIVE ABSOLUTE
+
+// insert components here (e.g. Insert -> Source -> ...)
+COMPONENT src = Source_simple(
+    yheight=0.01, 
+    xwidth=0.01, 
+    dist=500, 
+    focus_xw=0.01, 
+    focus_yh=0.01, 
+    lambda0=L0, 
+    dlambda=DL)
+AT (0, 0, 0) RELATIVE PREVIOUS
+
+COMPONENT set_pol = Set_pol(
+    py=1)
+AT (0, 0, 0) RELATIVE PREVIOUS
+
+COMPONENT py1 = PolLambda_monitor(
+    restore_neutron=1, Lmin=L0-DL, Lmax=L0+DL, nL=501,
+    my=1,filename="py1")
+AT (0, 0, 0.1) RELATIVE PREVIOUS
+
+COMPONENT px1 = PolLambda_monitor(
+    restore_neutron=1, Lmin=L0-DL, Lmax=L0+DL, nL=501,
+    mx=1,filename="px1")
+AT (0, 0, 0.1) RELATIVE PREVIOUS
+
+COMPONENT f1 = Foil_flipper_magnet2(
+    xwidth=0.1, 
+    yheight=0.1, 
+    zdepth=0.3, 
+    phi=0.095993, 
+    foilthick=3.0, 
+    Bx=0, 
+    By=By, 
+    Bz=0, 
+    foil_in=foil, verbose=0)
+AT (0, 0, 1.0) RELATIVE src
+
+COMPONENT py2 = COPY(py1)(filename="py2")
+AT (0, 0, 0.3) RELATIVE PREVIOUS
+
+COMPONENT px2 = COPY(px1)(filename="px2")
+AT (0, 0, 0.1) RELATIVE PREVIOUS
+
+COMPONENT ana = PolAnalyser_ideal(
+    my=1)
+AT(0,0,0.5) RELATIVE py2
+
+COMPONENT det = PSD_monitor(xwidth=0.01, yheight=0.01, filename="det",ny=101, nx=1)
+AT(0,0,5) RELATIVE src
+
+FINALLY
+%{
+%}
+
+END

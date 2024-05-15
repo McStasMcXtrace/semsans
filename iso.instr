@@ -45,7 +45,7 @@ COMPONENT f2 = COPY(f1)(By=2*By)
 AT(0,0,3) RELATIVE src
 */
 
-COMPONENT flip_1 = Pol_pi_2_rotator(xwidth=0.3, yheight=0.3)
+COMPONENT flip_1 = Pol_pi_2_rotator(xwidth=0.3, yheight=0.3, rx=0, ry = 0, rz = 1)
 AT (0.0, 0.0, 1.0 - 0.3) RELATIVE set_pol
 
 COMPONENT f1=Pol_triafield_y(
@@ -55,7 +55,7 @@ AT (0.0, 0.0, 1.0 - triacoil_depth) RELATIVE src
 
 COMPONENT f2 = Pol_triafield_y(
     xwidth=triacoil_width * 0.5,yheight=triacoil_height,zdepth=triacoil_depth,
-    B=-2*By, Bguide=0)
+    B=-By, Bguide=0)
 AT(0,0,3 - triacoil_depth * 0.5) RELATIVE src
 
 COMPONENT flip_4 = COPY(flip_1)
