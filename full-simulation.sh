@@ -30,7 +30,8 @@ zip -r "${dir_name}_${timestamp}.zip" "${dir_name}_${timestamp}"
 rm -rf "${dir_name}_${timestamp}"
     
 mkdir data
-mcrun $instr_with_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir "${dir_name}/up"
-mcrun $instr_with_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir "${dir_name}/down"
-mcrun $instr_no_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir "${dir_name}/no_sample_up"
-mcrun $instr_no_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir "${dir_name}/no_sample_down"
+cd instr
+mcrun $instr_with_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir "../${dir_name}/up"
+mcrun $instr_with_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir "../${dir_name}/down"
+mcrun $instr_no_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir "../${dir_name}/empty_up"
+mcrun $instr_no_sample --mpi=$N_threads -n $N -N $N_steps L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir "../${dir_name}/empty_down"
