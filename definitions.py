@@ -46,3 +46,13 @@ def G_0(xi):
 
 def G(xi):
     return s_t * G_0(xi)
+
+def compute_P_dark_field(I_up,I_down):
+    return  (I_up - I_down) / (I_up + I_down)
+
+def get_data(i):
+    y, I_up = np.genfromtxt(f'data/up/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
+    _, I_down = np.genfromtxt(f'data/down/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
+    _, I_empty_up = np.genfromtxt(f'data/no_sample_up/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
+    _, I_empty_down = np.genfromtxt(f'data/no_sample_down/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
+    return y, I_up, I_down, I_empty_up, I_empty_down
