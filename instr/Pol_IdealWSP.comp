@@ -103,8 +103,8 @@ TRACE
   deltaTmin = deltaT - deltaTpos; 
   
   // This calculates the spin rotation caused by the guide/precession field
-  sz_in2 = cos(omegaLplus*deltaT)*sz_in1 - sin(omegaLplus*deltaT)*sx_in1;
-  sx_in2 = sin(omegaLplus*deltaT)*sz_in1 + cos(omegaLplus*deltaT)*sx_in1;
+  sz_in2 = cos(omegaLplus*deltaTpos)*sz_in1 - sin(omegaLplus*deltaTpos)*sx_in1;
+  sx_in2 = sin(omegaLplus*deltaTpos)*sz_in1 + cos(omegaLplus*deltaTpos)*sx_in1;
 
   // This calculated the spin rotation caused by the triangular field
   sz = cos(omegaLmin*deltaTmin)*sz_in2 - sin(omegaLmin*deltaTmin)*sx_in2;
