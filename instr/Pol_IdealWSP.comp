@@ -16,6 +16,16 @@ double IntersectWall(double pos, double vel, double wallpos) {
     else 
       return (-wallpos-pos)/vel;
   }
+
+/* In this component, x and y will translate to y and z respectively */
+double intersect_lines(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
+  double numerator, denominator, t;
+  numerator = (x1 - x3) * (y3 - y4) - (y1 - y3)*(x3 - x4);
+  denominator = (x1 - x2) * (y3 - y4) - (y1 - y2)*(x3 - x4);
+  t = numerator / denominator;
+  // This will return the intersection coordinate y, which corresponds to z below
+  return y1 + t * (y2 - y1);
+}
 %}
 
 DECLARE
@@ -39,7 +49,7 @@ INITIALIZE
 	    NAME_CURRENT_COMP);
     exit(1);
   }
-  
+  // 1.832e8 is the neutron gyromagnetic
   omegaLmin	  = -1.832472e8 * (-By);
   omegaLplus = -1.832472e8 * (By);
   %}
@@ -56,12 +66,14 @@ TRACE
   deltaT = zdepth/vz;
     
   // This calculates the intersections on the xz-plane between the neutron trajectory and the triangular field boundaries
-  // The neutron trajectory is given by the points    (        x, 0,       0) and (     x+vx, 0,       vz)
-  // The field boundary is given by the points        (-xwidth/2, 0,       0) and ( xwidth/2, 0, zdepth)
+  // The neutron trajectory is given by the points    ( 0,         y,       0) and ( 0, y+vy, 0,       vz)
+  // The field boundary is given by the points        ( 0, -ywidth/2,      0) and ( 0, ywidth/2, 0, zdepth)
   // iz is the z value of the intersection
-    denom = (-vz)*((-xwidth/2)-xwidth/2)-(x-(x+vx))*(-zdepth);
-    iz    = ((-x*vz)*(-zdepth)-(-vz)*(-(-xwidth/2)*zdepth))/denom;
-    
+
+    denom = (-vz)*((-yheight/2)-yheight/2)-(y-(y+vy))*(-zdepth);
+    iz    = ((-y*vz)*(-zdepth)-(-vz)*(-(-yheight/2)*zdepth))/denom;
+  
+    //iz = intersect_lines(y,0,y+vy,vz, -ywidth/2, 0, ywidth/2, zdepth);
     // Time spent in + field (the rest is in - field)
     deltaTpos	= iz/vz;
 
@@ -89,6 +101,7 @@ TRACE
   sx_in1 = sx;
   sz_in1 = sz;
   deltaTmin = deltaT - deltaTpos; 
+  
   // This calculates the spin rotation caused by the guide/precession field
   sz_in2 = cos(omegaLplus*deltaT)*sz_in1 - sin(omegaLplus*deltaT)*sx_in1;
   sx_in2 = sin(omegaLplus*deltaT)*sz_in1 + cos(omegaLplus*deltaT)*sx_in1;
