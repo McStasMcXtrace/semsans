@@ -3,16 +3,17 @@
 # ./simulate-instr.sh 100000 4 5 0,0.020908 base.instr
 
 # Check if the number of arguments provided is correct
-if [ "$#" -ne 4 ]; then
-    echo "Usage: $0 <N> <N_threads> <B_min,B_max> <instr>"
+if [ "$#" -ne 5 ]; then
+    echo "Usage: $0 <N> <N_threads> <By> <instr> <mode>\nmode can be CPU or GPU"
     exit 1
 fi
 
 # Assign command-line arguments to variables
 N=$1
 N_threads=$2
-By_range=$3
+By=$3
 instr=$4
+mode=$5
 
 # Generate timestamp
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
@@ -30,5 +31,12 @@ rm -rf "${dir_name}_${timestamp}"
 mkdir -p data/up
 mkdir -p data/down
 cd instr
-mcrun $instr --mpi=$N_threads -n $N L0=2.165 DL=0.02 By=$By_range AnaSign=1 --dir "../${dir_name}/up/0"
-mcrun $instr --mpi=$N_threads -n $N L0=2.165 DL=0.02 By=$By_range AnaSign=-1 --dir "../${dir_name}/down/0"
+
+if [ $mode == 'CPU' ]; then
+    mcrun $instr --mpi=$N_threads -n $N L0=2.165 DL=0.02 By=$By AnaSign=1 --dir "../${dir_name}/up/0"
+    mcrun $instr --mpi=$N_threads -n $N L0=2.165 DL=0.02 By=$By AnaSign=-1 --dir "../${dir_name}/down/0"
+else
+    echo "Running with OpenACC GPU acceleration, this will require the CUDA toolkit to be installed"
+    mcrun $instr --openacc -n $N L0=2.165 DL=0.02 By=$By AnaSign=1 --dir "../${dir_name}/up/0"
+    mcrun $instr --openacc -n $N L0=2.165 DL=0.02 By=$By AnaSign=-1 --dir "../${dir_name}/down/0"
+fi
