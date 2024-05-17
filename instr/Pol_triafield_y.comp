@@ -100,7 +100,7 @@ INITIALIZE
 
 TRACE
 %{
-  double deltaT, deltaTx, deltaTy, sy_in1, sz_in1, sy_in2, sz_in2, iz1, iz2, denom1, denom2, deltaTtria;
+  double deltaT, deltaTx, deltaTy, iz1, iz2, denom1, denom2, deltaTtria;
   
   PROP_Z0;
   if (!inside_rectangle(x, y, xwidth, yheight))
@@ -110,10 +110,6 @@ TRACE
   deltaT = zdepth/vz;
     
   // This calculates the intersections on the xz-plane between the neutron trajectory and the triangular field boundaries
-  // The neutron trajectory is given by the points    (        x, 0,       0) and (     x+vx, 0,       vz)
-  // The first field boundary is given by the points  (-xwidth/2, 0,       0) and ( xwidth/2, 0, zdepth/2)
-  // The second field boundary is given by the points ( xwidth/2, 0,zdepth/2) and (-xwidth/2, 0,   zdepth)
-
     // The neutron trajectory is given by the points  ( 0,         y,       0) and (     0, y+vy,       vz)
   // The first field boundary is given by the points  ( 0,-yheight/2,       0) and ( 0, yheight/2, zdepth/2)
   // The second field boundary is given by the points ( 0, yheight/2,zdepth/2) and (0, -yheight/2,   zdepth)
@@ -144,18 +140,10 @@ TRACE
   }  
   
   PROP_DT(deltaT);  
-  
-  // These are the incoming spin directions 
-  sy_in1 = sy;
-  sz_in1 = sz;
-  
-  // This calculates the spin rotation caused by the guide/precession field
-  sz_in2 = cos(omegaLguide*deltaT)*sz_in1 - sin(omegaLguide*deltaT)*sy_in1;
-  sy_in2 = sin(omegaLguide*deltaT)*sz_in1 + cos(omegaLguide*deltaT)*sy_in1;
 
   // This calculated the spin rotation caused by the triangular field
-  sz = cos(omegaL*deltaTtria)*sz_in2 - sin(omegaL*deltaTtria)*sy_in2;
-  sy = sin(omegaL*deltaTtria)*sz_in2 + cos(omegaL*deltaTtria)*sy_in2;
+  sz = cos(omegaL*deltaTtria)*sz - sin(omegaL*deltaTtria)*sx;
+  sx = sin(omegaL*deltaTtria)*sz + cos(omegaL*deltaTtria)*sx;
   %}
 
 MCDISPLAY
