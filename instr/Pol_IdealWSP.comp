@@ -18,6 +18,7 @@ double IntersectWall(double pos, double vel, double wallpos) {
   }
 
 /* In this component, x and y will translate to y and z respectively */
+#pragma acc routine
 double intersect_lines(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
   double numerator, denominator, t;
   numerator = (x1 - x3) * (y3 - y4) - (y1 - y3)*(x3 - x4);
@@ -56,7 +57,7 @@ INITIALIZE
 
 TRACE
 %{
-  double deltaT, deltaTx, deltaTy, sx_in1, sz_in1, sx_in2, sz_in2, iz, denom, deltaTpos, deltaTmin;
+  double deltaT, deltaTx, deltaTy, sx_in1, sz_in1, sx_in2, sz_in2, iz, denom, deltaTpos, deltaTmin, phi;
   
   PROP_Z0;
   if (!inside_rectangle(x, y, xwidth, yheight))
@@ -64,18 +65,10 @@ TRACE
   
   // Time spent in the prism
   deltaT = zdepth/vz;
-    
-  // This calculates the intersections on the xz-plane between the neutron trajectory and the triangular field boundaries
-  // The neutron trajectory is given by the points    ( 0,         y,       0) and ( 0, y+vy, 0,       vz)
-  // The field boundary is given by the points        ( 0, -ywidth/2,      0) and ( 0, ywidth/2, 0, zdepth)
-  // iz is the z value of the intersection
 
-    denom = (-vz)*((-yheight/2)-yheight/2)-(y-(y+vy))*(-zdepth);
-    iz    = ((-y*vz)*(-zdepth)-(-vz)*(-(-yheight/2)*zdepth))/denom;
-  
-    //iz = intersect_lines(y,0,y+vy,vz, -ywidth/2, 0, ywidth/2, zdepth);
-    // Time spent in + field (the rest is in - field)
-    deltaTpos	= iz/vz;
+  iz = intersect_lines(y,0,y+vy,vz, -yheight/2, 0, yheight/2, zdepth);
+  // Time spent in + field (the rest is in - field)
+  deltaTpos	= iz/vz;
 
   // if the particle is out of bounds after propagating at given velocity (vx,vy) for a time deltaT,
   // propagate it until it intersects the wall where it is absorbed
@@ -101,21 +94,16 @@ TRACE
   sx_in1 = sx;
   sz_in1 = sz;
   deltaTmin = deltaT - deltaTpos; 
-  
-  // This calculates the spin rotation caused by the guide/precession field
-  sz_in2 = cos(omegaLplus*deltaTpos)*sz_in1 - sin(omegaLplus*deltaTpos)*sx_in1;
-  sx_in2 = sin(omegaLplus*deltaTpos)*sz_in1 + cos(omegaLplus*deltaTpos)*sx_in1;
+  phi = omegaLplus*deltaTpos + omegaLmin*deltaTmin;
 
   // This calculated the spin rotation caused by the triangular field
-  sz = cos(omegaLmin*deltaTmin)*sz_in2 - sin(omegaLmin*deltaTmin)*sx_in2;
-  sx = sin(omegaLmin*deltaTmin)*sz_in2 + cos(omegaLmin*deltaTmin)*sx_in2;
+  sz = cos(phi)*sz_in1 - sin(phi)*sx_in1;
+  sx = sin(phi)*sz_in1 + cos(phi)*sx_in1;
   %}
 
 MCDISPLAY
-%{
-  
-  
+%{  
   box(0, 0, 0, xwidth, yheight, zdepth);
-  %}
+%}
 
 END
