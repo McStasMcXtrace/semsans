@@ -23,12 +23,12 @@
 *
 *     __________________
 *    |        /\        |
-*    | Bguide/  \Bguide |      y
+*    |       /  \       |      y
 *    |      /    \      |      ^
 *    |     /      \     |      |
 *    |    /   B    \    |      |-----> z
-*    |   /   and    \   |
-*    |  /   Bguide   \  |
+*    |   /          \   |
+*    |  /            \  |
 *    | /              \ |
 *    |/________________\|
 *
@@ -36,7 +36,7 @@
 *
 * This component does NOT take gravity into account.
 *
-* Example: Pol_triafield_y(xwidth=0.1, yheight=0.1, zdepth=0.2, B=1e-3, Bguide=0.0)
+* Example: Pol_triafield_y(xwidth=0.1, yheight=0.1, zdepth=0.2, B=1e-3)
 *
 * %P
 * INPUT PARAMETERS:
@@ -45,7 +45,6 @@
 * yheight: [m]  Height of opening 
 * zdepth: [m]   zdepth of field 
 * B: [T]        Magnetic field along y-direction inside triangle 
-* Bguide: [T]   Magnetic field along y-direction inside entire box 
 *
 * OUTPUT PARAMETERS:
 *
@@ -53,8 +52,8 @@
 *******************************************************************************/
 
 DEFINE COMPONENT Pol_triafield_y
-SETTING PARAMETERS (xwidth, yheight, zdepth, B=0, Bguide=0)
-OUTPUT PARAMETERS(omegaL, omegaLguide)
+SETTING PARAMETERS (xwidth, yheight, zdepth, B=0)
+OUTPUT PARAMETERS(omegaL)
 /* Neutron parameters: (x,y,z,vx,vy,vz,t,sx,sy,sz,p) */
 
 SHARE
@@ -76,14 +75,11 @@ DECLARE
 %{
   /* Larmor frequency */
   double omegaL;
-  double omegaLguide;
 %}
 
 INITIALIZE
 %{
   omegaL = 0;  
-  omegaLguide = 0;  
-
 
   double velocity = 0, time = 0;
   
@@ -94,8 +90,7 @@ INITIALIZE
     exit(1);
   }
   
-  omegaL	  = -1.832472e8 * (B - Bguide); // B and Bguide is in Tesla
-  omegaLguide = -1.832472e8 * Bguide;       // Bguide is in Tesla
+  omegaL	  = -1.832472e8 * B; // B is in Tesla
   %}
 
 TRACE
