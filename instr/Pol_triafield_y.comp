@@ -95,7 +95,7 @@ INITIALIZE
 
 TRACE
 %{
-  double deltaT, deltaTx, deltaTy, iz1, iz2, denom1, denom2, deltaTtria;
+  double deltaT, deltaTx, deltaTy, iz1, iz2, sx_in1, sz_in1, denom1, denom2, deltaTtria;
   
   PROP_Z0;
   if (!inside_rectangle(x, y, xwidth, yheight))
@@ -135,17 +135,21 @@ TRACE
   }  
   
   PROP_DT(deltaT);  
-
+  sx_in1 = sx;
+  sz_in1 = sz;
   // This calculated the spin rotation caused by the triangular field
-  sz = cos(omegaL*deltaTtria)*sz - sin(omegaL*deltaTtria)*sx;
-  sx = sin(omegaL*deltaTtria)*sz + cos(omegaL*deltaTtria)*sx;
-  %}
+  sz = cos(omegaL*deltaTtria)*sz_in1 - sin(omegaL*deltaTtria)*sx_in1;
+  sx = sin(omegaL*deltaTtria)*sz_in1 + cos(omegaL*deltaTtria)*sx_in1;
+%}
 
 MCDISPLAY
 %{
   
   
   box(0, 0, 0, xwidth, yheight, zdepth);
+  multiline(5,-xwidth/2.0,-yheight/2.0,0.0, xwidth/2.0,-yheight/2.0,0.0, xwidth/2.0,yheight/2.0,zdepth/2.0, -xwidth/2.0,yheight/2.0,zdepth/2.0, -xwidth/2.0,-yheight/2.0,0.0);
+  multiline(5,-xwidth/2.0,-yheight/2.0,zdepth/2.0, xwidth/2.0,-yheight/2.0,zdepth/2.0, xwidth/2.0,yheight/2.0,zdepth, -xwidth/2.0,yheight/2.0,zdepth, -xwidth/2.0,-yheight/2.0,zdepth/2.0);
+
   %}
 
 END

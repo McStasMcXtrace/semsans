@@ -23,16 +23,16 @@ def compute_p_0(By):
 def compute_z(By):
     # B_2 - B_1 generally
     delta_B = By
-    # Distance between centers of the 2 flippers
-    L = 2 # m
-    z = c * wavelength ** 2 * delta_B * L / (np.pi * np.tan(theta_0))
+    # Distance from detector to sample
+    L_s = 1.8 # m
+    z = c * wavelength ** 2 * delta_B * L_s / (np.pi * np.tan(theta_0))
     return z
 
 # Computes By given z and other fixed parameters
 def compute_By(z):
-    # Distance between centers of the 2 flippers
-    L = 2 # m
-    delta_B = np.pi * np.tan(theta_0) * z / (c * wavelength ** 2 * L)
+    # Distance from detector to sample
+    L_s = 1.8 # m
+    delta_B = np.pi * np.tan(theta_0) * z / (c * wavelength ** 2 * L_s)
     return delta_B
 
 
