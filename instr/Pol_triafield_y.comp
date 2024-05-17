@@ -68,7 +68,19 @@ double IntersectWall(double pos, double vel, double wallpos) {
       return (wallpos-pos)/vel;
     else 
       return (-wallpos-pos)/vel;
-  }
+}
+
+/* In this component, x and y will translate to y and z respectively */
+#pragma acc routine
+double intersect_lines(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
+  double numerator, denominator, t;
+  numerator = (x1 - x3) * (y3 - y4) - (y1 - y3)*(x3 - x4);
+  denominator = (x1 - x2) * (y3 - y4) - (y1 - y2)*(x3 - x4);
+  t = numerator / denominator;
+  // This will return the intersection coordinate y, which corresponds to z below
+  return y1 + t * (y2 - y1);
+}
+
 %}
 
 DECLARE
@@ -95,7 +107,7 @@ INITIALIZE
 
 TRACE
 %{
-  double deltaT, deltaTx, deltaTy, iz1, iz2, sx_in1, sz_in1, denom1, denom2, deltaTtria;
+  double deltaT, deltaTx, deltaTy, iz1, iz2, sx_in1, sz_in1, deltaTtria;
   
   PROP_Z0;
   if (!inside_rectangle(x, y, xwidth, yheight))
@@ -109,13 +121,11 @@ TRACE
   // The first field boundary is given by the points  ( 0,-yheight/2,       0) and ( 0, yheight/2, zdepth/2)
   // The second field boundary is given by the points ( 0, yheight/2,zdepth/2) and (0, -yheight/2,   zdepth)
   // iz1 and iz2 are the z-values for the intersection
-    denom1 = (-vz)*((-yheight/2)-yheight/2)-(y-(y+vy))*(-zdepth/2);
-    iz1    = ((-y*vz)*(-zdepth/2)-(-vz)*(-(-yheight/2)*zdepth/2))/denom1;
-    
-    denom2 = (-vz)*(yheight/2-(-yheight/2))-(y-(y+vy))*(zdepth/2-zdepth);
-    iz2    = ((-y*vz)*(zdepth/2-zdepth)-(-vz)*(zdepth/2*(-yheight/2)-yheight/2*zdepth))/denom2;
+  iz1 = intersect_lines(y,0,y+vy,vz, -yheight/2, 0, yheight/2, zdepth/2);
+  iz2 = intersect_lines(y,0,y+vy,vz, yheight/2, zdepth/2, -yheight/2, zdepth);
+
   // Time spent in triangular B-field
-    deltaTtria	= (iz2-iz1)/vz;
+  deltaTtria	= (iz2-iz1)/vz;
 
   // check that track goes throgh without hitting the walls
   if (!inside_rectangle(x+vx*deltaT, y+vy*deltaT, xwidth, yheight)) {
@@ -146,9 +156,9 @@ MCDISPLAY
 %{
   
   
-  box(0, 0, 0, xwidth, yheight, zdepth);
+  box(0, 0, zdepth/2.0, xwidth, yheight, zdepth);
   multiline(5,-xwidth/2.0,-yheight/2.0,0.0, xwidth/2.0,-yheight/2.0,0.0, xwidth/2.0,yheight/2.0,zdepth/2.0, -xwidth/2.0,yheight/2.0,zdepth/2.0, -xwidth/2.0,-yheight/2.0,0.0);
-  multiline(5,-xwidth/2.0,-yheight/2.0,zdepth/2.0, xwidth/2.0,-yheight/2.0,zdepth/2.0, xwidth/2.0,yheight/2.0,zdepth, -xwidth/2.0,yheight/2.0,zdepth, -xwidth/2.0,-yheight/2.0,zdepth/2.0);
+  multiline(5,-xwidth/2.0,yheight/2.0,zdepth/2.0, xwidth/2.0,yheight/2.0,zdepth/2.0, xwidth/2.0,-yheight/2.0,zdepth, -xwidth/2.0,-yheight/2.0,zdepth, -xwidth/2.0,yheight/2.0,zdepth/2.0);
 
   %}
 
