@@ -1,4 +1,4 @@
-DEFINE INSTRUMENT SEMSANS_Delft(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.2, triacoil_width=0.1, triacoil_height=0.1)
+DEFINE INSTRUMENT SEMSANS_Delft(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.3, triacoil_width=0.3, triacoil_height=0.15)
 
 DECLARE
 %{
@@ -52,13 +52,12 @@ AT (0.0, 0.0, 1.0 - triacoil_depth) RELATIVE src
 
 COMPONENT f2 = Pol_triafield_y(
     xwidth=triacoil_width,yheight=triacoil_height* 0.5,zdepth=triacoil_depth,
-    B=-2 *By)
+    B=-2 * By)
 AT(0,0,3 - triacoil_depth * 0.5) RELATIVE src
 
 
 COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
-AT(0,0,0.18) RELATIVE f2
-
+AT(0,0,triacoil_depth * 0.5 + 0.02) RELATIVE f2
 
 COMPONENT det = PSD_monitor(xwidth=0.011, yheight=0.011, filename="det",ny=1001, nx=1)
 AT(0,0,5) RELATIVE src
