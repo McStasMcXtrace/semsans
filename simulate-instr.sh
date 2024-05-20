@@ -1,9 +1,9 @@
 #!/bin/bash
-# Example usage for 1e5 neutrons on 4 threads with 5 By field steps from 0 to 0.020908 T (corresponding to z from 0 to 3 um for base.instr)
-# ./simulate-instr.sh 100000 4 5 0,0.020908 2.165 0.02 base.instr
+# Example usage:
+# ./simulate-instr.sh 100000 4 0.020908 2.165 0.02 iso.instr GPU
 
 # Check if the number of arguments provided is correct
-if [ "$#" -ne 5 ]; then
+if [ "$#" -ne 7 ]; then
     echo "Usage: $0 <N> <N_threads> <By> <L0> <DL> <instr> <mode>\nmode can be CPU or GPU"
     exit 1
 fi

@@ -1,6 +1,6 @@
 #!/bin/bash
-# Example usage for 1e5 neutrons on 4 threads with 5 By field steps from 0 to 0.020908 T (corresponding to z from 0 to 3 um for base.instr)
-# ./full-simulation.sh 100000 4 5 0,0.020908 2.165 0.02 foil.instr foil_empty.instr GPU
+# Example usage:
+# ./full-simulation.sh 100000 4 5 0,0.020908 2.165 0.02 iso.instr iso_empty.instr GPU
 
 # Check if the number of arguments provided is correct
 if [ "$#" -ne 9 ]; then
