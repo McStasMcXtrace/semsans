@@ -12,7 +12,10 @@ c = 4.63e14 # T-1 m-2
 theta_0 = np.deg2rad(5.5) # rad
 wavelength = 2.165e-10 # m
 
-s_t = 3/2 * phi * (1 - phi) * delta_rho**2 * wavelength**2 * t * R
+
+def s_t(R):
+    return 3/2 * phi * (1 - phi) * delta_rho**2 * wavelength**2 * t * R
+
 
 def compute_p_0(By):
     delta_B = By
@@ -44,8 +47,13 @@ def G_0(xi):
          + 1 / 2 * valid_xi ** 2 * (1 - (valid_xi / 4 ) ** 2) * np.log(valid_xi / (2 + np.sqrt(4 - valid_xi ** 2)))
     return res
 
-def G(xi):
-    return s_t * G_0(xi)
+def G(z, R):
+    xi = z/R
+    return s_t(R) * G_0(xi)
+
+def G_norm(z, R):
+    xi = z/R
+    return G_0(xi)
 
 def compute_P_dark_field(I_up,I_down):
     return  (I_up - I_down) / (I_up + I_down)
