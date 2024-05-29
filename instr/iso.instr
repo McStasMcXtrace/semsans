@@ -57,7 +57,7 @@ AT(0,0,3 - triacoil_depth * 0.5) RELATIVE src
 
 
 COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
-AT(0,0,triacoil_depth * 0.5 + 0.02) RELATIVE f2
+AT (0, 0, 3.16) RELATIVE src
 
 COMPONENT sans_spheres = SANS_spheres2(xwidth=0.02, 
     yheight=0.02, 
