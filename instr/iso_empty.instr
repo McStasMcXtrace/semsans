@@ -1,4 +1,4 @@
-DEFINE INSTRUMENT SEMSANS_ISO(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.3, triacoil_height=0.15, R = 10000, t = 0.001)
+DEFINE INSTRUMENT SEMSANS_ISO(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.3, triacoil_height=0.15, R=10000, t=0.001)
 
 DECLARE
 %{
