@@ -23,11 +23,10 @@ def compute_p_0(By, wavelength=wavelength, theta_0 = theta_0):
     return p_0
 
 # Computes the z corresponding to a certain By given other fixed parameters
-def compute_z(By, wavelength=wavelength, theta_0 = theta_0):
+def compute_z(By, theta_0 = theta_0, wavelength=wavelength, L_s = 1.8):
     # B_2 - B_1 generally
     delta_B = By
     # Distance from detector to sample
-    L_s = 1.8 # m
     z = c * wavelength ** 2 * delta_B * L_s / (np.pi * np.tan(theta_0))
     return z
 
