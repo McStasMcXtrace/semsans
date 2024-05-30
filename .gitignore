@@ -5,3 +5,5 @@ my_instrument*/
 *.zip
 data
 __pycache__/
+data_*/
+simulate.sh
