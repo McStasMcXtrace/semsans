@@ -13,17 +13,17 @@ theta_0 = np.deg2rad(5.5) # rad
 wavelength = 2.165e-10 # m
 
 
-def s_t(R):
+def s_t(R = R, t = t, wavelength = wavelength, phi=phi, delta_rho=delta_rho):
     return 3/2 * phi * (1 - phi) * delta_rho**2 * wavelength**2 * t * R
 
 
-def compute_p_0(By):
+def compute_p_0(By, wavelength=wavelength, theta_0 = theta_0):
     delta_B = By
     p_0 = np.pi * np.tan(theta_0) / (c * wavelength * delta_B)
     return p_0
 
 # Computes the z corresponding to a certain By given other fixed parameters
-def compute_z(By):
+def compute_z(By, wavelength=wavelength, theta_0 = theta_0):
     # B_2 - B_1 generally
     delta_B = By
     # Distance from detector to sample
