@@ -1,4 +1,4 @@
-DEFINE INSTRUMENT SEMSANS_Delft(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1)
+DEFINE INSTRUMENT SEMSANS_FOIL(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, R = 10000)
 
 DECLARE
 %{
@@ -44,7 +44,7 @@ COMPONENT f2 = COPY(f1)(By=2*By)
 AT(0,0,3) RELATIVE src
 
 COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
-AT(0,0,0.18) RELATIVE f2
+AT (0, 0, 3.16) RELATIVE src
 
 COMPONENT det = PSD_monitor(xwidth=0.011, yheight=0.011, filename="det",ny=1001, nx=1)
 AT(0,0,5) RELATIVE src

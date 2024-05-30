@@ -1,4 +1,4 @@
-DEFINE INSTRUMENT SEMSANS_Delft(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.3, triacoil_width=0.3, triacoil_height=0.15)
+DEFINE INSTRUMENT SEMSANS_ISO(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.3, triacoil_height=0.15, R = 10000, t = 0.001)
 
 DECLARE
 %{
@@ -46,12 +46,12 @@ AT(0,0,3) RELATIVE src
 */
 
 COMPONENT f1=Pol_triafield_y(
-    xwidth=triacoil_width,yheight=triacoil_height,zdepth=2*triacoil_depth,
+    xwidth=0.3,yheight=triacoil_height,zdepth=2*triacoil_depth,
     B=By)
 AT (0.0, 0.0, 1.0 - triacoil_depth) RELATIVE src
 
 COMPONENT f2 = Pol_triafield_y(
-    xwidth=triacoil_width,yheight=triacoil_height* 0.5,zdepth=triacoil_depth,
+    xwidth=0.3,yheight=triacoil_height* 0.5,zdepth=triacoil_depth,
     B=-2 * By)
 AT(0,0,3 - triacoil_depth * 0.5) RELATIVE src
 
@@ -61,11 +61,11 @@ AT (0, 0, 3.16) RELATIVE src
 
 COMPONENT sans_spheres = SANS_spheres2(xwidth=0.02, 
     yheight=0.02, 
-	zthick=0.001, 
+	zthick=t, 
 	dsdw_inc=0.0, 
 	sc_aim=0.8, 
 	sans_aim=0.95, 
-	R=10000, 
+	R=R, 
 	phi=0.015, 
 	singlesp=0,
 	Qmind = 0.00003,
