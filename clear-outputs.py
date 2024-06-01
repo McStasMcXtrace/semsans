@@ -20,8 +20,13 @@ def clear_all_notebooks_in_directory(directory):
     for filename in os.listdir(directory):
         if filename.endswith('.ipynb'):
             notebook_path = os.path.join(directory, filename)
-            clear_notebook_outputs(notebook_path)
-            print(f"Cleared outputs for {notebook_path}")
+            try:
+                clear_notebook_outputs(notebook_path)
+                print(f"Cleared outputs for {notebook_path}")
+            except Exception as e:
+                print(e)
+                print(f"Could not clear outputs for {notebook_path}")
+
 
 if __name__ == "__main__":
     directory_path = "./"

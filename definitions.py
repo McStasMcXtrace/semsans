@@ -1,4 +1,5 @@
 import numpy as np
+import re
 
 # Sample volume thickness
 t = 0.001 # m
@@ -17,7 +18,7 @@ def s_t(R = R, t = t, wavelength = wavelength, phi=phi, delta_rho=delta_rho):
     return 3/2 * phi * (1 - phi) * delta_rho**2 * wavelength**2 * t * R
 
 
-def compute_p_0(By, wavelength=wavelength, theta_0 = theta_0):
+def compute_p_0(By, wavelength, theta_0):
     delta_B = By
     p_0 = np.pi * np.tan(theta_0) / (c * wavelength * delta_B)
     return p_0
@@ -57,9 +58,18 @@ def G_norm(z, R):
 def compute_P_dark_field(I_up,I_down):
     return  (I_up - I_down) / (I_up + I_down)
 
-def get_data(i):
-    y, I_up = np.genfromtxt(f'data/up/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
-    _, I_down = np.genfromtxt(f'data/down/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
-    _, I_empty_up = np.genfromtxt(f'data/no_sample_up/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
-    _, I_empty_down = np.genfromtxt(f'data/no_sample_down/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
-    return y, I_up, I_down, I_empty_up, I_empty_down
+def extract_By(file):
+    with open(file) as f:
+        text = f.read()
+        
+        match = re.search(r'# Param: By=([0-9.]+)', text)
+        assert(match)
+        return float(match.group(1))
+    
+def get_data(i, folder='data'):
+    y, I_up = np.genfromtxt(f'{folder}/up/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
+    _, I_down = np.genfromtxt(f'{folder}/down/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
+    _, I_empty_up = np.genfromtxt(f'{folder}/empty_up/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
+    _, I_empty_down = np.genfromtxt(f'{folder}/empty_down/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
+    By = extract_By(f'{folder}/up/{i}/det.dat')
+    return y, I_up, I_down, I_empty_up, I_empty_down, By
