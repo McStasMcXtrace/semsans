@@ -50,9 +50,10 @@ INITIALIZE
 	    NAME_CURRENT_COMP);
     exit(1);
   }
-  // 1.832e8 is the neutron gyromagnetic
-  omegaLmin	  = -1.832472e8 * (-By);
-  omegaLplus = -1.832472e8 * (By);
+  // 1.832472e8 is the neutron gyromagnetic, current use half
+  // to compensate for unexpected doubling (???)
+  omegaLmin	  = -9.16236e7 * (-By);
+  omegaLplus = -9.16236e7 * (By);
   %}
 
 TRACE

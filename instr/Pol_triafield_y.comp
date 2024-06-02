@@ -102,7 +102,7 @@ INITIALIZE
     exit(1);
   }
   
-  omegaL	  = -1.832472e8 * B; // B is in Tesla
+  omegaL	  = -9.16236e7 * B; // B is in Tesla
   %}
 
 TRACE
