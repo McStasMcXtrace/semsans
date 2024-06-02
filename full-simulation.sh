@@ -26,13 +26,13 @@ timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 
 # Rename the directory with timestamp
 dir_name="data"
-# mv "$dir_name" "${dir_name}_${timestamp}"
+mv "$dir_name" "${dir_name}_${timestamp}"
 
 # Zip the renamed directory
-# zip -r "${dir_name}_${timestamp}.zip" "${dir_name}_${timestamp}"
+zip -r "${dir_name}_${timestamp}.zip" "${dir_name}_${timestamp}"
 
 # Remove the original directory
-# rm -rf "${dir_name}_${timestamp}"
+rm -rf "${dir_name}_${timestamp}"
     
 mkdir data
 cd instr
