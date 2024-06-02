@@ -58,6 +58,7 @@ def G_norm(z, R):
 def compute_P_dark_field(I_up,I_down):
     return  (I_up - I_down) / (I_up + I_down)
 
+# Data processing helper functions
 def extract_By(file):
     with open(file) as f:
         text = f.read()
@@ -73,3 +74,6 @@ def get_data(i, folder='data'):
     _, I_empty_down = np.genfromtxt(f'{folder}/empty_down/{i}/det.dat', delimiter=' ', usecols=(0,1), unpack=True)
     By = extract_By(f'{folder}/up/{i}/det.dat')
     return y, I_up, I_down, I_empty_up, I_empty_down, By
+
+def indices_within_range(x, a, b):
+    return np.where((x >= a) & (x <= b))[0]
