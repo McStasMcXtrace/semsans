@@ -5,6 +5,10 @@ import re
 FWHM_factor = 2 * np.sqrt(2 * np.log(2))
 
 detector_pixel_size = 10e-6 # m
+
+# Detector sampling rate
+f_s = 1/detector_pixel_size
+
 # Sample volume thickness
 t = 0.001 # m
 # Radius of sphere, equal to 1 um but expressed in AA
@@ -29,7 +33,7 @@ def compute_p_0(By, wavelength, theta_0):
     return p_0
 
 # Computes the z corresponding to a certain By given other fixed parameters
-def compute_z(By, theta_0 = theta_0, wavelength=wavelength, L_s = 1.8):
+def compute_z(By, theta_0 = theta_0, wavelength=wavelength, L_s = L_s):
     # B_2 - B_1 generally
     delta_B = By
     # Distance from detector to sample
@@ -37,7 +41,7 @@ def compute_z(By, theta_0 = theta_0, wavelength=wavelength, L_s = 1.8):
     return z
 
 # Computes By given z and other fixed parameters
-def compute_By(z):
+def compute_By(z, L_s = L_s):
     # Distance from detector to sample
     delta_B = np.pi * np.tan(theta_0) * z / (c * wavelength ** 2 * L_s)
     return delta_B
