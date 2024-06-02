@@ -1,4 +1,4 @@
-DEFINE INSTRUMENT SEMSANS_ISO(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.3, triacoil_height=0.15, R=10000, t=0.001)
+DEFINE INSTRUMENT SEMSANS_ISO(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.3, triacoil_height=0.05459553513993035, R=10000, t=0.001)
 
 DECLARE
 %{
@@ -28,23 +28,6 @@ COMPONENT set_pol = Set_pol(
     px=1)
 AT (0, 0, 0) RELATIVE PREVIOUS
 
-/*
-COMPONENT f1 = Foil_flipper_magnet(
-    xwidth=0.1, 
-    yheight=0.1, 
-    zdepth=0.3, 
-    phi=0.095993, 
-    foilthick=3.0, 
-    Bx=0, 
-    By=By, 
-    Bz=0, 
-    foil_in=1, verbose=0)
-AT (0, 0, 1.0) RELATIVE src
-
-COMPONENT f2 = COPY(f1)(By=2*By)
-AT(0,0,3) RELATIVE src
-*/
-
 COMPONENT f1=Pol_triafield_y(
     xwidth=0.3,yheight=triacoil_height,zdepth=2*triacoil_depth,
     B=By)
@@ -52,7 +35,7 @@ AT (0.0, 0.0, 1.0 - triacoil_depth) RELATIVE src
 
 COMPONENT f2 = Pol_triafield_y(
     xwidth=0.3,yheight=triacoil_height* 0.5,zdepth=triacoil_depth,
-    B=-2 * By)
+    B=-2*By)
 AT(0,0,3 - triacoil_depth * 0.5) RELATIVE src
 
 
