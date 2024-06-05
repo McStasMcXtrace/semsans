@@ -6,8 +6,17 @@ FWHM_factor = 2 * np.sqrt(2 * np.log(2))
 
 detector_pixel_size = 10e-6 # m
 
+# Detector size
+detector_size = 11e-3 # m
+
+# Number of pixels
+detector_pixels = 1001
+
+# Pixel size
+detector_pixel_size = detector_size / detector_pixels
+
 # Detector sampling rate
-f_s = 1/detector_pixel_size
+f_s = 1/detector_pixel_size # m-1
 
 # Sample volume thickness
 t = 0.001 # m
