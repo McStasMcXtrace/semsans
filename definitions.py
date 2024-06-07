@@ -31,6 +31,10 @@ theta_0 = np.deg2rad(5.5) # rad
 wavelength = 2.165e-10 # m
 L_s = 1.8 # m
 
+B_s = 1
+d = 3e-6
+def tune_foil(lambda_0, n = 0):
+    return np.arcsin(c * d * B_s * lambda_0 / ((2 * n + 1) * np.pi))
 
 def s_t(R = R, t = t, wavelength = wavelength, phi=phi, delta_rho=delta_rho):
     return 3/2 * phi * (1 - phi) * delta_rho**2 * wavelength**2 * t * R

@@ -30,18 +30,18 @@ AT (0, 0, 0) RELATIVE PREVIOUS
 
 
 COMPONENT f1 = Pol_IdealWSP(
-    xwidth=0.1, 
-    yheight=0.1, 
-    zdepth=0.2, 
+    xwidth=0.15, 
+    yheight=0.15, 
+    zdepth=0.3, 
     By=By
     )
-AT (0, 0, 1.0 - 0.1) RELATIVE src
+AT (0, 0, 1.0 - 0.15) RELATIVE src
 
 COMPONENT f2 = COPY(f1)(By=-2*By)
-AT(0,0,3 - 0.1) RELATIVE src
+AT(0,0,3 - 0.15) RELATIVE src
 
 COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
-AT (0, 0, 3.16) RELATIVE src
+AT (0, 0, 3.17) RELATIVE src
 
 COMPONENT sans_spheres = SANS_spheres2(xwidth=0.02, 
     yheight=0.02, 
