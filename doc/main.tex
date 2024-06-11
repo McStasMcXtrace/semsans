@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+%\usepackage{geometry}
+%  \newgeometry{vmargin={15mm}, hmargin={12mm,17mm}} 
+\title{SEMSANS at the cold neutron source in Delft}
+\author{Thom van der Woude}
+\date{May 2024}
+\include{prelude}
+\usepackage[
+backend=biber,
+%sorting=ynt
+]{biblatex}
+
+\addbibresource{references.bib}
+\newcommand{\targetrange}{$10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$ }
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+In the food industry, there is the need to analyse the structure of materials at length scales ranging from nanometres to millimetres. To do this, different methods exist such as scattering techniques, microscopy and analysis based on macroscopic properties. What is unique about scattering techniques however is that they can probe the bulk of the sample at these length scales \cite{bouwman2021}.
+
+% I need to add a better bridge between these two sections, they are both good but lack coupling.
+
+Different scattering techniques exist based on X-rays and neutrons. Generally speaking, because these are reciprocal space methods, larger length-scales correspond to smaller scattering angles and vice versa. This is the motivation behind small-angle scattering techniques like Small Angle X-ray Scattering (SAXS) and Small Angle Neutron Scattering (SANS) which are used to analyse materials at length scales from $1 \unit{\nano\meter}$ to a few $100 \unit{\nano\meter}$. Past this upper limit such small-angle techniques become infeasible for realistic beam sizes and samples, as the deflection of particles in a beam is too slight to learn something about the sample.
+
+For neutrons, spin polarization can be used to label neutrons across the beam, a technique called neutron spin echo \cite{mezei1972}. This principle has been applied in the SANS-derivative techniques SESANS \cite{rekveldt1996} and SEMSANS\cite{bouwman2009}\cite{bouwman2011} to make the smallest angles and correspondingly the largest length-scales accessible using polarized neutrons. Formulated differently, these techniques can be seen to measure a type of real-space correlation function $G(\delta)$\cite{krouglov2003}\cite{andersson2008} as will also be discussed in Chapter \ref{c2:theory}.
+
+SEMSANS instruments have previously been realized at the Hoger Onderwijs Reactor (HOR) in Delft using a thermal neutron source. As part of the OYSTER project (Optimized Yield for Science, Technology, and Education of Radiation), a cold neutron source operating at $T=20 \unit{\kelvin}$ has been installed and additional improvements have been made.
+
+In this report, the possibility for realizing a SEMSANS instrument at the new cold source at HOR will be explored through a combination of mathematical analysis, constrained optimization and Monte Carlo simulations using raytracing software package McStas \cite{willendrup2020}. The goal is to bridge the gap between accessible length ranges of SANS and SEMSANS \cite{bouwman2021} and see if it is possible to access characteristic lengths from \targetrange by exploiting the advantage of greater wavelengths and without having to combine SANS and SEMSANS devices into one as has been proposed before \cite{bouwman2011}. An application that would benefit from such an instrument is the study of colloids such as casein micelles in milk and derivatives like yoghurt and curd. The characteristic length scales of all these would be accessible using the proposed instrument, facilitating a better understanding of their structure. 
+
+\section{Theory}
+\label{c2:theory}
+SEMSANS can in brief be understood as a variant of Small Angle Neutron Scattering (SANS) which exploits Larmor procession of neutrons to probe specific spin-echo lengths.
+
+\subsection{Small angle neutron scattering}
+SANS is an analytical technique which exploits elastic scattering of neutrons at small-angles. With $\vec{k}_i$ and $\vec{k}_f$ as initial and final angular wave vectors, the wave vector transfer is $Q = |\vec{Q}| = |\vec{k}_i - \vec{k}_f| = 2k_i\sin(\theta)$ in the elastic case with $2\theta$ the angle between $\vec{k}_i, \vec{k}_f$. At small angle $\theta$, $Q\approx 2\theta k_i$
+
+
+\section{Constraints and designs}
+\label{c3:constraints-and-design}
+\newpage
+\section{Optimization}
+The problem of designing an instrument suitable for a specific length range like \targetrange subject to the various constraints indicated in the previous chapter can be aptly described as a constrained optimization problem. This does require a formulation of an objective function to maximize and generally speaking this is easier said than done if all factors including instrument cost, intensity etc. are to be taken into account in addition to the $\delta$-range. In this section, the function that is maximized only depends on the $\delta$-range and consequently it should be understood as a speculative exploration of the instrument parameter-space rather than a final optimization of instruments to realize. 
+
+\subsection{Two possible $\delta$-range objective functions}
+Given the constraints formulated in Chapter \ref{c3:constraints-and-design}, let $(\delta_{i, min},\delta_{i, max})$ be the final $\delta$ interval subject to these constraints and let $(\delta_{t, min},\delta_{t, max})$ be a target interval. If these overlap, let the overlap interval be given by $(\delta_{o, min},\delta_{o, max})$. A first objective function $g_1$ to maximize is ratio of the length of the overlap and the length of the target interval
+$$g_1 = \begin{cases}
+	\frac{\delta_{o, max}-\delta_{o, min}}{\delta_{t, max} - \delta_{t, min}},\text{ if $\delta$-ranges overlap}\\
+	0,\text{ else}
+\end{cases}$$
+A problem with this objective function is that it doesn't take into consideration that the instrument should perform well across different length ranges and is biased towards the higher $\delta$ values in optimal designs. An intuitive way to optimize for coverage of different length ranges is achieved by looking at these on a logarithmic scale and considering the overlap there, which can be expressed using a second objective function $g_2$ as follows 
+$$g_2 = \begin{cases}
+	\frac{\ln(\delta_{o, max}/\delta_{o, min})}{\ln(\delta_{t, max}/\delta_{t, min})},\text{ if $\delta$-ranges overlap}\\
+	0,\text{ else}
+\end{cases}$$
+
+%Small-angle neutron scattering experiments are elastic, so that $k_i \approx k_f$ and $Q = 2k_i\sin{\theta} \approx 2\theta k_i$ with $2\theta$ being the deviation from the original $k_i$. Another term for this phenomenon is Bragg reflection. 
+
+%\section{Polarized neutrons}
+%A single neutron has spin $1/2$ and spin angular momentum $\pm\frac{1}{2}\hbar$ and has spin vector $\vec{s}_n$.
+
+%A \textbf{polarized} neutron beam has all neutrons in eigenstate $\uparrow$ or $\downarrow$ (question remains: why does it seem that in \cite{moon1969} only the up spin eigenstates are selected, is this just a different experiment with different devices?)
+
+%The polarization of a neutron beam is the ensemble average over all the neutron spin vectors normalised to their modulus
+%$$\vec{P} = \mean{\vec{s}_n} / \frac{1}{2} = 2\mean{\vec{s}_n}$$
+
+%When applying an external field $B$ (quantisation axis), there will be 2 possible orientations of neutron spins, parallel and anti-parallel. This gives rise to the scalar
+%$$P = \frac{N_+ - N_-}{N_+ + N_-}$$
+%with $N_+$ as the spin-up neutrons (spin parallel to field) and $N_-$ with spin-down (spin anti-parallel)
+
+
+\printbibliography
+\end{document}

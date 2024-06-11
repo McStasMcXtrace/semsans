@@ -8,3 +8,12 @@ __pycache__/
 data_*/
 simulate.sh
 *.txt
+# Documentation related
+*.blg
+*.run.xml
+*.aux
+*.bbl
+*.synctex.gz
+*.log
+*.bcf
+*.pdf
