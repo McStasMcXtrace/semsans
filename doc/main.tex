@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
-%\usepackage{geometry}
-%  \newgeometry{vmargin={15mm}, hmargin={12mm,17mm}} 
+\usepackage{geometry}
+  \newgeometry{vmargin={15mm}, hmargin={12mm,17mm}} 
 \title{SEMSANS at the cold neutron source in Delft}
 \author{Thom van der Woude}
 \date{May 2024}
@@ -24,25 +24,57 @@ In the food industry, there is the need to analyse the structure of materials at
 
 Different scattering techniques exist based on X-rays and neutrons. Generally speaking, because these are reciprocal space methods, larger length-scales correspond to smaller scattering angles and vice versa. This is the motivation behind small-angle scattering techniques like Small Angle X-ray Scattering (SAXS) and Small Angle Neutron Scattering (SANS) which are used to analyse materials at length scales from $1 \unit{\nano\meter}$ to a few $100 \unit{\nano\meter}$. Past this upper limit such small-angle techniques become infeasible for realistic beam sizes and samples, as the deflection of particles in a beam is too slight to learn something about the sample.
 
-For neutrons, spin polarization can be used to label neutrons across the beam, a technique called neutron spin echo \cite{mezei1972}. This principle has been applied in the SANS-derivative techniques SESANS \cite{rekveldt1996} and SEMSANS\cite{bouwman2009}\cite{bouwman2011} to make the smallest angles and correspondingly the largest length-scales accessible using polarized neutrons. Formulated differently, these techniques can be seen to measure a type of real-space correlation function $G(\delta)$\cite{krouglov2003}\cite{andersson2008} as will also be discussed in Chapter \ref{c2:theory}.
+For neutrons, spin polarization can be used to label neutrons across the beam, a technique called neutron spin echo \cite{mezei1972}. This principle has been applied in the SANS-derivative techniques SESANS \cite{rekveldt1996} and SEMSANS\cite{bouwman2009}\cite{bouwman2011} to make the smallest angles and correspondingly the largest length-scales accessible using polarized neutrons. Formulated differently, these techniques can be seen to measure a type of real-space density correlation function $G(\delta)$\cite{krouglov2003}\cite{andersson2008} as will also be discussed in Chapter \ref{c2:theory}.
 
 SEMSANS instruments have previously been realized at the Hoger Onderwijs Reactor (HOR) in Delft using a thermal neutron source. As part of the OYSTER project (Optimized Yield for Science, Technology, and Education of Radiation), a cold neutron source operating at $T=20 \unit{\kelvin}$ has been installed and additional improvements have been made.
 
-In this report, the possibility for realizing a SEMSANS instrument at the new cold source at HOR will be explored through a combination of mathematical analysis, constrained optimization and Monte Carlo simulations using raytracing software package McStas \cite{willendrup2020}. The goal is to bridge the gap between accessible length ranges of SANS and SEMSANS \cite{bouwman2021} and see if it is possible to access characteristic lengths from \targetrange by exploiting the advantage of greater wavelengths and without having to combine SANS and SEMSANS devices into one as has been proposed before \cite{bouwman2011}. An application that would benefit from such an instrument is the study of colloids such as casein micelles in milk and derivatives like yoghurt and curd. The characteristic length scales of all these would be accessible using the proposed instrument, facilitating a better understanding of their structure. 
+In this report, the possibility for realizing a SEMSANS instrument at the new cold source at HOR will be explored through a combination of mathematical analysis, constrained optimization and Monte Carlo simulations using raytracing software package McStas \cite{willendrup2020}. The goal is to bridge the gap between accessible length ranges of SANS and SEMSANS \cite{bouwman2021} and see if it is possible to access characteristic lengths from \targetrange by exploiting the advantage of greater wavelengths and without having to combine SANS and SEMSANS devices into one as has been proposed before \cite{bouwman2011}. An application that would benefit from such an instrument is the study of colloids such as casein micelles in milk and derivatives like yoghurt and curd. The characteristic length scales of all these would be accessible at an instrument with this target range, facilitating a better understanding of their structure. 
 
-\section{Theory}
-\label{c2:theory}
-SEMSANS can in brief be understood as a variant of Small Angle Neutron Scattering (SANS) which exploits Larmor procession of neutrons to probe specific spin-echo lengths.
+%\section{SEMSANS instrument model}
+%In this chapter, the used SEMSANS instrument model and all its components with their basic functions as well as parameters is introduced. It is based on an instrument which was previously simulated (CITATION NEEDED) and which is available as NAME in the McStas instrument library. A schematic overview is given in ADD FIGURE HERE. 
+%\subsection{Source}
 
-\subsection{Small angle neutron scattering}
-SANS is an analytical technique which exploits elastic scattering of neutrons at small-angles. With $\vec{k}_i$ and $\vec{k}_f$ as initial and final angular wave vectors, the wave vector transfer is $Q = |\vec{Q}| = |\vec{k}_i - \vec{k}_f| = 2k_i\sin(\theta)$ in the elastic case with $2\theta$ the angle between $\vec{k}_i, \vec{k}_f$. At small angle $\theta$, $Q\approx 2\theta k_i$
+%\section{Source}
+%The 
+,
+% Key challenge: translate this beautiful blob of mathematics and analysis I have in my jupyter notebook to on the one hand a summary and theoretical background and on the other hand a (somewhat, at least in the extent of having fully worked it out myself generally unaware of existing derivations) novel analysis on which
+% Another challenge: how to deal with the rather expansive theory with at least 2 main branches which there appears to be? If I give a theoretical background to make this thing readable for other bachelor students then I do sort of have to start at Larmor precession and neutron spins but also at small angle scattering and this is confusing. 
+
+\section{Theory of neutron spin echo and precession in SEMSANS}
+
+\
+% Vision: introduce theory in two parts:
+% 1. Introduce polarized neutron techniques, Larmor precession and how using polarizer+precession devices+analyzer you can get a modulation pattern on the detector
+
+\section{Real-space interpretation of SEMSANS measurements using spin-echo length}
+% 2. Introduce (small angle) scattering techniques and quantities like k, Q, etc. Briefly summarize the greater mathematical framework behind the real-space interpretation of SESANS/SEMSANS. In short, introduce how you can probe a certain spin echo length delta using SEMSANS and why this modulation is relevant in achieving that. 
 
 
-\section{Constraints and designs}
+\section{Instrument design and constraints}
 \label{c3:constraints-and-design}
-\newpage
-\section{Optimization}
-The problem of designing an instrument suitable for a specific length range like \targetrange subject to the various constraints indicated in the previous chapter can be aptly described as a constrained optimization problem. This does require a formulation of an objective function to maximize and generally speaking this is easier said than done if all factors including instrument cost, intensity etc. are to be taken into account in addition to the $\delta$-range. In this section, the function that is maximized only depends on the $\delta$-range and consequently it should be understood as a speculative exploration of the instrument parameter-space rather than a final optimization of instruments to realize. 
+
+\subsection{Instrument design variants}
+% Introduce table of instrument variants based of SEMSANS_Delft instrument with the
+% different wavelength operating points and different corresponding monochromators
+% Also vary the precession devices to give 9 variants in total or so. 
+
+\subsection{Constraints}
+% Discuss sources of constraints, linking them to the theory in previous chapters. Ideally refer to equation numbers to avoid repetition and make it sound really solid. 
+% Emphasize that these constraints serve as a starting point for estimating limitations for given instruments
+
+\subsection{Limitations of constraint scheme}
+% Discuss things that are missing
+% Also very important: discuss the softer constraints: why should the envelope FWHM be 3mm and not 2mm or 4mm? What determines this other than vibes. Indicate how they could be made more/less flexible
+
+\subsection{Computed $\delta$ constraints and final design $\delta$ ranges}
+% Give a table of computed constraints per instrument with ideally great names
+
+\subsection{Discussion of designs}
+% Here I'll write about clear trends in the tables of limitations and give indications of what is limiting these instruments. It might be interesting to give concrete recommendations: in order to get an even better delta range you could get a different monochromator, boost the B fields etc.
+
+
+\section{Optimization of instrument parameters}
+The problem of designing an instrument suitable for a specific length range like \targetrange subject to the various constraints indicated in the previous chapter can be aptly described as a constrained optimization problem. This does require a formulation of an objective function to maximize and generally speaking this is easier said than done if all factors including instrument cost, intensity etc. are to be taken into account in addition to the $\delta$-range. In this section, the function that is maximized only depends on the $\delta$-range and consequently it should be understood as a speculative exploration of the instrument parameter-space rather than a final optimization of instruments to realize. At best, the presented optimal instruments represent the best one can do in terms of $\delta$-range in the framework of parameters and constraints considered in this research.
 
 \subsection{Two possible $\delta$-range objective functions}
 Given the constraints formulated in Chapter \ref{c3:constraints-and-design}, let $(\delta_{i, min},\delta_{i, max})$ be the final $\delta$ interval subject to these constraints and let $(\delta_{t, min},\delta_{t, max})$ be a target interval. If these overlap, let the overlap interval be given by $(\delta_{o, min},\delta_{o, max})$. A first objective function $g_1$ to maximize is ratio of the length of the overlap and the length of the target interval
@@ -56,19 +88,42 @@ $$g_2 = \begin{cases}
 	0,\text{ else}
 \end{cases}$$
 
-%Small-angle neutron scattering experiments are elastic, so that $k_i \approx k_f$ and $Q = 2k_i\sin{\theta} \approx 2\theta k_i$ with $2\theta$ being the deviation from the original $k_i$. Another term for this phenomenon is Bragg reflection. 
+\subsection{Optimization scheme}
+Similar to in the previous chapter, all different pairings of precession devices and monochromators are considered. However, $\lambda_0, L_1, L_2, L_s$ are now free parameters with $\lambda_0$ being bounded by the approximate $\lambda$-band of the respective monochromator. 
 
-%\section{Polarized neutrons}
-%A single neutron has spin $1/2$ and spin angular momentum $\pm\frac{1}{2}\hbar$ and has spin vector $\vec{s}_n$.
+\subsection{Discussion of optimal instruments}
+The resulting optimal instrument parametrizations confirm patterns already visible in the previous chapter. For instance, isosceles triangles seem to be a very bad pairing with a PG monochromator. It can also be seen that instruments with PG monochromators are generally bounded on the upper end by field strength and those with velocity selectors by the narrowing of their envelope caused by wavelength spread. Similarly, almost all instruments are bounded by the condition that at least one period must be visible on the detector, with especially instruments at greater wavelengths $\lambda_0$ suffering from this limitation.  
+% add further points that come up, maybe after writing a similar section for designs and their computed limitations
 
-%A \textbf{polarized} neutron beam has all neutrons in eigenstate $\uparrow$ or $\downarrow$ (question remains: why does it seem that in \cite{moon1969} only the up spin eigenstates are selected, is this just a different experiment with different devices?)
+\section{Monte Carlo simulations of designs using McStas}
+% after all the analysis and discussion of constraints/optimizing using these, introduce monte carlo simulations as a step closer to a practical instruments and a way to verify identified limitations and see them in play. This last aspect could be an interesting part of the discussion of simulation results as well, you can really point out narrowing modulation envelopes, modulation periods becoming too big for the detecto retcetera. 
+% I expect some designs to not be able to measure specific samples at all or barely to the extent that showing them in a plot is a bit silly. 
 
-%The polarization of a neutron beam is the ensemble average over all the neutron spin vectors normalised to their modulus
-%$$\vec{P} = \mean{\vec{s}_n} / \frac{1}{2} = 2\mean{\vec{s}_n}$$
+\subsection{Simulation setup}
+% Mention the three samples, perhaps discuss their properties like thickness t etc. besides R. You can just put them in a table quick and dirty.
+% Maybe repeat/put an analytical graph of the expected P(\delta) curve here for all 3.
+\subsection{Results}
+% There will be quite a few graphs here, maybe use Appdendices if it is too much!
+\subsection{Discussion}
+% Did the simulations match the precomputed limits? Are the limits (to the extent that they are not absolute but rather somewhat chosen heuristically) good enough, too strict? Is it in practice possible to measure even at field strenghts outside of the range?
 
-%When applying an external field $B$ (quantisation axis), there will be 2 possible orientations of neutron spins, parallel and anti-parallel. This gives rise to the scalar
-%$$P = \frac{N_+ - N_-}{N_+ + N_-}$$
-%with $N_+$ as the spin-up neutrons (spin parallel to field) and $N_-$ with spin-down (spin anti-parallel)
+%\section{Appendix A: Limitations of SEMSANS theory at lower end of $\delta$ range}
+%In elastic scattering, the initial and final wave vectors $k_i$, $k_f$ are related through wave vector transfer $Q = |k_f - k_i| = k 2\sin\theta$ with $2\theta$ being the angle between $k_i, k_f$ and $|k_i| = |k_f| = k$ due to elasticity. 
+
+%In normal SEMSANS theory, the small-angle approximation must hold so that $Q_y = k2\theta$ or with $2\theta %\approx \frac{y}{L_s}$, $Q_y = k\frac{y}{L_s}$. Using this approximation, it can be seen that $\phi_t = %\delta Q_y$, which means that the modulation amplitude $A(\delta)$ is related to
+%$$G(\delta) = \frac{1}{\sigma k^2}\int_{Q_{x,min}}^{Q_{x,max}}\int_{Q_{y,min}}^{Q_{y,max}}\dfrac{d\sigma}{d\Omega}(Q)cos(\delta Q_y)dQ_ydQ_x$$
+%by the formula
+%$$A(\delta) = e^{\sigma [G(\delta) - 1]}$$
+%It can be shown that the generally correct expression for $Q_y$ is 
+%$$Q_y = 2k\sin(\frac{\arctan\frac{y}{L_s}}{2})$$
+%This can be simplified to the somewhat lengthy expression
+%$$Q_y = 2k \frac{\frac{y}{L_s}}{\sqrt{2}\sqrt{\frac{y^2}{L_s^2} + 1 }\sqrt{\frac{1}{\sqrt{\frac{y^2}{L_s^2} + 1}}+1}}$$
+%Considering again small $\frac{y}{L_s}$, it can be derived using a Taylor expansion that
+%$$Q_y \approx  k(\frac{y}{L_s} - \frac{3y^3}{8L_s^3})$$
+%So a more accurate relation between $\phi_t$ and $Q, \delta_y$ is given by $$\phi_t = \frac{\delta Q_y}{1 - \frac{3y^2}{8L_s^2}}$$
+% This appears to give an indication of up to which angles the SEMSANS theory gives a correct description of the amplitude decrease.
+
+
 
 
 \printbibliography
