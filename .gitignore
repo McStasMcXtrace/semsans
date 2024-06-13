@@ -17,3 +17,6 @@ simulate.sh
 *.log
 *.bcf
 *.pdf
+iso_data/
+foil_data/
+iwsp_data/
