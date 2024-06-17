@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{geometry}
-%\newgeometry{vmargin={15mm}, hmargin={12mm,17mm}} 
+\newgeometry{vmargin={15mm}, hmargin={12mm,17mm}} 
 \title{SEMSANS at the cold neutron source in Delft}
 \author{Thom van der Woude}
 \date{June 2024}
@@ -53,7 +53,6 @@ In addition to spin, a neutron has a wavelength $\lambda$ corresponding to a spe
 \begin{equation}
 	\phi = \frac{\gamma B L m\lambda}{h} = c\lambda B L \label{eq:larmor-prec}
 \end{equation}
-
 with $c = \frac{\gamma m}{h}$ being the Larmor constant \cite{bouwman2021b}.   
 \subsection{Modulating a neutron beam using precession}
 \label{c2.2}
@@ -64,12 +63,16 @@ Using the concepts of polarized neutrons and Larmor precession, the basic concep
 Such a $y$-dependent $\phi$ is in practice created using magnetic fields at an angle $\theta_0$ with the beam axis $z$. Different precession devices exist which can create such fields as will be analysed and discussed in Section [PLACEHOLDER].
 
 Finally, the modulation is created by applying an analyser to the beam afterwards \cite{mezei1972}. This again polarizes the beam in either the $+x$ or the $-x$ direction depending on the analyzer setting. Assuming a perfectly monochromatic source with $\lambda = \lambda_0$ for all neutrons and ignoring the effect of the sample for now, this creates an intensity modulation pattern on the position-sensitive detector at frequency $f_0 = \alpha\lambda_0$ of the form
-$$I_{b,s}(y) = I_{0, b,s} \pm A_{b,s}\cos(2\pi f_0y)$$
+\begin{equation}
+	I_{b,s}(y) = I_{0, b,s} \pm A_{b,s}\cos(2\pi f_0y) \label{eq:mono-modulation}
+\end{equation}
 where $I_{b,s}, A_{b,s}$ are experimentally observed quantities in the base case of an empty instrument ($b$) and an instrument with a sample ($s$) and the sign of the modulation depending on the $\pm x$ analyser setting \cite{parnell2023}. 
 \subsection{Spin-echo length $\delta$ and measurement interpretation}
 \label{c2.3}
 When adding a sample to the instrument after the analyser at distance $L_s$ from the detector, a length scale known as the spin-echo length $\delta$ is accessed \cite{bouwman2011}, given by 
-$$\delta = \lambda_0^2L_s\alpha$$
+\begin{equation}
+	\delta = \lambda_0^2L_s\alpha \label{eq:delta}
+\end{equation}
 This is the same spin-echo length as used in the analysis and interpretation of SESANS \cite{rekveldt1996}\cite{krouglov2003}\cite{andersson2008}. Whereas in SESANS a decrease in overall beam polarization is used, SEMSANS considers the reduction of intensity modulation amplitude or equivalently visibility upon adding a sample, which can be shown to be related to $\delta$ through the formula \cite{parnell2023}
 $$\frac{A_s(\delta)}{A_b(\delta)} = P(\delta) = e^{G(\delta) - \tau}$$
 with $\tau = \sigma t$ being the scattering power, which corresponds to the average number of scattering events for a neutron traversing the sample. $G(\delta)$ is the SESANS correlation function given by
@@ -133,18 +136,19 @@ $$\phi = c\lambda (B_1d_1/2 +B_2d_2/2) - 2c\lambda (B_1 + B_2) \frac{y}{\tan\the
 To achieve $\phi = 0$ at $y=0$, the condition $B_1d_1 = -B_2d_2$ must hold, giving 
 $$\phi = -2c\lambda (B_1 + B_2) \frac{y}{\tan\theta_0}$$
 This can be achieved making the triangle with the stronger field the smallest. 
-\subsubsection{Focussing condition}
-In practice, neutrons will not travel parallel to the $z$-axis but move at a slight angle to this depending on beam divergence and other parameters. Letting $\theta$ be the angle their trajectory makes with the $z$-axis in the $yz$ plane, it can be seen that a neutron arriving at height $y$ on the detector will pass through the $i$'th precession device at average height $y_i = y + L_i\tan\theta \approx y + L_i\theta$, with $L_i$ being the distance from the detector of the device. This means that the total precession angle will be
-$$\phi = - 2c\lambda B_1\frac{y + L_1\theta}{\tan\theta_0} - 2c\lambda B_2\frac{y + L_2\theta}{\tan\theta_0}$$
-This $\theta$-dependence is a problem as it will cause a loss of modulation depending on how large $\theta$ is. In first-order approximation, this effect can be removed by setting the positions $L_i$ and field strengths $B_i$ to meet the focussing condition
-$$B_1L_1 = -B_2L_2$$
-Substituting this gives as final precession angle formula (ignoring the $-$ sign)
-$$\phi_t = 2c\lambda (B_1 + B_2)\frac{y}{\tan\theta_0} $$
-which can be seen to match Equation \eqref{eq:precession-freq} with $\alpha = \frac{(B_1 + B_2)}{\pi\tan\theta_0}$
-This gives also the motivation for using two devices: you need at least two to remove this $\theta$-dependency and achieve optimal modulation using a realistic, slightly divergent beam.
-\subsubsection{Foil-flippers and Wollaston prisms}
 
-
+\subsubsection{Magnetic Wollaston prisms}
+A more sophisticated device is the magnetic Wollaston prism shown in Figure \ref{fig:precession-devices:wsp}, having two equal and opposite triangular magnetic fields in the form of a square. The analysis is very similar to that of isosceles triangles and for a single prism with angle $\theta_0$, the precession angle is
+$$\phi = \frac{2c\lambda B y}{\tan{\theta_0}}$$
+Two prisms with fields $B_1, B_2$ in sequence gives
+$$\phi = \frac{2c\lambda (B_1 + B_2) y}{\tan{\theta_0}}$$
+\subsubsection{Ferromagnetic foil flippers}
+The last device type considered is the ferromagnetic foil flipper depicted in Figure \ref{fig:precession-devices:foil}. It consists of a ferromagnetic foil of thickness $d = 3\unit{\micro\meter}$ in an electromagnet which quickly saturates to a magnetization of $B_s = 1.0 \unit{\tesla}$ \cite{kraan2003}. The foil has the effect of rotating neutron spins around it by an angle 
+$$\phi_{foil} = \frac{cdB_s\lambda}{\sin\theta_0}$$
+By appropriately choosing $\theta_0$, the foil can be made to rotate a central wavelength $\lambda_0$ by $\phi_{foil} = \pi$, causing the device to emulate a magnetic Wollaston prism using a simpler magnetic field as the effect of the second triangular region behind the foil will be opposite to that of the first for $\lambda = \lambda_0$. In this case,
+$$\phi = -2c\lambda (B_1 + B_2) \frac{y}{\tan\theta_0}$$
+For $\lambda \neq \lambda_0$ this will cause a depolarization as previously shown experimentally \cite{kraan2003}.
+% I think because there is then a y-component of spin which shows up as 50/50 up/down on the detector. 
 \begin{figure}[htbp]
 	\centering
 	\begin{subfigure}[b]{0.3\textwidth}
@@ -170,6 +174,35 @@ This gives also the motivation for using two devices: you need at least two to r
 	\caption{TODO: THIS SHOULD CONTAIN 3 SUBFIGURES SHOWCASING THE DEVICE GEOMETRIES NEXT TO EACH OTHER TO FACILITATE COMPARISON}
 	\label{fig:precession-devices}
 \end{figure}
+
+\subsubsection{Device $\alpha$ and characteristics}
+In summary, once device-specific conditions are met a pair of any of them have in absolute terms the same precession-angle profile given by Equation \eqref{eq:precession-freq} with $\alpha = \frac{(B_1 + B_2)}{\pi\tan\theta_0}$
+\begin{equation}
+	\phi = 2c\lambda (B_1 + B_2)\frac{y}{\tan\theta_0} \label{eq:device-prec}
+\end{equation}
+the contribution of each separate device being $\phi_i = \frac{2c\lambda B_i y}{\tan\theta_0}$. Table \ref{tab:device-properties} summarizes device characteristics as they appear in literature, these values will be used in this research.
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		Label & $\theta_0$ (degrees) & $B_{\text{min}}$ (mT) & $B_{\text{max}}$ (mT) & Source \\
+		\hline
+		Isosceles triangle & 20 & 0.1 & 15 & \cite{kusmin2017} \\
+		Wollaston prism & 45 & 0.1 & 63 & \cite{li2021} \\
+		Foil flipper & - & 0.3 & 30 & \cite{bouwman2011} \\
+		\hline
+	\end{tabular}
+	\caption{Precession device characteristics including the source of the values used. For a foil flipper, $\theta_0$ needs to be set to match $\lambda_0$ and is omitted, its range is sufficient for all $\lambda_0$'s considered in this research.}
+	\label{tab:device-properties}
+\end{table}
+\subsubsection{Focussing condition}
+In practice, neutrons will not travel parallel to the $z$-axis but move at a slight angle to this depending on beam divergence and other parameters. Letting $\theta$ be the angle their trajectory makes with the $z$-axis in the $yz$ plane, it can be seen that a neutron arriving at height $y$ on the detector will pass through the $i$'th precession device at average height $y_i = y + L_i\tan\theta \approx y + L_i\theta$, with $L_i$ being the distance from the detector of the device. This means that the total precession angle will be
+$$\phi = 2c\lambda B_1\frac{y + L_1\theta}{\tan\theta_0} + 2c\lambda B_2\frac{y + L_2\theta}{\tan\theta_0}$$
+This $\theta$-dependence is a problem as it will cause a loss of modulation depending on how large $\theta$ is. In first-order approximation, this effect can be removed by setting the positions $L_i$ and field strengths $B_i$ to meet the focussing condition
+$$B_1L_1 = -B_2L_2$$
+Substituting this retrieves Equation \eqref{eq:device-prec}. This gives also the motivation for using two devices: you need at least two to remove this $\theta$-dependency and achieve optimal modulation using a realistic, slightly divergent beam.
+
 
 \subsection{Polychromatic SEMSANS}
 
