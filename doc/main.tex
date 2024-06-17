@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{geometry}
-\newgeometry{vmargin={15mm}, hmargin={12mm,17mm}} 
+%\newgeometry{vmargin={15mm}, hmargin={12mm,17mm}} 
 \title{SEMSANS at the cold neutron source in Delft}
 \author{Thom van der Woude}
 \date{June 2024}
@@ -26,7 +26,7 @@ In the food industry, there is the need to analyse the structure of materials at
 
 Different scattering techniques exist based on X-rays and neutrons. Generally speaking, because these are reciprocal space methods, larger length-scales correspond to smaller scattering angles and vice versa. This is the motivation behind small-angle scattering methods like Small Angle X-ray Scattering (SAXS) and Small Angle Neutron Scattering (SANS) which are used to analyse materials at length scales from $1 \unit{\nano\meter}$ to a few $100 \unit{\nano\meter}$, which are significantly larger than for instance crystal lattice constants of a few $\unit{Å}$ that can be determined using techniques like X-ray diffraction. Past the upper limit of a few $100 \unit{\nano\meter}$ such small-angle techniques become infeasible for realistic beam sizes and samples, as the deflection of particles in a beam is too slight to learn something about the sample.
 
-For neutrons, spin polarization can be used to label trajectories across the beam, a technique called neutron spin echo \cite{mezei1972}. This principle has been applied in the SANS-derivative techniques SESANS \cite{rekveldt1996} and SEMSANS\cite{bouwman2009}\cite{bouwman2011} to make smaller angles and correspondingly the larger length scales up to about $10 \unit{\micro\meter}$ accessible using polarized neutrons. Formulated differently, these techniques can be seen to measure a type of real-space density correlation function $G(\delta)$\cite{krouglov2003}\cite{andersson2008} as will also be discussed in Chapter \ref{c2:theory}.
+For neutrons, spin polarization can be used to label trajectories across the beam, a technique called neutron spin echo \cite{mezei1972}. This principle has been applied in the SANS-derivative techniques SESANS \cite{rekveldt1996} and SEMSANS \cite{bouwman2009}\cite{bouwman2011} to make smaller angles and correspondingly the larger length scales up to about $10 \unit{\micro\meter}$ accessible using polarized neutrons. Formulated differently, these techniques can be seen to measure a type of real-space density correlation function $G(\delta)$ \cite{krouglov2003}\cite{andersson2008} as will also be discussed in Chapter \ref{c2:theory}.
 
 \subsection{SEMSANS at the Reactor Institute Delft}
 
@@ -43,35 +43,44 @@ In this chapter, a review is given of relevant theory related to SEMSANS and the
 
 % I like 'Beam modulation through Larmor precession' as a phrase
 \subsection{Polarized neutrons and Larmor precession}
+\label{c2.1}
 Neutrons are spin $s=\frac{1}{2}$ particles, meaning that their spin can be described as a superposition of spin states $\{\ket{\uparrow}, \ket{\downarrow}\}$ for some chosen axis or equivalently using a spin angular momentum vector $\vec{S}$, the direction of $\vec{S}$ being the spin polarization $\vec{P}$.
 When a neutron passes through a uniform $\vec{B}$-field, $\vec{P}$ will precess by a certain angle $\phi$ over time. The frequency at which this occurs is given by
 $$\omega = \gamma |B_\perp|$$
 with $B_\perp$ the magnetic field strength perpendicular to the plane $\vec{P}$ is in and $\gamma$ the neutron gyromagnetic ratio. 
 
 In addition to spin, a neutron has a wavelength $\lambda$ corresponding to a speed $v = \frac{h}{m\lambda}$, $m$ being the neutron mass. This means that it will pass through a uniform (perpendicular) field $B$ of length $L$ in time $t = \frac{Lm\lambda}{h}$. From this it can be seen that the total precession will be 
-$$\phi = \frac{\gamma B L m\lambda}{h} = c\lambda B L$$
+\begin{equation}
+	\phi = \frac{\gamma B L m\lambda}{h} = c\lambda B L \label{eq:larmor-prec}
+\end{equation}
+
 with $c = \frac{\gamma m}{h}$ being the Larmor constant \cite{bouwman2021b}.   
 \subsection{Modulating a neutron beam using precession}
+\label{c2.2}
 Using the concepts of polarized neutrons and Larmor precession, the basic concept of a SEMSANS instrument can be described, deferring a detailed discussion of the source and monochromator for now. The instrument takes a neutron beamline as a source, meaning that with the choice of axes used in this research neutrons can be assumed to move in the $z$-direction with a slight divergence in the $xy$ plane. A polarizer is used to polarize the beam in the $+x$ direction. Next, the beam passes through two precession devices at distance $L_1, L_2$ from the detector that give neutrons at wavelength $\lambda$ in the beam a $y$-dependent precession angle
-$$\phi = 2\pi\alpha\lambda y$$
+\begin{equation}
+	\phi = 2\pi\alpha\lambda y \label{eq:precession-freq}
+\end{equation}
 Such a $y$-dependent $\phi$ is in practice created using magnetic fields at an angle $\theta_0$ with the beam axis $z$. Different precession devices exist which can create such fields as will be analysed and discussed in Section [PLACEHOLDER].
 
 Finally, the modulation is created by applying an analyser to the beam afterwards \cite{mezei1972}. This again polarizes the beam in either the $+x$ or the $-x$ direction depending on the analyzer setting. Assuming a perfectly monochromatic source with $\lambda = \lambda_0$ for all neutrons and ignoring the effect of the sample for now, this creates an intensity modulation pattern on the position-sensitive detector at frequency $f_0 = \alpha\lambda_0$ of the form
 $$I_{b,s}(y) = I_{0, b,s} \pm A_{b,s}\cos(2\pi f_0y)$$
 where $I_{b,s}, A_{b,s}$ are experimentally observed quantities in the base case of an empty instrument ($b$) and an instrument with a sample ($s$) and the sign of the modulation depending on the $\pm x$ analyser setting \cite{parnell2023}. 
 \subsection{Spin-echo length $\delta$ and measurement interpretation}
+\label{c2.3}
 When adding a sample to the instrument after the analyser at distance $L_s$ from the detector, a length scale known as the spin-echo length $\delta$ is accessed \cite{bouwman2011}, given by 
 $$\delta = \lambda_0^2L_s\alpha$$
 This is the same spin-echo length as used in the analysis and interpretation of SESANS \cite{rekveldt1996}\cite{krouglov2003}\cite{andersson2008}. Whereas in SESANS a decrease in overall beam polarization is used, SEMSANS considers the reduction of intensity modulation amplitude or equivalently visibility upon adding a sample, which can be shown to be related to $\delta$ through the formula \cite{parnell2023}
-$$\frac{A_s(\delta)}{A_b(\delta)} = A_n(\delta) = e^{\tau[G(\delta) - 1]}$$
+$$\frac{A_s(\delta)}{A_b(\delta)} = P(\delta) = e^{G(\delta) - \tau}$$
 with $\tau = \sigma t$ being the scattering power, which corresponds to the average number of scattering events for a neutron traversing the sample. $G(\delta)$ is the SESANS correlation function given by
-$$G(\delta) = \frac{1}{\sigma k_0^2}\int dQ_xdQ_y \dfrac{d\sigma(\vec{Q})}{d\Omega}cos(Q_y \delta)$$
-This is the 1D expression for $G(\delta)$ compatible with anisotropic samples and also matching the 1D detector that will be described in the next chapter. In the case of isotropic samples, radial integration is possible without loss of information and $G(\delta)$ can be stated using a Hankel transform instead \cite{andersson2008}.
+$$G(\delta) = \frac{1}{k_0^2}\int dQ_xdQ_y \dfrac{d\sigma(\vec{Q})}{d\Omega}cos(Q_y \delta)$$
+This is the 1D expression for $G(\delta)$ compatible with anisotropic samples and also matching the 1D detector that will be described in the next chapter. In the case of isotropic samples, radial integration is possible without loss of information and $G(\delta)$ can be stated using a Hankel transform instead of a cosine transform \cite{andersson2008}.
 
 \subsection{Mono-disperse reference sample and its $G(\delta)$}
+\label{c2.4}
 Expressions for $\tau$ and $G(\delta)$ exist and can be derived for many different sample geometries \cite{andersson2008}. In the context of analysing colloidal systems, a simple commonly used model is a dilute mono-disperse solution of solid spheres \cite{tromp2007}. Although poly-disperse models such as log-normal distributions of spheres appear to better match real samples \cite{heijkamp2011}, a mono-disperse sample is used as a reference in this work as it is also implemented in McStas in the form of the \texttt{SANS\_spheres2} component (see \cite{parnell2024} for a validation of this sample in the context of SESANS) in addition to being a simpler model for samples of various characteristic lengths. 
 
-Such a mono-disperse sample is characterized by sphere radius $R$, scattering length density contrast $\Delta\rho$, volume fraction $\phi$ and lastly a sample thickness of $t = 1\unit{\milli\meter}$. The scattering power $\tau$ for such a sample is given by
+Such a mono-disperse sample is characterized by sphere radius $R$, scattering length density contrast $\Delta\rho$, volume fraction $\phi$ and lastly a sample thickness $t$. The scattering power $\tau$ for such a sample is given by
 $$\tau = \frac{3}{2}\phi (1 - \phi) (\Delta\rho)^2\lambda_0^2tR$$
 Using $\xi = \frac{\delta}{R}$, it can be derived that for $0\leq \xi \leq 2$, $G(\delta) = \tau G_0(\delta)$ with 
 $$G_0(\delta) = \left[1 - \left(\frac{\xi}{2}\right)^2\right]^{1/2}\left(1 + \frac{1}{8}\xi^2\right) + \frac{1}{2}\xi^2\left[1 - \left(\frac{\xi}{4}\right)^2\right]\ln \left[\frac{\xi}{2 + (4 - \xi^2)^{1/2}}\right]$$
@@ -84,38 +93,113 @@ Outside of this range, $G_0(\xi) = 0$ \cite{krouglov2003}. Figure \ref{fig:analy
 	\label{fig:analytical-G0}
 \end{figure}
 \newpage
-\section{Instrument analysis at a cold source}
-In this chapter, the used SEMSANS instrument model is introduced. The cold neutron source and the applicable monochromators for different $\lambda_0$ ranges will be described and three different precession device options and their properties will be described. Additionally, the effect of a spread in wavelength $\lambda$ is described in terms of the observed modulation pattern as well as what is effectively measured. This is to account especially for the greater wavelength spread $\Delta\lambda/\lambda_0$ as encountered at higher $\lambda_0$ operating points accessible at a cold source, requiring the use of a velocity selector monochromator. 
 
-\subsection{Instrument model}
-The general configuration of SEMSANS instruments considered in this work is illustrated in Figure \ref{fig:instrument-config}. The basic setup is derivative of 
-
-Neutrons enter the instrument from a beamline, after which they pass through a monochromator set to select neutrons with a wavelength around $\lambda_0$, with  $\Delta\lambda/\lambda_0$ depending on the choice of monochromator as described below. Next, they pass through a polarizer and two precession devices at locations $L_1, L_2$ respectively. As described in Chapter \ref{c2:theory}, a modulation pattern appears after the analyser, which scatters of the sample at distance $L_s$ from the position-sensitive detector at the end, causing different degrees of loss of visibility of the modulation pattern depending on the sample structure. 
-
-\subsection{Instrument configuration and source model}
-Using the concepts of polarized neutrons and Larmor precession, the basic configuration of a SEMSANS setup as illustrated in Figure \ref{fig:instrument-config} can be understood. First, there is a source which corresponds to the end of a neutron beamline. In this research, this is assumed to have a spectrum corresponding to a Maxwell-Boltzmann distribution at $T = 20 \unit{\kelvin}$ given by 
-$$f_\lambda(\lambda) = \sqrt{\frac{2}{\pi}}(\frac{1}{mk_BT})^{\frac{3}{2}}\frac{h^3}{\lambda^4}e^{-\frac{h^2}{2k_BTm\lambda^2}}$$
-This distribution is shown in Figure \ref{fig:source-spectrum}, with the thermal distribution at $T=290 \unit{\kelvin}$ also shown for reference. A monochromator is used to select a narrow band of wavelengths around a central wavelength $\lambda_0$. In a practical instrument, a pyroletic graphite (PG) crystal monochromator can be used to do this up to roughly $\lambda_0 \approx 4.5 $Å. For greater wavelengths, a helical velocity selector (VS)\cite{szewc2010} can be used to select neutrons travelling at the right velocity. This is a mechanical device rotating at a great speed, and a lower practical limit of $\lambda_0 \approx 7$Å is used. Both types of monochromator are characterized by $\Delta\lambda/\lambda_0$, the ratio of the full-width-half-maximum (FWHM) of wavelengths $\Delta\lambda$ passed through and $\lambda_0$. In PG crystals, this is a function of the mosaicity of the crystal and for VS monochromators it depends on the ratio of the angular aperture of slits and the pitch angle \cite{szewc2010}. This ratio is taken to be $\Delta\lambda/\lambda_0 = 0.01$ for PG and $\Delta\lambda/\lambda_0 = 0.1$ for PG and VS monochromators respectively, roughly corresponding to the characteristics of components available for the realization. In both analysis and simulations, the transfer of monochromators is taken to be a Gaussian centered at $\lambda_0$ with $\sigma = \frac{1}{2\sqrt{2\ln 2}}\Delta\lambda$
 \begin{figure*}
 	\centering
 	\includegraphics[width=\linewidth]{config-placeholder}
 	\caption{PLACEHOLDER IMAGE, TO BE REPLACED}
 	\label{fig:instrument-config}
 \end{figure*}
+\section{Instrument analysis for a cold source}
+In this chapter, the used SEMSANS instrument model is introduced and analysed. The cold neutron source and the applicable monochromators for different $\lambda_0$ ranges will be described and three different precession device options and their properties will be described. Additionally, the effect of a spread in wavelength $\lambda$ is described in terms of the observed modulation pattern as well as what is effectively measured. This is to account especially for the greater wavelength spread $\Delta\lambda/\lambda_0$ as encountered at higher $\lambda_0$ operating points accessible at a cold source, requiring the use of a velocity selector monochromator. 
+
+\subsection{Instrument configuration}
+The general configuration of the family of SEMSANS instruments considered in this work is illustrated in Figure \ref{fig:instrument-config}. It is derivative of an existing study simulating a SEMSANS instrument using foil-flippers and the corresponding McStas instrument \texttt{SEMSANS\_Delft} \cite{bouwman2021b}. Neutrons enter the instrument from a beamline, after which they pass through a monochromator set to select neutrons with a wavelength around $\lambda_0$, with  $\Delta\lambda/\lambda_0$ depending on the choice of monochromator as described below. Next, they pass through a polarizer and two precession devices at locations $L_1, L_2$ respectively. As described in Chapter \ref{c2:theory}, a modulated neutron intensity pattern appears after the analyser, which scatters of the sample at distance $L_s$ from the position-sensitive detector at the end, causing different degrees of loss of visibility of the modulation pattern depending on the sample structure. 
+
+\subsection{Source and monochromators}
+The cold source beamline is assumed to have a spectrum corresponding to a Maxwell-Boltzmann distribution at $T = 20 \unit{\kelvin}$ given by 
+$$f_\lambda(\lambda) = \sqrt{\frac{2}{\pi}}\left(\frac{1}{mk_BT}\right)^{\frac{3}{2}}\frac{h^3}{\lambda^4}e^{-\frac{h^2}{2k_BTm\lambda^2}}$$
+This distribution is shown in Figure \ref{fig:source-spectrum}, with the thermal distribution at $T=290 \unit{\kelvin}$ also shown for reference. The peak for $T=20 \unit{\kelvin}$ corresponds to $E = k_bT = 1.724 \unit{\milli\electronvolt}$ as opposed to $E = 24.990 \unit{\milli\electronvolt}$ for room-temperature neutrons. 
+
+A monochromator is used to select a narrow band of wavelengths around a central wavelength $\lambda_0$. In a practical instrument, a pyroletic graphite (PG) crystal monochromator can be used to do this up to roughly $\lambda_0 \approx 4.5 $Å. For greater wavelengths, a helical velocity selector (VS)\cite{szewc2010} can be used to select neutrons travelling at the right velocity. This is a mechanical device rotating at a great speed, and a lower practical limit of $\lambda_0 \approx 7$Å is used as lower $\lambda_0$ would require a too great RPM. Both types of monochromator are characterized by $\Delta\lambda/\lambda_0$, the ratio of the full-width-half-maximum (FWHM) of wavelengths $\Delta\lambda$ passed through and $\lambda_0$. In PG crystals, this is a function of the mosaicity of the crystal \cite{shapiro1972} and for VS monochromators it depends on the ratio of the angular aperture of slits and the pitch angle \cite{szewc2010}. This ratio is taken to be $\Delta\lambda/\lambda_0 = 0.01$ for PG and $\Delta\lambda/\lambda_0 = 0.1$ for PG and VS monochromators respectively, roughly corresponding to the characteristics of components available for an eventual realization. In both analysis and simulations, the transfer of monochromators is taken to be a Gaussian centered at $\lambda_0$ with $\sigma = \frac{1}{2\sqrt{2\ln 2}}\Delta\lambda$. So in practice, the following Gaussian distribution will be used as a source in both analysis and simulations
+ $$f(\lambda) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}(\frac{\lambda - \lambda_0}{\sigma})^2}$$
+
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\linewidth]{source-spectrum}
 	\caption{Probability density function for Maxwell-Boltzmann neutron sources at $T = 20 \unit{\kelvin}$ and $T = 290 \unit{\kelvin}$, illustrating the effect of using a cold neutron source.}
 	\label{fig:source-spectrum}
 \end{figure}
+
+\subsection{Precession device analysis}
+As discussed in Chapter \ref{c2:theory}, different precession devices can be derived that give a precession angle of the form of Equation \eqref{eq:precession-freq} resulting in modulation. The three main types existent in literature are isosceles triangles \cite{sales2015}, magnetic Wollaston prisms \cite{li2021} and ferromagnetic foil flippers \cite{bouwman2021b} and all three have previously been used in SEMSANS realizations and simulations. Their respective geometries are shown in Figure \ref{fig:precession-devices}. What they all have in common is that their effect is proportional to $\cot(\theta)$ and magnetic field strength $B$.
+\subsubsection{Isosceles triangle}
+In the case of a triangle as illustrated in Figure \ref{fig:precession-devices:iso}, the angle of the faces with the $z$-axis can be seen to be $\theta_0 = \arctan\left(\frac{h}{d/2}\right)$. Consider the triangle to be centred along the optical axis so that $y=0$ bisects it. Then for a path at height $y$, the length $L$ passed through the field becomes
+$$L = d/2 - \frac{2y}{\tan\theta_0}$$
+Using the Equation \eqref{eq:larmor-prec}, the precession angle after passing through the triangle becomes
+$$\phi = c\lambda B L = c\lambda B(d/2 - \frac{2y}{\tan\theta_0})$$
+Next, consider two similar triangles with base $d_1, d_2$ and field strengths $B_1, B_2$. Adding their precession angles gives 
+$$\phi = c\lambda (B_1d_1/2 +B_2d_2/2) - 2c\lambda (B_1 + B_2) \frac{y}{\tan\theta_0}$$
+To achieve $\phi = 0$ at $y=0$, the condition $B_1d_1 = -B_2d_2$ must hold, giving 
+$$\phi = -2c\lambda (B_1 + B_2) \frac{y}{\tan\theta_0}$$
+This can be achieved making the triangle with the stronger field the smallest. 
+\subsubsection{Focussing condition}
+In practice, neutrons will not travel parallel to the $z$-axis but move at a slight angle to this depending on beam divergence and other parameters. Letting $\theta$ be the angle their trajectory makes with the $z$-axis in the $yz$ plane, it can be seen that a neutron arriving at height $y$ on the detector will pass through the $i$'th precession device at average height $y_i = y + L_i\tan\theta \approx y + L_i\theta$, with $L_i$ being the distance from the detector of the device. This means that the total precession angle will be
+$$\phi = - 2c\lambda B_1\frac{y + L_1\theta}{\tan\theta_0} - 2c\lambda B_2\frac{y + L_2\theta}{\tan\theta_0}$$
+This $\theta$-dependence is a problem as it will cause a loss of modulation depending on how large $\theta$ is. In first-order approximation, this effect can be removed by setting the positions $L_i$ and field strengths $B_i$ to meet the focussing condition
+$$B_1L_1 = -B_2L_2$$
+Substituting this gives as final precession angle formula (ignoring the $-$ sign)
+$$\phi_t = 2c\lambda (B_1 + B_2)\frac{y}{\tan\theta_0} $$
+which can be seen to match Equation \eqref{eq:precession-freq} with $\alpha = \frac{(B_1 + B_2)}{\pi\tan\theta_0}$
+This gives also the motivation for using two devices: you need at least two to remove this $\theta$-dependency and achieve optimal modulation using a realistic, slightly divergent beam.
+\subsubsection{Foil-flippers and Wollaston prisms}
+
+
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{source-spectrum}
+		\caption{CAPTION FOR ISO}
+		\label{fig:precession-devices:iso}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{source-spectrum}
+		\caption{CAPTION FOR WSP}
+		\label{fig:precession-devices:wsp}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.3\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{source-spectrum}
+		\caption{CAPTION FOR FOIL}
+		\label{fig:precession-devices:foil}
+	\end{subfigure}
+	\caption{TODO: THIS SHOULD CONTAIN 3 SUBFIGURES SHOWCASING THE DEVICE GEOMETRIES NEXT TO EACH OTHER TO FACILITATE COMPARISON}
+	\label{fig:precession-devices}
+\end{figure}
+
+\subsection{Polychromatic SEMSANS}
+
+\subsubsection{Modulation envelope for Gaussian $\lambda$ spectrum}
+\subsubsection{Effect of $\sigma$ on $\delta$-resolution}
+
+\subsection{Coarse intensity estimate}
+In addition to the $\delta$-range, the intensity is a key factor in instrument design: it determines the measurement time and quality in an experimental setting. Although accurate intensity estimates are beyond the scope of this research, requiring detailed characterizations of losses in all components and accounting for many factors, a highly simplified estimate assuming ideal components can be derived as follows.
+
+First of all, the flux after the monochromator combined is estimated relative to the full-spectrum flux $\Phi_0 = 10^9 \unit{\centi\meter^{-2}\sec^{-1}}$ (TODO: change/add source). Given an operating point $\lambda_0$ with a matching $\sigma$ from the monochromator type, the intensity can be estimated by numerical evaluation of the integral
+$$\Phi_{mc} \propto \Phi_0\int_0^\infty f_\lambda(\lambda)e^{-\frac{1}{2}\left(\frac{\lambda - \lambda_0}{\sigma}\right)^2}d\lambda$$
+The transfer of the monochromator is assumed to be a lossless Gaussian, and losses from beam divergence from beamline to monochromator are neglected.  It can easily be seen from Figure \ref{fig:source-spectrum} that the choice of $\lambda_0$ matters here, as well as the value of $\sigma$. Assuming an ideal polariser and an ideal analyser, the average loss of intensity for $\pm x$ analyser settings due to these corresponds to a factor $1/4$. To account for losses due to beam divergence, consider the beam divergence to be a small angle $\psi_0$. For a beam of radius $R_0$ at the end of the beamline, at a distance $d$ from the beamline, taken to be after the analyser, it will have expanded to radius $R = R_0 + \psi_0 d$ in small-angle approximation. Simplifying the distribution of neutrons to be uniform over this expanded radius, the flux at distance $d$ can be seen to be proportional to
+$$\Phi(d) \propto \frac{\Phi_{mc}}{4}\frac{R_0^2}{(R_0 + \psi_0 d)^2}$$
+This expression can be used to compute a very coarse estimate for the total sample or detector intensity by substituting the respective distances $d$ from the source.  
+
+
+
+% $\psi_0 = 1^\circ$ or $\psi_0 = 0.01745329$ in radians
+
+
+
 %\section{SEMSANS instrument model}
 %In this chapter, the used SEMSANS instrument model and all its components with their basic functions as well as parameters is introduced. It is based on an instrument which was previously simulated (CITATION NEEDED) and which is available as NAME in the McStas instrument library. A schematic overview is given in ADD FIGURE HERE. 
 %\subsection{Source}
 
 %\section{Source}
-Key challenge: translate this beautiful blob of mathematics and analysis I have in my jupyter notebook to on the one hand a summary and theoretical background and on the other hand a (somewhat, at least in the extent of having fully worked it out myself generally unaware of existing derivations) novel analysis on which
+% Key challenge: translate this beautiful blob of mathematics and analysis I have in my jupyter notebook to on the one hand a summary and theoretical background and on the other hand a (somewhat, at least in the extent of having fully worked it out myself generally unaware of existing derivations) novel analysis on which
 % Another challenge: how to deal with the rather expansive theory with at least 2 main branches which there appears to be? If I give a theoretical background to make this thing readable for other bachelor students then I do sort of have to start at Larmor precession and neutron spins but also at small angle scattering and this is confusing. 
 
+\newpage
 \section{Instrument design and constraints}
 \label{c3:constraints-and-design}
 
@@ -138,7 +222,7 @@ Key challenge: translate this beautiful blob of mathematics and analysis I have 
 \subsection{Discussion of designs}
 % Here I'll write about clear trends in the tables of limitations and give indications of what is limiting these instruments. It might be interesting to give concrete recommendations: in order to get an even better delta range you could get a different monochromator, boost the B fields etc.
 
-
+\newpage
 \section{Optimization of instrument parameters}
 The problem of designing an instrument suitable for a specific length range like \targetrange subject to the various constraints indicated in the previous chapter can be aptly described as a constrained optimization problem. This does require a formulation of an objective function to maximize and generally speaking this is easier said than done if all factors including instrument cost, intensity etc. are to be taken into account in addition to the $\delta$-range. In this section, the function that is maximized only depends on the $\delta$-range and consequently it should be understood as a speculative exploration of the instrument parameter-space rather than a final optimization of instruments to realize. At best, the presented optimal instruments represent the best one can do in terms of $\delta$-range in the framework of parameters and constraints considered in this research.
 
@@ -160,7 +244,7 @@ Similar to in the previous chapter, all different pairings of precession devices
 \subsection{Discussion of optimal instruments}
 The resulting optimal instrument parametrizations confirm patterns already visible in the previous chapter. For instance, isosceles triangles seem to be a very bad pairing with a PG monochromator. It can also be seen that instruments with PG monochromators are generally bounded on the upper end by field strength and those with velocity selectors by the narrowing of their envelope caused by wavelength spread. Similarly, almost all instruments are bounded by the condition that at least one period must be visible on the detector, with especially instruments at greater wavelengths $\lambda_0$ suffering from this limitation.  
 % add further points that come up, maybe after writing a similar section for designs and their computed limitations
-
+\newpage
 \section{Monte Carlo simulations of designs using McStas}
 % after all the analysis and discussion of constraints/optimizing using these, introduce monte carlo simulations as a step closer to a practical instruments and a way to verify identified limitations and see them in play. This last aspect could be an interesting part of the discussion of simulation results as well, you can really point out narrowing modulation envelopes, modulation periods becoming too big for the detecto retcetera. 
 % I expect some designs to not be able to measure specific samples at all or barely to the extent that showing them in a plot is a bit silly. 
@@ -188,6 +272,8 @@ The resulting optimal instrument parametrizations confirm patterns already visib
 %$$Q_y \approx  k(\frac{y}{L_s} - \frac{3y^3}{8L_s^3})$$
 %So a more accurate relation between $\phi_t$ and $Q, \delta_y$ is given by $$\phi_t = \frac{\delta Q_y}{1 - \frac{3y^2}{8L_s^2}}$$
 % This appears to give an indication of up to which angles the SEMSANS theory gives a correct description of the amplitude decrease.
+\newpage
+\section{Conclusion and future work}
 
 
 
