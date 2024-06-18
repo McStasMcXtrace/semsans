@@ -3,7 +3,7 @@
 # ./full-simulation.sh 100000 4 5 0,0.020908 2.165 0.02 10000 0.001 0.095993 iso iso_empty GPU
 
 # Check if the number of arguments provided is correct
-if [ "$#" -ne 11 ]; then
+if [ "$#" -ne 12 ]; then
     echo "Usage: $0 <N> <N_threads> <N_steps> <B_min,B_max> <L0> <DL> <R> <t> <theta0_foil> <instr_with_sample> <instr_no_sample> <mode>\nmode can be CPU or GPU" 
     exit 1
 fi
