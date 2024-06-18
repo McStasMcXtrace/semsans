@@ -111,6 +111,7 @@ Outside of this range, $G_0(\xi) = 0$ \cite{krouglov2003}. Figure \ref{fig:analy
 	\label{fig:instrument-config}
 \end{figure*}
 \section{Instrument analysis for a cold source}
+\label{c3}
 In this chapter, the used SEMSANS instrument model is introduced and analysed. The cold neutron source and the applicable monochromators for different $\lambda_0$ ranges will be described and three different precession device options and their properties will be described. Additionally, the effect of a spread in wavelength $\lambda$ is described in terms of the observed modulation pattern as well as what is effectively measured. This is to account especially for the greater wavelength spread $\Delta\lambda/\lambda_0$ as encountered at higher $\lambda_0$ operating points accessible at a cold source, requiring the use of a velocity selector monochromator. In the last section the list of instrument design variants considered in this research is introduced. These will be analysed and simulated in Chapter \ref{c4:constraints} and Chapter \ref{c6:monte-carlo} respectively. 
 
 \subsection{Instrument configuration}
@@ -332,17 +333,44 @@ Similar to in the previous chapter, all different pairings of precession devices
 \newpage
 \section{Monte Carlo simulations of designs using McStas}
 \label{c6:monte-carlo}
+In this chapter, Monte Carlo simulations of the instrument design variants will be presented. The goal is to complement the analysis and constraints discussed in Chapter $\ref{c4:constraints}$ and provide an understanding of how instruments might behave in practice for a range of samples. 
+
 % after all the analysis and discussion of constraints/optimizing using these, introduce monte carlo simulations as a step closer to a practical instruments and a way to verify identified limitations and see them in play. This last aspect could be an interesting part of the discussion of simulation results as well, you can really point out narrowing modulation envelopes, modulation periods becoming too big for the detecto retcetera. 
 % I expect some designs to not be able to measure specific samples at all or barely to the extent that showing them in a plot is a bit silly. 
 
 \subsection{Method}
+To test the ability of the various instruments to measure samples in the characteristic length range of \targetrange three samples of the type described in Section \ref{c2.4} are considered with radii $R = 50\unit{\nano\meter}, 300\unit{\nano\meter}, 2000\unit{\nano\meter}$. Although these could in principle all be simulated with other sample parameters like sample thickness $t$ the same, this would cause the scattering power $\tau$ as defined in Equation \eqref{eq:sample-tau} to vary greatly and cause it to go too far out of the range of $0.1$ and $0.8$ that is typically considered to be optimal in terms of signal-to-noise ratio \cite{bouwman2021}\cite{heijkamp2011}. For this reason, $t$ is varied between $1 - 10\unit{\milli\meter}$ for different $\lambda_0, R$ pairings to optimize $\tau$. The remaining sample parameters take values $\phi = 0.015$, $\Delta\rho = 1.8e10 \unit{\centi\meter}^{-2}$ and are the same in each case. The chosen $t$ values with the corresponding $\tau$ are shown in Table \ref{tab:sample-thickness}.
+
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		$\lambda_0$ (Å)  & $R$ (nm)  & $t$ (mm)& $\tau$ \\
+		\hline
+		4.321 & 50 & 10 & 0.067\\
+		4.321 & 300 & 10 & 0.4022 \\
+		4.321 & 2000 & 1 & 0.2681 \\
+		8 & 50 & 10 & 0.2298 \\
+		8 & 300 & 5 & 0.6893 \\
+		8 & 2000 & 1 & 0.9191 \\
+		\hline
+	\end{tabular}
+	\caption{TODO}
+	\label{tab:sample-thickness}
+\end{table}
+\subsubsection{Simulated measurement procedure}
+For each instrument as described in Table \ref{tab:design-variants}, measurements on the three samples with radii and thicknesses as given in Table \ref{tab:sample-thickness} were simulated. Additionally, an empty measurement was done for each instrument to establish a baseline. 
+
+To perform a measurement, a range of $B$-field strength values is simulated with the analyser in the $+x$ and $-x$ settings. Although in principle the full range of $B$-values bounded by the focussing condition could be simulated, only $B$-values were considered that correspond to the respective instrument ranges as computed from constraints in Chapter \ref{c4:constraints}. The sample range was taken to be $\frac{R}{10} - 3R$ and the overlap between each instrument range and these sample ranges were computed. In each case there was overlap and 30 $B$ settings corresponding to the overlapping $\delta$-range were chosen.
+
 \subsubsection{Simulation setup}
-% Mention the three samples, perhaps discuss their properties like thickness t etc. besides R. You can just put them in a table quick and dirty.
-% Maybe repeat/put an analytical graph of the expected P(\delta) curve here for all 3.
+To simulate the instruments, version 3.4 of the raytracing software package McStas \cite{willendrup2020} is used with OpenACC acceleration enabled. The simulations were performed on a desktop computer with an Intel Core i5-6600 quad-core 3.3 Ghz CPU and an Nvidia GeForce GTX 1060 GPU. Simulated instruments are all derivative of the previously simulated \texttt{SEMSANS\_Delft} instrument \cite{bouwman2021}. The \texttt{Foil\_flipper\_magnet} component was used to simulate foil flippers like in \texttt{SEMSANS\_Delft} and idealized components for the Wollaston prism and isosceles triangle were derived from the existing \texttt{Pol\_triafield} component. Each $B$-field and analyser setting was simulated using $10^6$ neutrons and the simulation time varied from under $1\unit{\second}$ for the prisms and triangles to about $4\unit{\second}$ for the foil flippers, presumably due to the greater complexity of the corresponding McStas component. 
+
 \subsubsection{Data analysis}
-\subsection{Simulation setup}
 
 \subsection{Results}
+
 % There will be quite a few graphs here, maybe use Appdendices if it is too much!
 \subsection{Discussion}
 % Did the simulations match the precomputed limits? Are the limits (to the extent that they are not absolute but rather somewhat chosen heuristically) good enough, too strict? Is it in practice possible to measure even at field strenghts outside of the range?
