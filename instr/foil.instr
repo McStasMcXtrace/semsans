@@ -56,8 +56,8 @@ COMPONENT sans_spheres = SANS_spheres2(xwidth=0.02,
     drho=1.8e10,
 	phi=0.015, 
 	singlesp=0,
-	Qmind = 0.00003,
-	Qmaxd = 0.001)
+	Qmind = 0.3 / R,
+	Qmaxd = 10 / R)
 AT (0, 0, 3.2) RELATIVE src
 
 COMPONENT det = PSD_monitor(xwidth=0.011, yheight=0.011, filename="det",ny=1001, nx=1)
