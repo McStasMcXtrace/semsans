@@ -53,7 +53,7 @@ COMPONENT sans_spheres = SANS_spheres2(xwidth=0.02,
     drho=1.8e10,
 	phi=0.015, 
 	singlesp=0,
-	Qmind = 0.3 / R,
+	Qmind = 0.1 / R,
 	Qmaxd = 10 / R)
 AT (0, 0, 3.2) RELATIVE src
 
