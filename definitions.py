@@ -24,7 +24,7 @@ t = 0.001 # m
 R = 10000e-10 # m
 # Volume ratio
 phi = 0.015
-delta_rho = 6e10 * (1e2) ** 2 # 1/m^2 (?)
+delta_rho = 1.8e10 * (1e2) ** 2 # 1/m^2 (?)
 
 c = 4.63e14 # T-1 m-2
 theta_0 = np.deg2rad(5.5) # rad
@@ -72,6 +72,11 @@ def G(z, R):
     xi = z/R
     return s_t(R) * G_0(xi)
 
+
+def P_analytical(z, R, t, wavelength):
+    xi = z/R
+    return np.exp(s_t(R,t,wavelength) * (G_0(xi) - 1))
+
 def G_norm(z, R):
     xi = z/R
     return G_0(xi)
@@ -104,3 +109,24 @@ def get_data(i, folder='data'):
 
 def indices_within_range(x, a, b):
     return np.where((x >= a) & (x <= b))[0]
+
+def alpha_fun(delta_B, theta_0):
+    return c * delta_B / (np.pi * np.tan(theta_0))
+
+def I_envelope(y, delta_B, theta_0, wl_sigma):
+    alpha = alpha_fun(delta_B, theta_0)
+    E_y = np.exp(-0.5 * (2 * np.pi * alpha * wl_sigma * y) ** 2)
+    return E_y
+def I_empty_analytical(y, lambda_0, delta_B, theta_0, wl_sigma, up = True):
+    E_y = I_envelope(y, delta_B, theta_0, wl_sigma)
+    alpha = alpha_fun(delta_B, theta_0)
+    # mod = np.cos(2 * np.pi * alpha * lambda_0 * y)
+    p_0 = compute_p_0(delta_B, lambda_0, theta_0)
+    # print(p_0)
+    mod = np.cos(2 * np.pi * lambda_0 * alpha * y)
+    # print(alpha * lambda_0 * y)
+    # print(mod)
+    if up:
+        return mod * E_y
+    else:
+        return -mod * E_y
