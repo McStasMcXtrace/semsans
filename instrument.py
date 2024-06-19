@@ -1,6 +1,6 @@
 import numpy as np
 from definitions import *
-FWHM_env_min = 2e-3
+FWHM_env_min = 1e-3
 # L_s_reduction = 0.75
 # For simulating variable L_s
 # L_s_min = 1.5 
@@ -52,7 +52,7 @@ class Instrument:
         # Due to the focussing condition, one component will have field By_max/2 and the other By_max, giving a delta of By_max/2
         return compute_z(self.By_max * (1 - self.L_2 / self.L_1), self.theta_0, self.L0, self.L_s)
 
-    def delta_max_sampling(self, samples = 10):
+    def delta_max_sampling(self, samples = 5):
         f_s = 1/detector_pixel_size
         f_super_sampled = f_s / samples
         delta_max_sampling = f_super_sampled * self.L0 * self.L_s
@@ -61,6 +61,9 @@ class Instrument:
     def delta_max_envelope(self):
         delta_max_env = np.sqrt(2 * np.log(2)) * self.L0**2 * self.L_s / (np.pi * self.DL * FWHM_env_min)
         return delta_max_env
+    
+    def delta_range_B_field(self):
+        return self.delta_min_B_field(), self.delta_max_B_field()
     
     def delta_range(self):
         return self.delta_min(), self.delta_max()
