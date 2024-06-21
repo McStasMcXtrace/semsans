@@ -53,7 +53,7 @@ class Instrument:
         # Due to the focussing condition, one component will have field By_max/2 and the other By_max, giving a delta of By_max/2
         return compute_z(self.By_max * (1 - self.L_2 / self.L_1), self.theta_0, self.L0, self.L_s)
 
-    def delta_max_sampling(self, samples = 5):
+    def delta_max_sampling(self, samples = 10):
         f_s = 1/detector_pixel_size
         f_super_sampled = f_s / samples
         delta_max_sampling = f_super_sampled * self.L0 * self.L_s
@@ -97,6 +97,7 @@ class Instrument:
         (d_min, min_name) = max(mins)
         # print(min_max)
         Q_max = self.Q_max()
+        R_max = 1 / (Q_max * 1e-10)
         return f"""Instrument ID {self.id}; Name: {self.name}
     \tSource: L0 = {self.L0 * 1e10} Å; sigma_L = {self.DL * 1e10} Å
     \tPrecession device: {self.prec_type_long()}; theta_0 = {round(self.theta_0,2)} rad; By_min = {self.By_min * 1e3}mT; By_max = {self.By_max * 1e3}mT
@@ -105,25 +106,31 @@ class Instrument:
     \tmin δ for 1 period on detector with height {detector_size * 1e3}mm: {round(d_min * 1e9,1)}nm 
     \tmax δ for sampling at 10s/period (f_0 = {round(f_s / 10 *1e-3)}mm^-1): {round(delta_max_ten_samples * 1e9,1)}nm
     \tmax δ for envelope FWHM due to wavelength spread >= {FWHM_env_min*1e3}mm: {round(delta_max_env * 1e9,1)}nm
-    \tQ_max as determined by detector height and distance: {round(Q_max * 1e-10, 5)}
+    \tQ_max as determined by detector height and distance: {round(Q_max * 1e-10, 7)} Å-1
+    \tApproximate max R of solid sphere sample: {round(R_max * 0.1, 2)} - {round(R_max,2)} nm
     \tfinal δ range: {round(d_min * 1e9,1)} - {round(d_max * 1e9, 1)}nm ({min_name} - {max_name} limited)"""
     
 if __name__ == '__main__':
     import util
     instrs = util.load_instruments('simulations_new.csv')
-    for instr in instrs:
-        print(instr)
-        
-        d_max_field = instr.delta_max_B_field()
-        delta_max_env = instr.delta_max_envelope()
-        delta_max_ten_samples = instr.delta_max_sampling()
-        # print(F"Max delta ideal sampling (10 samples per period) (f_0 = {round(f_ten_samples*1e-3)}mm^-1: {round(delta_max_ten_samples * 1e9,2)}nm")
-        maxes = [(d_max_field, 'precession devices'), (delta_max_env, 'envelope'), (delta_max_ten_samples, 'sampling')]
-        (d_max, max_name) = min(maxes)
-        delta_min_field = instr.delta_min_B_field()
-        delta_min_single_period = instr.delta_min_detector()
-        mins = [(delta_min_field, 'precession devices'), (delta_min_single_period, 'detector size')]
-        (d_min, min_name) = max(mins)
-        # print(min_max)
-        Q_max = instr.Q_max()
-        # print(f"{a}")
+    for i in [0,1]:
+        for instr in instrs[3:-6]:
+            # print(instr)
+            delta_max_field = instr.delta_max_B_field()
+            delta_max_env = instr.delta_max_envelope()
+            delta_max_ten_samples = instr.delta_max_sampling()
+            # print(F"Max delta ideal sampling (10 samples per period) (f_0 = {round(f_ten_samples*1e-3)}mm^-1: {round(delta_max_ten_samples * 1e9,2)}nm")
+            maxes = [(delta_max_ten_samples, 'sampling'), (delta_max_env, 'envelope'), (delta_max_field, 'precession devices') ]
+            (delta_max, max_name) = min(maxes)
+            delta_min_field = instr.delta_min_B_field()
+            delta_min_single_period = instr.delta_min_detector()
+            mins = [(delta_min_single_period, 'detector size'), (delta_min_field, 'precession devices')]
+            (delta_min, min_name) = max(mins)
+            # print(min_max)
+            Q_max = instr.Q_max()
+            # print(f"{a}")
+            r = lambda x: round(x * 1e9,2)
+            if i==0:
+                print(f"{instr.name} & {r(delta_min_single_period)} & {r(delta_min_field)} & {r(delta_max_ten_samples)} & {r(delta_max_env)} & {r(delta_max_field)} \\\\")
+            else:
+                print(f"{instr.name} & {round(Q_max * 1e-10, 5)} & {r(delta_min)} & {r(delta_max)} \\\\")
