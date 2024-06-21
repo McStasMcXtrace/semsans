@@ -18,7 +18,7 @@ backend=biber,
 \maketitle
 
 \section{Introduction}
-In the food industry, there is the need to analyse the structure of materials at length scales ranging from nanometres to millimetres. To do this, different methods exist such as scattering techniques, microscopy and analysis based on macroscopic properties. What is unique about scattering techniques however is that they can probe the bulk of the sample at these length scales \cite{bouwman2021}.
+In many industries, there is the need to analyse the structure of materials at length scales ranging from nanometres to millimetres. To do this, different methods exist such as scattering techniques, microscopy and analysis based on macroscopic properties. What is unique about scattering techniques however is that they can probe the bulk of the sample at these length scales \cite{bouwman2021}.
 
 % I need to add a better bridge between these two sections, they are both good but lack coupling.
 
@@ -34,7 +34,7 @@ For neutrons, spin polarization can be used to label trajectories across the bea
 SEMSANS instruments have previously been realized at the Hoger Onderwijs Reactor (HOR) at the Reactor Institute Delft (RID) using a thermal neutron source. As part of the OYSTER project (Optimized Yield for Science, Technology, and Education of Radiation), a cold neutron source operating at $T=20 \unit{\kelvin}$ has been installed and additional improvements have been made to achieve an expected hundredfold improvement in measurement quality or time.
 
 In this report, the possibility for realizing a SEMSANS instrument at the new cold source at HOR will be explored through a combination of mathematical analysis, constrained optimization and Monte Carlo simulations using raytracing software package McStas \cite{willendrup2020}. An existing McStas simulation model \cite{bouwman2021b} is taken as a starting point and extended to include various design options such as precession devices different from foil flippers. 
-The goal is to bridge the gap between accessible length ranges of SANS and SEMSANS \cite{bouwman2021} and see if it is possible to access characteristic lengths from \targetrange in a single instrument by exploiting the advantage of greater wavelengths. This as an alternative to combining SANS and SEMSANS devices into one as has been proposed before \cite{bouwman2011}\cite{kusmin2017}. An application that would benefit from such an instrument is the study of colloids such as casein micelles in (fat free) milk and derivatives like yoghurt and curd. The characteristic length scales of all of these would be accessible at an instrument with this target range, facilitating a better understanding of processes like milk turning into yoghurt. 
+The goal is to bridge the gap between accessible length ranges of SANS and SEMSANS \cite{bouwman2021} and see if it is possible to access characteristic lengths from \targetrange in a single instrument by exploiting the advantage of greater wavelengths. This as an alternative to combining SANS and SEMSANS devices into one as has been proposed before \cite{bouwman2011}\cite{kusmin2017}. An application in the food industry that would benefit from such an instrument is the study of colloids such as casein micelles in (fat free) milk and derivatives like yoghurt and curd. The characteristic length scales of all of these would be accessible at an instrument with this target range, facilitating a better understanding of processes like milk turning into yoghurt. 
 
 \newpage 
 \section{Theory}
@@ -110,7 +110,9 @@ Outside of this range, $G_0(\xi) = 0$ \cite{krouglov2003}. Figure \ref{fig:analy
 
 \subsubsection{Solid sphere form factor and $Q$-range}
 Formulated in terms of $Q$ as in regular SANS rather than $\delta$, the relevant $Q$-range of a dilute mono-disperse sample of spheres with radius $R$ can be seen to be largely determined by its form factor $P(Q)$ as $d\sigma(\vec{Q})d\Omega\propto P(Q)$, which is \cite{rekveldt1996}
-$$P(Q) = \left(3\frac{\sin(QR) - QR\cos(QR)}{\left(QR\right)^3}\right)^2$$
+\begin{equation}
+	P(Q) = \left(3\frac{\sin(QR) - QR\cos(QR)}{\left(QR\right)^3}\right)^2\label{eq:sample-form-factor}
+\end{equation}
 This is a rapidly decaying oscillation with significant values in the range from $Q_{\text{min}} = 0.1/R$ up to $Q_{\text{max}} = 10/R$, meaning that in order to determine $G(\delta)$ accurately a detector should integrate over a proportional $Q$-range.  Figure \ref{fig:analytical-P} shows $P(Q)$ with these limits for $R = 100\unit{\nano\meter}$.  
 
 \begin{figure}
@@ -280,9 +282,9 @@ Firstly, there is the choice of $\lambda_0$ and the corresponding monochromator.
 		\hline
 		Label & $\lambda_0$ (Å) & $\Delta\lambda$ (Å) & Monochromator & Device & $\theta_0$ (degrees) & $B_{\text{min}}$ (mT) & $B_{\text{max}}$ (mT) \\
 		\hline
-		ISO 4 & 4.321 & 0.04321 & PG & ISO & 20 & 0.1 & 15 \\
-		WSP 4 & 4.321 & 0.04321 & PG & WSP & 45 & 0.1 & 63 \\
-		FOIL 4 & 4.321 & 0.04321 & PG & FOIL & 11.0138 & 0.3 & 30 \\
+		ISO 4.321 & 4.321 & 0.04321 & PG & ISO & 20 & 0.1 & 15 \\
+		WSP 4.321 & 4.321 & 0.04321 & PG & WSP & 45 & 0.1 & 63 \\
+		FOIL 4.321 & 4.321 & 0.04321 & PG & FOIL & 11.0138 & 0.3 & 30 \\
 		ISO 8 & 8 & 0.8 & VS & ISO & 20 & 0.1 & 15 \\
 		WSP 8 & 8 & 0.8 & VS & WSP & 45 & 0.1 & 63 \\
 		FOIL 8 & 8 & 0.8 & VS & FOIL & 20.71416 & 0.3 & 30 \\
@@ -307,9 +309,9 @@ Firstly, there is the choice of $\lambda_0$ and the corresponding monochromator.
 \newpage
 \section{$\delta$-constraints and intensity in instrument design}
 \label{c4:constraints}
-Two key parameters in SEMSANS instrument design are the accessible $\delta$-range and the intensity at the detector. The first determines the range of samples that can be measured and the second the amount of signal per unit time, which determines how well you can measure in given time or similarly the measurement time needed for a required measurement quality. In this chapter, building on the analysis presented in Chapter \ref{c3}, a system of constraints will be presented that together limit the accessible $\delta$ range for each of the designs listed in Table \ref{tab:design-variants}. After discussing the $\delta$-ranges, a coarse estimate for the intensity at the detector for the two source options will be presented.
-
+Two key parameters in SEMSANS instrument design are the accessible $\delta$-range and the intensity at the detector. The first determines the range of samples that can be measured and the second the amount of signal per unit time, which determines how well you can measure in given time or similarly the measurement time needed for a required measurement quality. In this chapter, building on the analysis presented in Chapter \ref{c3}, a system of constraints will be presented that together limit the accessible $\delta$ range for each of the designs listed in Table \ref{tab:design-variants}. After discussing the $\delta$-ranges, a coarse estimate for the intensity at the detector for the two source options will be presented. Lastly, the effect of intensity loss due to SANS scattering is briefly discussed by using a very primitive model for scattering based on the sample form factor $P(Q)$, the goal being to understand the lower $\delta$-limit of the presented instruments better.
 \subsection{Constraints}
+\label{c4.1}
 Three main sources of limitations can be recognized. Firstly, the detector height $h_d$ and pixel size $p$ as well as the distance from detector to sample $L_s$ will limit which modulation frequencies can be sampled as well as the accessible $Q$-range, limiting $\delta$ in various ways.
 Secondly, the mean wavelength $\lambda_0$ as well as the monochromator quality $\frac{d\lambda}{\lambda_0}$ (and corresponding wavelength $\sigma$) shape the modulation envelope and determine how quickly it will become too narrow as $\alpha$ increases due to increasing field strengths, with $\lambda_0$ also playing a role in all other bounds. Lastly, the basic characteristics of precession devices as well as their positions relative to the detector limit the range of $\alpha$ and how strong the precession gradient is along the $y$-axis. 
 % Discuss sources of constraints, linking them to the theory in previous chapters. Ideally refer to equation numbers to avoid repetition and make it sound really solid. 
@@ -321,12 +323,14 @@ This can be derived from the form of $\delta$ that is independent of $\alpha$, $
 $$\delta_{max,s} = \frac{\lambda_0L_s}{5p}$$
 Similarly, the requirement that at least 1 modulation period is visible on the detector restricts the frequency to a minimum of $f_{min} = \frac{1}{h_d}$, corresponding to 
 $$\delta_{min,s} = \frac{\lambda_0L_s}{h_d}$$
-An alternative and equivalent way of deriving this is through considering the detected $Q$-range, using $Q_{max}$ and $\theta_a$ as described in Section \ref{c3.4} and relating this to precession angle $\phi$ through $\phi = \delta Q$. 
+An alternative and equivalent way of deriving this is through considering the detected $Q$-range, using $Q_{max}$ and $\theta_a$ as described in Section \ref{c3.4}. This gives 
+$$Q_{max} = \frac{\pi h_s}{\lambda_0 L_s}$$
+This is equivalent to $\delta_{min,s}$ as it satisfies $\delta_{min,s} Q_{max} = \pi$. It also provides an idea of the $Q$-range that reaches the detector, providing a coarse upper limit for $Q$ and accessible characteristic sample lengths. 
 
 \subsubsection{Modulation envelope width}
 As discussed before, the modulation can be described by a Gaussian envelope with a FWHM as given by Equation \eqref{eq:poly-base-modulation-fwhm}. Using $\delta = \lambda_0^2L_s\alpha$ and given a $FWHM_{e,min}$, this can be rewritten to a maximum $\delta$ value
 $$\delta_{max,e} = \frac{\sqrt{2\ln 2}\lambda_0^2 L_s}{\pi\sigma FWHM_{e,min}}$$
-In this way, the intuitive notion that the envelope should not become too narrow to measure enough signal can be translated to a concrete limit by choosing $FWHM_{e,min}$. For monochromators with a low $\Delta\lambda$ and a corresponding low $\sigma$ such as PG monochromators, this will in practice not normally be a limit but it can be when using velocity selectors. The chosen value in this work for $FWHM_{e,min}$ is $1 \unit{\milli\meter}$, so about $9.1$\% of the detector height $h_d$ and is somewhat permissive.  
+In this way, the intuitive notion that the envelope should not become too narrow to measure enough signal can be translated to a concrete limit by choosing $FWHM_{e,min}$. For monochromators with a low $\Delta\lambda$ and a corresponding low $\sigma$ such as PG monochromators, this will in practice not normally be a limit but it can be when using velocity selectors. The chosen value in this work for $FWHM_{e,min}$ is $2 \unit{\milli\meter}$, so about $18.2$\% of the detector height $h_d$ and is somewhat permissive.  
 
 \subsubsection{Precession device limitations}
 In terms of instrument design, the engineering of precession devices with a high $\alpha$ and optimizing their positions from the detector $L_1, L_2$ perhaps has the greatest impact on $\delta$-range. The importance of $L_1, L_2$ comes from the focussing condition, which is $B_1L_1 = -B_2L_2$ for two devices. As $\alpha\propto B_1 + B_2$ and $B_1, B_2$ are each limited by device-specific $B_{min}, B_{max}$ as given by Table \ref{tab:device-properties}, $B_1 + B_2$ is bounded by
@@ -343,12 +347,50 @@ Similarly, the distance from sample to detector $L_s$ is bounded at least by
 $$L_2 \geq L_s + \frac{d_2}{2}$$
 This scheme could be further extended by considering the dimensions of the analyser, sample holder etc. Additionally, $L_1$  will be bounded by in any case the length of the experiment hall the instrument is constructed in as well as by other factors.
 
-\subsection{Computed $\delta$ constraints and final design $\delta$ ranges}
-Using the above constraints, $\delta$-ranges for the designs can be estimated and these are given in ...
-% Give a table of computed constraints per instrument with ideally great names
+\subsection{Computed $\delta$ constraints and design $\delta$ ranges}
+\label{c4.2}
+The computed $\delta$-constraints for the designs are given in Table \ref{tab:designs-delta-constraints}.
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c c c c c c}
+		\toprule
+		Label & $\delta_{\text{min,s}}$ (nm) & $\delta_{\text{min,d}}$ (nm) & $\delta_{\text{max,s}}$ (nm) & $\delta_{\text{max,e}}$ (nm) & $\delta_{\text{max,d}}$ (nm) \\
+		\midrule
+		FOIL 4.321 & 70.71 & \textbf{76.35} & 7077.8 & 34321.19 & \textbf{3817.27} \\
+		WSP 4.321 & \textbf{70.71} & 4.95 & 7077.8 & 34321.19 & \textbf{1560.21} \\
+		ISO 4.321 & \textbf{70.71} & 13.61 & 7077.8 & 34321.19 & \textbf{1020.63} \\
+		FOIL 8 & 130.91 & \textbf{134.69} & 13104.0 & \textbf{6354.31} & 6734.57 \\
+		WSP 8 & \textbf{130.91} & 16.98 & 13104.0 & 6354.31 & \textbf{5348.03} \\
+		ISO 8 & \textbf{130.91} & 46.65 & 13104.0 & 6354.31 & \textbf{3498.48} \\
+		\bottomrule
+	\end{tabular}
+	\caption{TODO}
+	\label{tab:designs-delta-constraints}
+\end{table}
+From these together, $\delta$-ranges can be calculated for each design as given in Table \ref{tab:designs-final-ranges} together with their $Q_{max}$.
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c c c c}
+		\toprule
+		Label & $Q_{\text{max}}$ ($\text{\AA}^{-1}$) & $\delta_{min}$ (nm) & $\delta_{max}$ (nm) \\
+		\midrule
+		FOIL 4.321 & 0.00444 & 76.35 & 3817.27 \\
+		WSP 4.321 & 0.00444 & 70.71 & 1560.21 \\
+		ISO 4.321 & 0.00444 & 70.71 & 1020.63 \\
+		FOIL 8 & 0.0024 & 134.69 & 6354.31 \\
+		WSP 8 & 0.0024 & 130.91 & 5348.03 \\
+		ISO 8 & 0.0024 & 130.91 & 3498.48 \\
+		\bottomrule
+	\end{tabular}
+	\caption{TODO}
+	\label{tab:designs-final-ranges}
+\end{table}
+\subsubsection{Discussion of design constraints}
+The computed $\delta$-ranges and $Q_{max}$ give a first understanding of for what samples the designs can be used to estimate $G(\delta)$ through $G_{\text{exp}}(\delta)$. $\delta$ limits the range of $G(\delta)$'s that can be estimated and $Q_{max}$ gives an indication of how well the bounded integral will approximate the true value. It can be seen that instruments at $\lambda_0 = 4.321$Å have a wider $Q$-range given the same $L_s, h_d$ as was to be expected from $Q_{max} \propto 1/\lambda_0$ and correspondingly a lower $\delta_{min}$, making them better able to characterize samples of $\delta \approx 100 \unit{\nano\meter}$. For instruments with triangles and prisms, the condition that at least one modulation period must fit on the detector of height $h_d$ is a limiting factor, whereas for foils the devices and their positions $L_1, L_2$ limit $\delta$. Another observation that can be made is that instruments at $\lambda_0 = 4.321$Å with a narrower $\lambda$ spectrum are limited more strongly by the upper sampling limit due to detector pixel size $p$ whereas with a wider spectrum at $\lambda_0 = 8$Å the narrowing of the modulation envelope becomes a limiting factor. With exception of FOIL 8, the upper $\delta$ limit is in these instruments determined by device characteristics together with $L_1, L_2, L_s$ as well as the specific $\lambda_0$ operating point. 
+
 
 \subsubsection{Limitations of constraint scheme}
-Together, the constraints above give an impression of various factors limiting the achievable $\delta$-range for SEMSANS instruments with $2$ precession devices. It makes it possible to quickly evaluate designs such as those given and identify possibilities to improve them by making the necessary changes. There are some key limitations however, in particular related to the beam and the detector $Q$-range. As mentioned in Section \ref{c3.4} it is assumed that the full detector height $h_d$ is covered by the beam which translates to requirements for the beam width and/or divergence. A uniform intensity across the beam is also considered, which means that the used Gaussian modulation pattern might be too simple of a model for the modulation envelope. As for the $Q$-range, the lower limit imposed by sampling and the precession devices might be too permissive as in practice at the smallest $\delta$, $G_\text{exp}(\delta)$ can significantly deviate from $G(\delta)$. Lastly, 
+Together, the constraints above give an impression of various factors limiting the achievable $\delta$-range for SEMSANS instruments with $2$ precession devices. It makes it possible to quickly evaluate designs such as those given and identify possibilities to improve them by making the necessary changes. There are some key limitations however, in particular related to the beam and the detector $Q$-range. As mentioned in Section \ref{c3.4} it is assumed that the full detector height $h_d$ is covered by the beam which translates to requirements for the beam width and/or divergence. The intensity across the beam is assumed to be uniform, which means that the used Gaussian modulation pattern might be too simple of a model for the modulation envelope. As for the $Q$-range, the lower limit imposed by sampling and the precession devices might be too permissive as in practice at the smallest $\delta$, $Q_{max}$ can be too low and $G_\text{exp}(\delta)$ can significantly deviate from $G(\delta)$, this will be discussed in Section \ref{c4.4}. Lastly, 
 $B$-resolution limitations and how these could influence the $\delta$-resolution were not considered.
 %Some factors that were not taken into account are errors in $G_\text{exp}$ for the lowest $\delta$ values where the $Q$-range might be insufficient as well as more acc
 
@@ -360,21 +402,46 @@ $B$-resolution limitations and how these could influence the $\delta$-resolution
 
 
 \subsection{Intensity estimate}
+\label{c4.3}
 In this section, a coarse estimate of intensities as they can be expected using the described designs is derived. Although accurate intensity estimates are beyond the scope of this research, requiring detailed characterizations of losses in all components as well detailed information about the newly installed cold source, a highly simplified estimate assuming ideal components can be derived as follows.
 
 The original targetted value for the full-spectrum flux at the new cold source beamline corresponding to a reactor power of $3\unit{\mega\watt}$ of $10^9 \unit{\centi\meter^{-2}\sec^{-1}}$ \cite{OYSTER2008} is taken as a starting point. It is assumed that the intensity of the source has about half the targetted intensity, so $\Phi_0 = 5\cdot 10^8\unit{\centi\meter^{-2}\sec^{-1}}$. Given an operating point $\lambda_0$ with a matching $\sigma$ from the monochromator type, the intensity can be estimated by numerical evaluation of the integral
 $$\Phi_{mc} \propto \int_0^\infty f_\lambda(\lambda)e^{-\frac{1}{2}\left(\frac{\lambda - \lambda_0}{\sigma}\right)^2}d\lambda \Phi_0= C_{mc}\Phi_0$$
 The transfer of the monochromator is assumed to be a lossless Gaussian, and losses from beam divergence from beamline to monochromator are neglected.  It can easily be seen from Figure \ref{fig:source-spectrum} that the choice of $\lambda_0$ matters here, as well as the value of $\sigma$. For the used monochromators at $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å with $\Delta\lambda = 0.4321$Å and $\Delta\lambda = 0.8$Å the integral on the right evaluates to $C_{mc} = 0.00631826$ and $C_{mc} = 0.07346646$. Assuming an ideal polariser and an ideal analyser, the average loss of intensity for $\pm x$ analyser settings due to these corresponds to a factor $1/4$. To account for losses due to beam divergence, consider the beam divergence to be a small angle $\psi_0$. 
-For a uniform beam of radius $R_0$ coming out of the beamline with such a divergence $\phi_0$, it will have expanded to radius $R = R_0 + \psi_0 d$ in small-angle approximation. Simplifying the distribution of neutrons to be uniform over this radius after expansion, the flux at distance $d$ behind the analyzer can be seen to be proportional to
-$$\Phi(d) \propto \frac{\Phi_{mc}}{4}\frac{R_0^2}{(R_0 + \psi_0 d)^2} = \frac{C_{mc}\Phi_0}{4}\frac{R_0^2}{(R_0 + \psi_0 d)^2}$$
-Consider $R = 0.1 \unit{\meter}$ to be the radius of the beamline and let $\phi_0 = 1^\circ$. Using $d = 6 \unit{\meter}$ as estimate for the distance of the sample to the beamline gives a divergence loss factor of about $\frac{R_0^2}{(R_0 + \psi_0 d)^2} = 0.346$. 
-This expression can be used to compute a very coarse estimate for an upper bound of the total sample or detector intensity by substituting the respective distances $d$ from the source and integrating the flux over the surface area.
+For a uniform beam of radius $R_0$ coming out of the beamline with such a divergence $\phi_0$, it will have expanded to radius $R = R_0 + \psi_0 d$ in small-angle approximation. Simplifying the distribution of neutrons to be uniform over this radius after expansion, the flux at distance $d$ behind the analyser can be seen to be proportional to
+$$\Phi(d) \propto \frac{\Phi_{mc}}{4}\frac{R_0^2}{(R_0 + \psi_0 d)^2} = \frac{\Phi_{mc}}{4}C_{div}$$
+Consider $R = 0.1 \unit{\meter}$ to be the radius of the beamline and let $\phi_0 = 2^\circ$. Using $d = 6 \unit{\meter}$ as estimate for the distance of the sample to the beamline gives a divergence loss factor of about $C_{div} = 0.1044$.
 
-\subsection{Sample scattering and intensity}  
+Using this approach gives highly optimistic order of magnitude estimates of the flux at the sample for both $\lambda_0$ options: $100021 \approx 10^5 \unit{\centi\meter^{-2}\sec^{-1}}$ and $959064 \approx 10^6 \unit{\centi\meter^{-2}\sec^{-1}}$ for $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å respectively, the order of magnitude difference being due to the greater $\Delta\lambda/\lambda_0$ of the velocity selector compared to the PG crystal under the assumption of an optimal Gaussian transfer. As the detector has an area of approximately $1 \unit{\centi\meter^2}$ and neglecting additional losses due to further divergence, this is also the estimated total intensity at the detector, at least in the absence of a sample or when using a sample that scatters only into a very small $Q$-range. Various losses due to non-ideal components etc. can be expected to reduce this by perhaps another of magnitude and the relative efficiency of concrete PG and VS monochromators could cancel the estimated benefit of the VS.
 
+\subsection{Sample scattering and intensity}
+\label{c4.4}
+Although so far the the accessible $\delta$-range and detector intensity have been discussed separately, the characteristic length of the sample measured will have a tangible effect on the measured intensity as well as the quality of $G_{exp}(\delta)$ as estimate of $G(\delta)$ limited to $Q_{max}$ for lower $\delta$ and higher $\lambda_0$. This effect was first discussed in the context of SESANS at a simulated instrument with $\lambda_0 = 2$Å and $\theta_a \approx 30\unit{\milli\radian}$ \cite{rekveldt1996}, where it was concluded that for characteristic lengths larger than $5\unit{\nano\meter}$ SESANS can be used to reliably estimate $G(\delta)$. As $\theta_a \approx h_d / (2L_s) = 3\unit{\milli\radian}$ in the instruments discussed here and $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å, this estimated limit translates to about $100 \unit{\nano\meter}$ and $200 \unit{\nano\meter}$ respectively. This indicates that true $\delta$-range might be more limited using current $h_d,L_s$ and the colder wavelengths. This effect is here verified using a very primitive non-randomized computational approach from which deviation from the ideal regime in which $G_\text{exp}(\delta) \approx G(\delta)$ can be seen on the detector. 
+\subsubsection{Non-randomized single-scattering model}
+A very thin, dilute sample of solid spheres has $d\sigma/d\Omega \propto S(Q)$ at each point in the sample $(s_x, s_y)$, neglecting effects like multiple scattering. The form factor $S(Q)$ of a solid sphere is given by Equation \eqref{eq:sample-form-factor}. Assuming a uniform square non-divergent beam of scattering of the sample over an area of $10\times10\unit{\milli\meter}$, the corresponding detector intensity can be estimated by considering each point in the sample a source of scattering with intensity proportional to $S(Q)$, which can be translated to a point $y$ on the detector using trigonometry. The corresponding detector intensity patterns are shown in Figure \ref{fig:simplified-scattering}. It can be seen that the respective estimated limits of $100 \unit{\nano\meter}$ and $200 \unit{\nano\meter}$ describe the observed scattering behaviour quite well, with these particle radii being approximately the limit where the middle of the detector picks up the full intensity.
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simplified-I-scattering-4.321}
+		\caption{Estimated detected scattering fraction for $\lambda_0 = 4.321$Å}
+		\label{fig:simplified-scattering-4.321}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simplified-I-scattering-8.0}
+		\caption{Estimated detected scattering fraction for $\lambda_0 = 8$Å}
+		\label{fig:simplified-scattering-8}
+	\end{subfigure}
+	\caption{A numerical comparison of the estimated fraction of scattered neutrons that is detected at each point on the detector for $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å using a simple single-scattering model.}
+	\label{fig:simplified-scattering}
+\end{figure}
+Integrating these curves could provide another sample-dependent correction factor to complement the estimate given in Section \ref{c4.3} but Figure \ref{fig:simplified-scattering} also gives an idea at which radii error in $G_\text{exp}(\delta)$ becomes significant. This is an effect which can be corrected for \cite{kusmin2017} but this is not considered here.  
 
-\subsection{Discussion of designs}
-% Here I'll write about clear trends in the tables of limitations and give indications of what is limiting these instruments. It might be interesting to give concrete recommendations: in order to get an even better delta range you could get a different monochromator, boost the B fields etc.
+\subsection{Design evaluation}
+In this chapter, a wide range of effects limiting the $\delta$-range of designs have been discussed and computed for the concrete design variants with their various precession devices and $\lambda_0$-monochromator pairings. An optimistic order of magnitude estimate of intensity was made giving $10^5 \unit{\centi\meter^{-2}\sec^{-1}}$ and $10^6 \unit{\centi\meter^{-2}\sec^{-1}}$ for $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å respectively, the difference being due to the idealized VS monochromator passing through a broader spectrum. After having first considered the various upper and lower $\delta$-limits imposed by the detector, precession devices and $\lambda$-spectrum width $\sigma$, it was shown that for the given acceptance angle $\theta_a \approx h_d/(2L_s)$ and $\lambda_0$ it might prove to be very difficult to access $\delta\propto 10\unit{\nano\meter}$. A simple solution would be to decrease $L_s$, increasing $\theta_a$ at the cost of slightly increasing the small-angle error and scaling down the $\delta$ range generally as $\delta \propto L_s$. Such optimizations with more free parameters are the subject of the next chapter.
+
 
 \newpage
 \section{Optimization of instrument parameters}
@@ -465,8 +532,9 @@ So a more accurate relation between $\phi_t$ and $Q, \delta_y$ is given by $$\ph
 This appears to give an indication of up to which angles the SEMSANS theory gives a correct description of the amplitude decrease.
 \newpage
 \section{Conclusion and future work}
+In this work, the possibility of realizing a SEMSANS instrument at the new cold source at the Hoger Onderwijs Reactor at the Reactor Institute in Delft was explored through a range of methods. After providing an overview of relevant theory and introducing a simple instrument model, a range of designs were analysed in detail.
 
-
+Although the goal was to develop 
 
 
 \printbibliography
