@@ -1,12 +1,13 @@
 import numpy as np
 from definitions import *
-FWHM_env_min = 1e-3
+FWHM_env_min = 2e-3
 # L_s_reduction = 0.75
 # For simulating variable L_s
 # L_s_min = 1.5 
 class Instrument:
-    def __init__(self, id: str,  prec_type: str, L0: float, DL: float, theta_0: float, By_min: float, By_max: float, L_s: float = 1.8, L_1: float = 4, L_2: float = 2):
+    def __init__(self, id: str, name: str, prec_type: str, L0: float, DL: float, theta_0: float, By_min: float, By_max: float, L_s: float = 1.8, L_1: float = 4, L_2: float = 2):
         self.id = id
+        self.name = name
         self.prec_type = prec_type
         self.L0 = L0
         self.DL = DL
@@ -67,6 +68,9 @@ class Instrument:
     
     def delta_range(self):
         return self.delta_min(), self.delta_max()
+    
+    def Q_max(self):
+        return np.pi / self.delta_min_detector()
 
     def prec_type_long(self):
         long_str = ''
@@ -92,7 +96,8 @@ class Instrument:
         mins = [(delta_min_field, 'precession devices'), (delta_min_single_period, 'detector size')]
         (d_min, min_name) = max(mins)
         # print(min_max)
-        return f"""Instrument ID {self.id}
+        Q_max = self.Q_max()
+        return f"""Instrument ID {self.id}; Name: {self.name}
     \tSource: L0 = {self.L0 * 1e10} Å; sigma_L = {self.DL * 1e10} Å
     \tPrecession device: {self.prec_type_long()}; theta_0 = {round(self.theta_0,2)} rad; By_min = {self.By_min * 1e3}mT; By_max = {self.By_max * 1e3}mT
     \tL_1 = {round(self.L_1, 2)}m; L_2 = {round(self.L_2, 2)}m;  L_s = {round(self.L_s, 2)}m
@@ -100,5 +105,25 @@ class Instrument:
     \tmin δ for 1 period on detector with height {detector_size * 1e3}mm: {round(d_min * 1e9,1)}nm 
     \tmax δ for sampling at 10s/period (f_0 = {round(f_s / 10 *1e-3)}mm^-1): {round(delta_max_ten_samples * 1e9,1)}nm
     \tmax δ for envelope FWHM due to wavelength spread >= {FWHM_env_min*1e3}mm: {round(delta_max_env * 1e9,1)}nm
+    \tQ_max as determined by detector height and distance: {round(Q_max * 1e-10, 5)}
     \tfinal δ range: {round(d_min * 1e9,1)} - {round(d_max * 1e9, 1)}nm ({min_name} - {max_name} limited)"""
     
+if __name__ == '__main__':
+    import util
+    instrs = util.load_instruments('simulations_new.csv')
+    for instr in instrs:
+        print(instr)
+        
+        d_max_field = instr.delta_max_B_field()
+        delta_max_env = instr.delta_max_envelope()
+        delta_max_ten_samples = instr.delta_max_sampling()
+        # print(F"Max delta ideal sampling (10 samples per period) (f_0 = {round(f_ten_samples*1e-3)}mm^-1: {round(delta_max_ten_samples * 1e9,2)}nm")
+        maxes = [(d_max_field, 'precession devices'), (delta_max_env, 'envelope'), (delta_max_ten_samples, 'sampling')]
+        (d_max, max_name) = min(maxes)
+        delta_min_field = instr.delta_min_B_field()
+        delta_min_single_period = instr.delta_min_detector()
+        mins = [(delta_min_field, 'precession devices'), (delta_min_single_period, 'detector size')]
+        (d_min, min_name) = max(mins)
+        # print(min_max)
+        Q_max = instr.Q_max()
+        # print(f"{a}")
