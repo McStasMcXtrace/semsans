@@ -12,29 +12,30 @@ backend=biber,
 ]{biblatex}
 
 \addbibresource{references.bib}
-\newcommand{\targetrange}{$10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$ }
+\newcommand{\targetrange}{$10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$}
 \begin{document}
 
 \maketitle
 
 \section{Introduction}
+\label{c1:introduction}
 In many industries, there is the need to analyse the structure of materials at length scales ranging from nanometres to micrometers. To do this, different methods exist such as scattering techniques, microscopy and analysis based on macroscopic properties. What is unique about scattering techniques however is that they can probe the bulk of the sample at these length scales \cite{bouwman2021}.
 
 % I need to add a better bridge between these two sections, they are both good but lack coupling.
 
 \subsection{Small-angle scattering}
-
+\label{c1.1}
 Different scattering techniques exist based on X-rays and neutrons. Generally speaking, because these are reciprocal space methods, larger length-scales correspond to smaller scattering angles and vice versa. This is the motivation behind small-angle scattering methods like Small Angle X-ray Scattering (SAXS) and Small Angle Neutron Scattering (SANS) which are used to analyse materials at length scales from $1 \unit{\nano\meter}$ to a few $100 \unit{\nano\meter}$, which are significantly larger than for instance crystal lattice constants of a few $\unit{Å}$ that can be determined using techniques like X-ray diffraction. Past the upper limit of a few $100 \unit{\nano\meter}$ such small-angle techniques become infeasible for realistic beam sizes and samples, as the deflection of particles in a beam is too slight to learn something about the sample.
 
 For neutrons, spin polarization can be used to label trajectories across the beam, a technique called neutron spin echo \cite{mezei1972}. This principle has been applied in the SANS-derivative techniques SESANS \cite{rekveldt1996} and SEMSANS \cite{bouwman2009}\cite{bouwman2011} to make smaller angles and correspondingly the larger length scales up to about $10 \unit{\micro\meter}$ accessible using polarized neutrons. Formulated differently, these techniques can be seen to measure a type of real-space density correlation function $G(\delta)$ \cite{krouglov2003}\cite{andersson2008} as will also be discussed in Chapter \ref{c2:theory}.
 
 \subsection{SEMSANS at the Reactor Institute Delft}
-
+\label{c1.2}
 
 SEMSANS instruments have previously been realized at the Hoger Onderwijs Reactor (HOR) at the Reactor Institute Delft (RID) using a thermal neutron source. As part of the OYSTER project (Optimized Yield for Science, Technology, and Education of Radiation), a cold neutron source operating at $T=20 \unit{\kelvin}$ has been installed and additional improvements have been made to achieve an expected hundredfold improvement in measurement quality or time.
 
 In this report, the possibility for realizing a SEMSANS instrument at the new cold source at HOR will be explored through a combination of mathematical analysis, constrained optimization and Monte Carlo simulations using raytracing software package McStas \cite{willendrup2020}. An existing McStas simulation model \cite{bouwman2021b} is taken as a starting point and extended to include various design options such as precession devices different from foil flippers. 
-The goal is to bridge the gap between accessible length ranges of SANS and SEMSANS \cite{bouwman2021} and see if it is possible to access characteristic lengths from \targetrange in a single instrument by exploiting the advantage of greater wavelengths. This as an alternative to combining SANS and SEMSANS devices into one as has been proposed before \cite{bouwman2011}\cite{kusmin2017}. An application in the food industry that would benefit from such an instrument is the study of colloids such as casein micelles in (fat free) milk and derivatives like yoghurt and curd. The characteristic length scales of all of these would be accessible at an instrument with this target range, facilitating a better understanding of processes like milk turning into yoghurt. 
+The goal is to bridge the gap between accessible length ranges of SANS and SEMSANS \cite{bouwman2021} and see if it is possible to access characteristic lengths from $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$ in a single instrument by exploiting the advantage of greater wavelengths. This as an alternative to combining SANS and SEMSANS devices into one as has been proposed before \cite{bouwman2011}\cite{kusmin2017}. An application in the food industry that would benefit from such an instrument is the study of colloids such as casein micelles in (fat free) milk and derivatives like yoghurt and curd. The characteristic length scales of all of these would be accessible at an instrument with this target range, facilitating a better understanding of processes like milk turning into yoghurt. 
 
 \newpage 
 \section{Theory}
@@ -242,9 +243,16 @@ The position sensitive detector used is $11\times11\unit{\milli\meter}$ with a r
 \end{equation}
 assuming a symmetric detector with an equal $Q$-range for $x,y$. For samples with significant scattering with $Q > Q_{max}$, the error of $G_\text{exp}(\delta)$ as estimator of $G(\delta)$ can be expected to be significant whereas for samples with larger characteristic lengths and scattering over lower $Q$-ranges, the error will be negligible with most scattered neutrons being picked up by the detector \cite{rekveldt1996} so that $G_\text{exp}(\delta)$ approximates $G(\delta)$ well. 
 
+\subsection{The sample and its position $L_s$}
+\label{c3.5}
+The model sample that is considered in this work is a dilute mono-disperse solution of solid spheres as described in Section \ref{c2.4} with radii varying from $R = 50\unit{\nano\meter}$ to $R = 2000\unit{\nano\meter}$. It is modelled as a $20\times20\unit{\milli\meter}$ square with thickness $t$ along the $z$-axis, meaning that it is significantly wider than the beam as described above. 
+ 
+In general, $L_s$ can be varied in a given instrument to measure different samples in practical SEMSANS instrument designs \cite{kusmin2017}. However, as mentioned in Section \ref{c1.2}, one of the target applications of the instrument is to study processes in colloids like milk turning into yoghurt which encompass the full target range of $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$. This means that it is not practical to adjust $L_s$ in the middle of measurements unless precise remote control of the sample holder is available. It is assumed such control is not available in this model and that for a given sample measurement $L_s$ is fixed. 
+
+
 %% TODO: add min Q from pixel size? I guess in small angle approximation this is already in there? In fact probably Q_max will already be related to the period although I need to figure out how exactly. 
 \subsection{Polychromatic SEMSANS}
-\label{c3.5}
+\label{c3.6}
 The usual description of SEMSANS modulation patterns as given in \eqref{eq:mono-modulation} and their relation to a spin-echo length \eqref{eq:delta} typically assumes a monochromatic source or a source that closely approximates it, for instance by using a PG monochromator with $\Delta\lambda/\lambda_0 = 0.01$ with thermal neutrons. However, even in such cases a modulation envelope can be seen to appear \cite{bouwman2021} due to this wavelength spread. This effect becomes far more important when using a velocity selector with $\Delta\lambda/\lambda_0 = 0.1$ to select a higher wavelength $\lambda_0$ and is here discussed in detail.
 %Without resorting to time-of-flight instrument realizations also exist \cite{sales2015}\cite{li2021} that in this way support broad ranges of wavelengths. 
 \subsubsection{Modulation envelope for Gaussian $\lambda$ spectrum}
@@ -270,7 +278,7 @@ per linearity describes the modulation pattern. Qualitatively it can be seen tha
 
 
 \subsection{Instrument design variants}
-\label{c3.6}
+\label{c3.7}
 Using the basic instrument configuration described and analysed in this chapter with the various options in terms of monochromator and precession devices, a few design variants can be formulated exploring the different options for these component types. What the instruments have in common are the distances in the instrument $L_1 = 4.0\unit{\meter}, L_2 = 2.0\unit{\meter}, L_s = 1.8\unit{\meter}$ in addition to the detector characteristics previously described. The possibility of optimizing these distances together with $\lambda_0$ for a given choice of monochromator and precession device is discussed in Chapter \ref{c5:optimization}.  
 
 Firstly, there is the choice of $\lambda_0$ and the corresponding monochromator. Two considered options are $\lambda_0 = 4.321$Å with a PG monochromator giving $\Delta\lambda = 0.04321$Å and $\lambda_0 = 8$Å with a VS monochromator giving $\Delta\lambda = 0.8$Å. These two sources are combined with each of the three precession device options as characterized in Table \ref{tab:device-properties}, giving Table \ref{tab:design-variants} which includes the appropriate $\theta_0$ needed to achieve $\phi_{foil} = \pi$ in the case of foil flippers. These instruments will first be analysed in the next chapter to estimate their $\delta$-range by using constraints as well as their relative source intensity. In Chapter \ref{c6:monte-carlo}, Monte Carlo simulation results of these instruments on a three representative samples are discussed. 
@@ -358,9 +366,7 @@ $$\delta_{max, f} = \lambda_0^2 L_s \frac{c(1 - \frac{L_2}{L_1})B_{max}}{\pi\tan
 \end{table}
 \subsection{Computed $\delta$ constraints and design $\delta$ ranges}
 \label{c4.2}
-The computed $\delta$-constraints for the designs are given in Table \ref{tab:designs-delta-constraints}.
-
-From these together, $\delta$-ranges can be calculated for each design as given in Table \ref{tab:designs-final-ranges} together with their $Q_{max}$.
+The computed $\delta$-constraints for the designs are given in Table \ref{tab:designs-delta-constraints}. From these together, $\delta$-ranges can be calculated for each design as given in Table \ref{tab:designs-final-ranges} together with their $Q_{max}$. These values were computed using $L_s = 1.8\unit\meter$, which is approximately the maximal $L_s$ setting available. This means that shorter $\delta_{min}$ is accessible by reducing $L_s$ but $\delta_{max}$ is the maximal spin-echo length that can be measured.
 \begin{table}[h!]
 	\centering
 	\begin{tabular}{c c c c}
@@ -596,7 +602,7 @@ To simulate the instruments, version 3.4 of the raytracing software package McSt
 The \texttt{SANS\_spheres2} sample component is used to model the described sample. Although most of its parameters correspond directly to those listed above, two that deserve mention are \texttt{Qmind} and \texttt{Qmaxd} which define the simulated $Q$-range. As the sample $R$ values span almost two orders of magnitude, the corresponding $Q$ range is quite different for the three samples and proportional to $1/R$. This is accounted for by using \texttt{Qmind}$=0.1/R$, \texttt{Qmaxd}$=10/R$, matching the sample $Q$-range as discussed in Section \ref{c2.4}.
 
 \subsubsection{Data analysis}
-To estimate $P(\delta) = e^{G(\delta)  - \tau}$, the modulation pattern as given in Equation \eqref{eq:poly-base-modulation} is fitted with variable amplitude to $I_{sum} = I_{up} - I_{down}$, the difference between the intensity patterns of the two analyser settings. Only the middle $8\unit{\milli\meter}$ is used to avoid boundary effects as depicted in Figure \ref{fig:simplified-scattering} and also seen in simulation intensity patterns. In practice, this means a Gaussian is fitted with a slight correction proportional to $I_{0,up} - I_{0,down}$ which is close to $0$. The resulting amplitudes $A_b, A_s$ with and without a sample at a given $B$ or $\delta$ setting are then related to $P(\delta)$ via $P(\delta) = A_s/A_b$. As discussed in Section \ref{c3.5}, this can be expected to result in an error proportional to the width of the $\lambda$-spectrum, as a range of $\delta$'s is effectively sampled, each having their own $G(\delta)$ and $\tau(\delta)$. And as discussed in Sections \ref{c3.4} and \ref{c4.4}, the limited $Q$-range of the detector will result in incomplete detection of scattering for samples with smaller radii like $R = 50 \unit{\nano\meter}$ and a greater $Q$-range, limiting the accuracy of $G_\text{exp}(\delta)$. For these reasons, the value of $P(\delta)$ computed is to be understood as an estimate.  
+To estimate $P(\delta) = e^{G(\delta)  - \tau}$, the modulation pattern as given in Equation \eqref{eq:poly-base-modulation} is fitted with variable amplitude to $I_{sum} = I_{up} - I_{down}$, the difference between the intensity patterns of the two analyser settings. Only the middle $8\unit{\milli\meter}$ is used to avoid boundary effects as depicted in Figure \ref{fig:simplified-scattering} and also seen in simulation intensity patterns. In practice, this means a Gaussian is fitted with a slight correction proportional to $I_{0,up} - I_{0,down}$ which is close to $0$. The resulting amplitudes $A_b, A_s$ with and without a sample at a given $B$ or $\delta$ setting are then related to $P(\delta)$ via $P(\delta) = A_s/A_b$. As discussed in Section \ref{c3.6}, this can be expected to result in an error proportional to the width of the $\lambda$-spectrum, as a range of $\delta$'s is effectively sampled, each having their own $G(\delta)$ and $\tau(\delta)$. And as discussed in Sections \ref{c3.4} and \ref{c4.4}, the limited $Q$-range of the detector will result in incomplete detection of scattering for samples with smaller radii like $R = 50 \unit{\nano\meter}$ and a greater $Q$-range, limiting the accuracy of $G_\text{exp}(\delta)$. For these reasons, the value of $P(\delta)$ computed is to be understood as an estimate.  
 \subsection{Results}
 The result of the described simulation and data analysis is shown in Figure \ref{fig:simulation-plot}, with each subfigure showing simulated measurements within the accessible $\delta$-ranges for each design.
 
