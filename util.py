@@ -2,6 +2,34 @@ from instrument import *
 import numpy as np
 import pandas as pd
 
+def find_overlap(interval1, interval2):
+    a1, a2 = interval1
+    b1, b2 = interval2
+
+    # Calculate the start and end of the overlap interval
+    start = max(a1, b1)
+    end = min(a2, b2)
+
+    # Check if there is an actual overlap
+    if start <= end:
+        return (start, end)
+    else:
+        return None  # No overlap
+
+def overlap_percentage(interval1, interval2):
+    b1, b2 = interval2
+    overlap = find_overlap(interval1, interval2)
+    if overlap == None:
+        return 0
+    else:
+        (c1, c2) = overlap
+        # Overlap as fraction of interval 2 (b)
+        fraction = (c2 - c1) / (b2 - b1) * 100
+        return fraction 
+    
+def log_overlap_percentage(interval1, interval2):
+    return overlap_percentage(np.log(interval1), np.log(interval2))
+
 number_mapping = {
     '1': '2.165',
     '2': '4.321',

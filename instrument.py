@@ -110,9 +110,7 @@ class Instrument:
     \tApproximate max R of solid sphere sample: {round(R_max * 0.1, 2)} - {round(R_max,2)} nm
     \tfinal δ range: {round(d_min * 1e9,1)} - {round(d_max * 1e9, 1)}nm ({min_name} - {max_name} limited)"""
     
-if __name__ == '__main__':
-    import util
-    instrs = util.load_instruments('simulations_new.csv')
+def print_latex_tables(instrs):
     for i in [0,1]:
         for instr in instrs[3:-6]:
             # print(instr)
@@ -134,3 +132,7 @@ if __name__ == '__main__':
                 print(f"{instr.name} & {r(delta_min_single_period)} & {r(delta_min_field)} & {r(delta_max_ten_samples)} & {r(delta_max_env)} & {r(delta_max_field)} \\\\")
             else:
                 print(f"{instr.name} & {round(Q_max * 1e-10, 5)} & {r(delta_min)} & {r(delta_max)} \\\\")
+if __name__ == '__main__':
+    import util
+    instrs = util.load_instruments('simulations_new.csv')
+    print_latex_tables(instrs)
