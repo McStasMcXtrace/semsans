@@ -5,13 +5,14 @@ FWHM_env_min = 2e-3
 # For simulating variable L_s
 # L_s_min = 1.5 
 class Instrument:
-    def __init__(self, id: str, name: str, prec_type: str, L0: float, DL: float, theta_0: float, By_min: float, By_max: float, L_s: float = 1.8, L_1: float = 4, L_2: float = 2):
+    def __init__(self, id: str, name: str, prec_type: str, L0: float, DL: float, theta_0: float, By_min: float, By_max: float, L_s: float = 1.8, L_1: float = 4, L_2: float = 2, detector_size = detector_size):
         self.id = id
         self.name = name
         self.prec_type = prec_type
         self.L0 = L0
         self.DL = DL
         self.theta_0 = theta_0
+        self.detector_size = detector_size
         self.By_min = By_min 
         self.By_max = By_max
         self.L_s = L_s
@@ -24,7 +25,7 @@ class Instrument:
     
     # Limit to have at least 1 modulation period on the detector
     def delta_min_detector(self):
-        f_min = 1/detector_size
+        f_min = 1/self.detector_size
         delta_min_sampling = f_min * self.L0 * self.L_s
         return delta_min_sampling
 
@@ -97,6 +98,7 @@ class Instrument:
         (d_min, min_name) = max(mins)
         # print(min_max)
         Q_max = self.Q_max()
+        theta_a = np.arctan(self.detector_size / (2 * self.L_s)) * 1e3
         R_max = 1 / (Q_max * 1e-10)
         return f"""Instrument ID {self.id}; Name: {self.name}
     \tSource: L0 = {self.L0 * 1e10} Å; sigma_L = {self.DL * 1e10} Å
@@ -108,6 +110,7 @@ class Instrument:
     \tmax δ for envelope FWHM due to wavelength spread >= {FWHM_env_min*1e3}mm: {round(delta_max_env * 1e9,1)}nm
     \tQ_max as determined by detector height and distance: {round(Q_max * 1e-10, 7)} Å-1
     \tApproximate max R of solid sphere sample: {round(R_max * 0.1, 2)} - {round(R_max,2)} nm
+    \ttheta_a: {round(theta_a, 2)} mrad
     \tfinal δ range: {round(d_min * 1e9,1)} - {round(d_max * 1e9, 1)}nm ({min_name} - {max_name} limited)"""
     
 def print_latex_tables(instrs):
