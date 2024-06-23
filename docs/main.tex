@@ -1,7 +1,7 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{geometry}
-%\newgeometry{vmargin={15mm}, hmargin={12mm,17mm}} 
+\newgeometry{vmargin={15mm}, hmargin={12mm,17mm}} 
 \title{SEMSANS at the cold neutron source in Delft}
 \author{Thom van der Woude}
 \date{June 2024}
@@ -321,6 +321,7 @@ Two key parameters in SEMSANS instrument design are the accessible $\delta$-rang
 \label{c4.1}
 Three main sources of limitations can be recognized. Firstly, the detector height $h_d$ and pixel size $p$ as well as the distance from detector to sample $L_s$ will limit which modulation frequencies can be sampled as well as the accessible $Q$-range, limiting $\delta$ in various ways.
 Secondly, the mean wavelength $\lambda_0$ as well as the monochromator quality $\frac{d\lambda}{\lambda_0}$ (and corresponding wavelength $\sigma$) shape the modulation envelope and determine how quickly it will become too narrow as $\alpha$ increases due to increasing field strengths, with $\lambda_0$ also playing a role in all other bounds. Lastly, the basic characteristics of precession devices as well as their positions relative to the detector limit the range of $\alpha$ and how strong the precession gradient is along the $y$-axis. 
+
 % Discuss sources of constraints, linking them to the theory in previous chapters. Ideally refer to equation numbers to avoid repetition and make it sound really solid. 
 % Emphasize that these constraints serve as a starting point for estimating limitations for given instruments
 \subsubsection{Detector sampling limitations}
@@ -349,7 +350,7 @@ $$\delta_{max, f} = \lambda_0^2 L_s \frac{c(1 - \frac{L_2}{L_1})B_{max}}{\pi\tan
 
 \begin{table}[h!]
 	\centering
-	\begin{tabular}{c c c c c c}
+	\begin{tabular}{c | c c | c c c}
 		\toprule
 		Label & $\delta_{\text{min,s}}$ (nm) & $\delta_{\text{min,d}}$ (nm) & $\delta_{\text{max,s}}$ (nm) & $\delta_{\text{max,e}}$ (nm) & $\delta_{\text{max,d}}$ (nm) \\
 		\midrule
@@ -361,7 +362,7 @@ $$\delta_{max, f} = \lambda_0^2 L_s \frac{c(1 - \frac{L_2}{L_1})B_{max}}{\pi\tan
 		ISO 8 & \textbf{130.91} & 46.65 & 13104.0 & 6354.31 & \textbf{3498.48} \\
 		\bottomrule
 	\end{tabular}
-	\caption{TODO}
+	\caption{Calculated $\delta$ constraints for the designs with the constraints limiting the final $\delta$-range listed in Table \ref{tab:designs-final-ranges} marked in bold for each design.}
 	\label{tab:designs-delta-constraints}
 \end{table}
 \subsection{Computed $\delta$ constraints and design $\delta$ ranges}
@@ -381,7 +382,7 @@ The computed $\delta$-constraints for the designs are given in Table \ref{tab:de
 		ISO 8 & 0.0024 & 130.91 & 3498.48 \\
 		\bottomrule
 	\end{tabular}
-	\caption{TODO}
+	\caption{Key characteristics for the various designs, with $\delta_{min}, \delta_{max}$ being computed using the constraints listed in Table \ref{tab:designs-delta-constraints}}
 	\label{tab:designs-final-ranges}
 \end{table}
 \subsubsection{Discussion of design constraints}
@@ -410,7 +411,7 @@ For a uniform beam of radius $R_0$ coming out of the beamline with such a diverg
 $$\Phi(d) \propto \frac{\Phi_{mc}}{4}\frac{R_0^2}{(R_0 + \psi_0 d)^2} = \frac{\Phi_0}{4}C_{mc}C_{div}$$
 Consider $R = 0.1 \unit{\meter}$ to be the radius of the beamline and let $\phi_0 = 2^\circ$. Using $d = 6 \unit{\meter}$ as estimate for the distance of the sample to the beamline gives a divergence loss factor of about $C_{div} = 0.1044$.
 
-Using this approach gives highly optimistic order of magnitude estimates of the flux at the sample for both $\lambda_0$ options: $100021 \approx 10^5 \unit{\centi\meter^{-2}\sec^{-1}}$ and $959064 \approx 10^6 \unit{\centi\meter^{-2}\sec^{-1}}$ for $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å respectively, the order of magnitude difference being due to the greater $\Delta\lambda/\lambda_0$ of the velocity selector compared to the PG crystal under the assumption of an optimal Gaussian transfer. As the detector has an area of approximately $1 \unit{\centi\meter^2}$ and neglecting additional losses due to further divergence, this is also the estimated total intensity at the detector, at least in the absence of a sample or when using a sample that scatters only into a very small $Q$-range. Various losses due to non-ideal components etc. can be expected to reduce these estimates by perhaps another of magnitude and the relative efficiency of concrete PG and VS monochromators could cancel the estimated benefit of the VS.
+Using this approach gives highly optimistic order of magnitude estimates of the flux at the sample for both $\lambda_0$ options: $100021 \approx 10^5 \unit{\centi\meter^{-2}\sec^{-1}}$ and $959064 \approx 10^6 \unit{\centi\meter^{-2}\sec^{-1}}$ for $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å respectively, the order of magnitude difference being due to the greater $\Delta\lambda/\lambda_0$ of the velocity selector compared to the PG crystal under the assumption of an optimal Gaussian transfer. As the detector has an area of approximately $1 \unit{\centi\meter^2}$ and neglecting additional losses due to further divergence, this is also roughly the total intensity at the detector, at least in the absence of a sample or when using a sample that scatters only into a very small $Q$-range. Various losses due to non-ideal components etc. can be expected to reduce these estimates by perhaps another of magnitude and the relative efficiency of concrete PG and VS monochromators could cancel the estimated benefit of the VS.
 
 
 
@@ -486,7 +487,7 @@ This scheme could be further extended by considering the dimensions of the analy
 
 Finally, $h_d/L_s$ needs to be small enough so that the small-angle approximation $Q_{max} \approx \frac{2\pi}{\lambda_0}\frac{h_d}{2L_s}$ remains valid. This was not a problem in Chapter \ref{c4:constraints} as there $L_s = 1.8\unit{\meter}$, $h_d = 11\unit{\milli\meter}$, giving an acceptance angle of only $\theta_a \approx 3\unit{\milli\radian}$. As derived in Appendix \ref{appendix-a}, a higher-order approximation of $Q_{max}$ is given by
 $$Q_{max} \approx  k(\frac{h_d}{2L_s} - \frac{3h_d^3}{64L_s^3})$$
-making the relative approximation error proportional to $\epsilon_\angle = \frac{3h_d^2}{32L_s^2}$. This evaluates to $\epsilon_\angle = 3.5 \cdot 10^{-6}$ for the given $L_s, h_d$ values. What values of $h_d/L_s$ and $\epsilon_\angle$ are permissible is unclear as no studies appear to have been done investigating this specifically. Values like $\theta_a \approx 30\unit{\milli\radian}$ are used in SESANS \cite{rekveldt1996} however, indicating that a tenfold increase might be feasible. To be on the safe side, $h_d / (2L_s) = 15\unit{\milli\radian}$ will be used as an upper limit here, translating to a lower limit of $L_s = 0.37\unit{\meter}$ with $h_d = 11\unit{\milli\meter}$.
+making the relative approximation error proportional to $\epsilon_\angle = \frac{3h_d^2}{32L_s^2}$. This evaluates to $\epsilon_\angle = 3.5 \cdot 10^{-6}$ for the given $L_s, h_d$ values. What values of $h_d/L_s$ and $\epsilon_\angle$ are permissible is unclear as no studies appear to have been done investigating this specifically. Values like $\theta_a \approx 30\unit{\milli\radian}$ are used in SESANS \cite{rekveldt1996} however, indicating that a tenfold increase might be feasible. To be on the safe side, $\arctan\left(h_d / (2L_s)\right) = 15\unit{\milli\radian}$ will be used as an upper limit here, translating to a lower limit of $L_s = 0.37\unit{\meter}$ with $h_d = 11\unit{\milli\meter}$.
 % and $L_s = 1.33\unit{\meter}$ for $h_d = 40\unit{\milli\meter}$.
 
 %Although the modulation mechanism of SEMSANS appears to complicate this, it appears that the error 
@@ -517,19 +518,25 @@ The used optimization routine is essentially a constrained random-search of the 
 % TODO: Add list of constraints somewhere to improve reproducibility?
 
 \subsection{Optimized instruments}
-The optimized instruments and their parameters are given in Table \ref{tab:optimized-designs}, their labels indicating the combination of monochromator and precession device of the instrument, which the parameters are optimized for in the sense of maximizing $g_2$. Their $\delta$-range and $Q_{max}$ is given in Table \ref{tab:optimized-designs-performance}. Comparing the $\delta$-ranges in Table \ref{tab:optimized-designs-performance} with those of the unoptimized designs in Table \ref{tab:designs-final-ranges}, a first obvious difference is that far lower $\delta_{min}$ values are accessible to the optimized instruments. Sometimes this is at the cost of $\delta_{max}$ as in the case of for instance FOIL 4.321 compared to FOIL PG, for instance for WSP 4.321 and WSP PG the optimized $\delta_{max}$ value exceeds the unoptimized one while still having a far lower $\delta_{min}$.
+The optimized instruments and their parameters are given in Table \ref{tab:optimized-designs}, their labels indicating the combination of monochromator and precession device of the instrument, which the parameters are optimized for in the sense of maximizing $g_2$. Their $\delta$-range and $Q_{max}$ is given in Table \ref{tab:optimized-designs-performance}, with $\delta_{min}, \delta_{max}$ being derived from Table \ref{tab:optimized-designs-delta-constraints} like in Section \ref{c4.2}.
+
+
+
+
+Comparing the $\delta$-ranges in Table \ref{tab:optimized-designs-performance} with those of the unoptimized designs in Table \ref{tab:designs-final-ranges}, a first obvious difference is that far lower $\delta_{min}$ values are accessible to the optimized instruments. This comes at the cost of $\delta_{max}$ however with these instruments optimized for $g_2$ in every case having a lower $\delta_{max}$. Comparing Table \ref{tab:optimized-designs-delta-constraints} to \ref{tab:designs-delta-constraints} shows that in both cases $\delta_{min,s}$ is the limiting factor, meaning that with $L_s$ being optimized as far as possible, the detector height $h_d$ appears to restrict both the original and the optimized designs.
+
 \begin{table}[h!]
 	\centering
-	\begin{tabular}{c c c c c c}
+	\begin{tabular}{c | c c c c c}
 		\toprule
 		Label & $\lambda_0$(Å) & $\Delta\lambda$(Å) & $L_1$($\unit{\meter}$) & $L_2$($\unit{\meter}$) & $L_s$($\unit{\meter}$) \\
 		\midrule
-		FOIL PG & 3.3 & 0.033 & 4.544 & 3.627 & 3.467 \\
-		WSP PG & 4.39 & 0.044 & 4.842 & 1.485 & 1.325 \\
-		ISO PG & 4.38 & 0.044 & 4.825 & 1.512 & 1.352 \\
-		FOIL VS & 8.09 & 0.809 & 3.717 & 2.932 & 2.772 \\
-		WSP VS & 8.27 & 0.827 & 4.074 & 1.529 & 1.369 \\
-		ISO VS & 11.97 & 1.197 & 4.674 & 1.936 & 1.776 \\
+		FOIL PG & 3.11 & 0.031 & 4.836 & 2.521 & 2.361 \\
+		WSP PG & 4.4 & 0.044 & 4.827 & 0.518 & 0.358 \\
+		ISO PG & 4.4 & 0.044 & 4.742 & 0.521 & 0.361 \\
+		FOIL VS & 10.07 & 1.007 & 3.19 & 1.599 & 1.124 \\
+		WSP VS & 8.86 & 0.886 & 4.764 & 1.438 & 1.278 \\
+		ISO VS & 12.0 & 1.2 & 4.838 & 0.79 & 0.63 \\
 		\bottomrule
 	\end{tabular}
 	\caption{Optimized design parameters for each combination of precession device option and monochromator. }
@@ -537,19 +544,37 @@ The optimized instruments and their parameters are given in Table \ref{tab:optim
 \end{table}
 \begin{table}[h!]
 	\centering
-	\begin{tabular}{c c c c}
+	\begin{tabular}{c|cc|ccc}
 		\toprule
-		Label & $Q_{\text{max}}$ ($\text{\AA}^{-1}$) & $\delta_{min}$ (nm) & $\delta_{max}$ (nm) \\
+		Label & $\delta_{\text{min,s}}$ (nm) & $\delta_{\text{min,d}}$ (nm) & $\delta_{\text{max,s}}$ (nm) & $\delta_{\text{max,e}}$ (nm) & $\delta_{\text{max,d}}$ (nm) \\
 		\midrule
-		FOIL PG & 0.01099 & 28.62 & 2284.62 \\
-		WSP PG & 0.02159 & 14.55 & 1644.51 \\
-		ISO PG & 0.02124 & 14.79 & 393.19 \\
-		FOIL VS & 0.0056 & 56.08 & 4423.8 \\
-		WSP VS & 0.01109 & 28.32 & 4999.42 \\
-		ISO VS & 0.00591 & 53.15 & 3294.12 \\
+		FOIL PG & 66.67 & \textbf{66.73} & 6674.06 & 32363.43 & \textbf{3478.05} \\
+		WSP PG & \textbf{14.29} & 8.48 & 1430.77 & 6937.98 & \textbf{572.85} \\
+		ISO PG & \textbf{14.45} & 8.34 & 1446.42 & 7013.89 & \textbf{137.55} \\
+		FOIL VS & \textbf{102.89} & 100.87 & 10298.88 & \textbf{4994.07} & 5055.08 \\
+		WSP VS & \textbf{103.0} & 34.23 & 10310.73 & \textbf{4999.81} & 6509.71 \\
+		ISO VS & \textbf{68.69} & 68.5 & 6875.64 & 3334.09 & \textbf{1677.05} \\
 		\bottomrule
 	\end{tabular}
-	\caption{Key characteristics of optimized designs.}
+	\caption{Calculated $\delta$ constraints for optimized designs with the constraints limiting the final $\delta$-range listed in Table \ref{tab:optimized-designs-performance} marked in bold for each design.}
+	\label{tab:optimized-designs-delta-constraints}
+\end{table}
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c | c c c c}
+		\toprule
+		Label & $Q_{\text{max}}$ ($\text{\AA}^{-1}$) & $\theta_a$ ($\unit{\milli\radian}$) & $\delta_{min}$ (nm) & $\delta_{max}$ (nm) \\
+		\midrule
+		FOIL PG & 0.00471 & 2.33 & 66.73 & 3478.05 \\
+		WSP PG & 0.02198 & 15.375 & 14.29 & 572.85 \\
+		ISO PG & 0.02174 & 15.217 & 14.45 & 137.55 \\
+		FOIL VS & 0.00305 & 4.894 & 102.89 & 4994.07 \\
+		WSP VS & 0.00305 & 4.303 & 103.0 & 4999.81 \\
+		ISO VS & 0.00457 & 8.734 & 68.69 & 1677.05 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Key characteristics of optimized designs, with $\delta_{min}, \delta_{max}$ being computed using the constraints listed in Table \ref{tab:optimized-designs-delta-constraints}}
 	\label{tab:optimized-designs-performance}
 \end{table}
 
@@ -589,7 +614,7 @@ To test the ability of the various instruments to measure samples in the charact
 		8 & 2000 & 1 & 0.9191 \\
 		\hline
 	\end{tabular}
-	\caption{TODO}
+	\caption{Combinations of $\lambda_0$ and sample radius $R$ with a sample thickness $t$ chosen to keep $\tau$ approximately within the optimal range of $0.1$ and $0.8$.}
 	\label{tab:sample-thickness}
 \end{table}
 \subsubsection{Simulated measurement procedure}
@@ -653,7 +678,7 @@ The result of the described simulation and data analysis is shown in Figure \ref
 	\label{fig:simulation-plot}
 \end{figure}
 \subsection{Discussion}
-As was to be expected from the previously computed constraints, none of the instruments were able to fully characterize the $R=50\unit{\nano\meter}$ sample. Although the instruments operating at $\lambda_0 = 4.321$Å were able to measure a somewhat wider range, all that can be said about these and those with $\lambda_0 = 8$Å is that they managed to estimate $P(\infty) = e^{-\tau}$ for this sample to differing degrees of accuracy. All instruments were able to measure the $R = 2000 \unit{\nano\meter}$ sample well within their given $\delta$ limitations, with all designs except WSP 4.321 and ISO 4.321 being able to measure up to $\delta \approx 2R$. Going by the analysis presented in Section \ref{c4.4}, it was expected that for $\lambda_0 = 4.321, 8$Å the approximate lower limit at which SEMSANS ceases to approximate $P(\delta)$ well is $100, 200\unit{\nano\meter}$ respectively. This appears to be reflected in the increasing error compared to the analytical expression for $R = 300\unit{\nano\meter}$ which has not been corrected for such an effect. The error is greater for $\lambda_0 = 8$Å which makes sense given what was discussed in Section \ref{c4.3}. This error can be reduced by fitting a smaller height than the centre $8\unit{\milli\meter}$, trading correctness of the estimate for increased uncertainty in $P(\delta)$, which can be understood by considering Figure \ref{fig:simplified-scattering} and the fraction of scattered neutrons that is 'missing' from each point on the detector. 
+None of the instruments were able to fully characterize the $R=50\unit{\nano\meter}$ sample, with the previously computed (hard) constraints listed limiting the $\delta$-range. Although the instruments operating at $\lambda_0 = 4.321$Å were able to measure a somewhat wider range, all that can be said about these and those with $\lambda_0 = 8$Å is that they managed to estimate $P(\infty) = e^{-\tau}$ for this sample to differing degrees of accuracy. All instruments were able to measure the $R = 2000 \unit{\nano\meter}$ sample well within their given $\delta$ limitations, with all designs except WSP 4.321 and ISO 4.321 being able to measure up to $\delta \approx 2R$. Going by the analysis presented in Section \ref{c4.4}, it was expected that for $\lambda_0 = 4.321, 8$Å the approximate lower limit at which SEMSANS ceases to approximate $P(\delta)$ well is $100, 200\unit{\nano\meter}$ respectively. This appears to be reflected in the increasing error compared to the analytical expression for $R = 300\unit{\nano\meter}$ which has not been corrected for such an effect. The error is greater for $\lambda_0 = 8$Å which makes sense given what was discussed in Section \ref{c4.3}. This error can be reduced by fitting a smaller height than the centre $8\unit{\milli\meter}$, trading correctness of the estimate for increased uncertainty in $P(\delta)$, which can be understood by considering Figure \ref{fig:simplified-scattering} and the fraction of scattered neutrons that is 'missing' from each point on the detector. 
 
 % Did the simulations match the precomputed limits? Are the limits (to the extent that they are not absolute but rather somewhat chosen heuristically) good enough, too strict? Is it in practice possible to measure even at field strenghts outside of the range?
 
