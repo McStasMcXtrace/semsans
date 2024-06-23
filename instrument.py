@@ -83,6 +83,9 @@ class Instrument:
             case 'foil':
                 long_str = 'foil flipper'
         return long_str
+    
+    def theta_a(self):
+        return np.arctan(self.detector_size / (2 * self.L_s))
 
             
     def __str__(self):
@@ -98,7 +101,7 @@ class Instrument:
         (d_min, min_name) = max(mins)
         # print(min_max)
         Q_max = self.Q_max()
-        theta_a = np.arctan(self.detector_size / (2 * self.L_s)) * 1e3
+        theta_a = self.theta_a() * 1e3
         R_max = 1 / (Q_max * 1e-10)
         return f"""Instrument ID {self.id}; Name: {self.name}
     \tSource: L0 = {self.L0 * 1e10} Å; sigma_L = {self.DL * 1e10} Å
