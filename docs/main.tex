@@ -423,9 +423,6 @@ Consider $R = 0.1 \unit{\meter}$ to be the radius of the beamline and let $\phi_
 
 Using this approach gives highly optimistic order of magnitude estimates of the flux at the sample for both $\lambda_0$ options: $100021 \approx 10^5 \unit{\centi\meter^{-2}\sec^{-1}}$ and $959064 \approx 10^6 \unit{\centi\meter^{-2}\sec^{-1}}$ for $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å respectively, the order of magnitude difference being due to the greater $\Delta\lambda/\lambda_0$ of the velocity selector compared to the PG crystal under the assumption of an optimal Gaussian transfer. As the detector has an area of approximately $1 \unit{\centi\meter^2}$ and neglecting additional losses due to further divergence, this is also roughly the total intensity at the detector, at least in the absence of a sample or when using a sample that scatters only into a very small $Q$-range. Various losses due to non-ideal components etc. can be expected to reduce these estimates by perhaps another of magnitude and the relative efficiency of concrete PG and VS monochromators could cancel the estimated benefit of the VS.
 
-
-
-
 \subsection{Sample scattering and intensity}
 \label{c4.4}
 Although so far the the accessible $\delta$-range and detector intensity have been discussed separately, the characteristic length of the sample measured will have a tangible effect on the measured intensity as well as the quality of $G_{exp}(\delta)$ as estimate of $G(\delta)$ limited to $Q_{max}$ for lower $\delta$ and higher $\lambda_0$. This effect was first discussed in the context of SESANS with an instrument for which $\lambda_0 = 2$Å and $\theta_a \approx 30\unit{\milli\radian}$ \cite{rekveldt1996}, where it was concluded that for characteristic lengths larger than $5\unit{\nano\meter}$ SESANS can be used to reliably estimate $G(\delta)$. Using $L_s = 1.8\unit\meter$ for the instruments considered here, $\theta_a \approx h_d / (2L_s) = 3\unit{\milli\radian}$. With $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å, this estimated limit translates to about $100 \unit{\nano\meter}$ and $200 \unit{\nano\meter}$ respectively. This indicates that true $\delta$-range might be more limited using current $h_d,L_s$ and the colder wavelengths. This effect is here verified using a very primitive non-randomized computational approach from which deviation from the ideal regime in which almost all scattered neutrons reach the detector \cite{rekveldt1996} can be seen. 
@@ -444,7 +441,7 @@ Although so far the the accessible $\delta$-range and detector intensity have be
 		\caption{Scattering integrated over entire sample and normalized.}
 		\label{fig:simplified-scattering-3D:b}
 	\end{subfigure}
-	\caption{An illustration of a simple scattering model assuming a very thin sample and single scattering of a square beam with $R=200\unit{\nano\meter}$ and $\lambda_0 = 4.321$Å. Beam divergence is neglected and a uniform profile is assumed. Figure \ref{fig:simplified-scattering-3D:a} shows the intensity contribution of a single point $(s_x,s_y) = (0,0)$ projected onto the detector. Figure \ref{fig:simplified-scattering-3D:b} shows the normalized result of integrating over the full $10\times10\unit{\milli\meter}$ sample, giving an indication of how much of the scattered fraction of neutrons is detected and which part of the detector can be used to reliably compute $G_\text{exp}$ without resorting to Monte Carlo methods.}
+	\caption{An illustration of a simple scattering model assuming a very thin sample and single scattering of a square beam with $R=200\unit{\nano\meter}$, $\lambda_0 = 4.321$Å and $L_s = 1.8\unit\meter$. Beam divergence is neglected and a uniform profile is assumed. Figure \ref{fig:simplified-scattering-3D:a} shows the intensity contribution of a single point $(s_x,s_y) = (0,0)$ projected onto the detector. Figure \ref{fig:simplified-scattering-3D:b} shows the normalized result of integrating over the full $10\times10\unit{\milli\meter}$ sample, giving an indication of how much of the scattered fraction of neutrons is detected and which part of the detector can be used to reliably compute $G_\text{exp}$ without resorting to Monte Carlo methods.}
 	\label{fig:simplified-scattering-3D}
 \end{figure}
 \begin{figure}[htbp]
@@ -462,7 +459,7 @@ Although so far the the accessible $\delta$-range and detector intensity have be
 		\caption{Estimated detected scattering fraction for $\lambda_0 = 8$Å}
 		\label{fig:simplified-scattering-8}
 	\end{subfigure}
-	\caption{A comparison of the estimated fraction of scattered neutrons that is detected at each point on the detector for $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å and different radii $R$ using a simple single-scattering model. Curves are calculated by first computing a 2D intensity pattern as illustrated in Figure \ref{fig:simplified-scattering-3D:b}, after which the pattern is integrated over $x$ and normalized.} 
+	\caption{A comparison of the estimated fraction of scattered neutrons that is detected at each point on the detector with $L_s = 1.8\unit\meter$ for $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å and different radii $R$. Curves are calculated by first computing a 2D intensity pattern as illustrated in Figure \ref{fig:simplified-scattering-3D:b}, after which the pattern is integrated over $x$ and normalized.} 
 	\label{fig:simplified-scattering}
 \end{figure}
 \subsubsection{Non-randomized single-scattering model}
