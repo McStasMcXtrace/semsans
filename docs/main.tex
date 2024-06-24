@@ -40,7 +40,7 @@ The goal is to bridge the gap between accessible length ranges of SANS and SEMSA
 \newpage 
 \section{Theory}
 \label{c2:theory}
-In this chapter, a review is given of relevant theory related to SEMSANS and the interpretation of measurements. First, the basic principles of SEMSANS as a neutron spin echo technique are explained and the way the beam is modulated is derived. Next, the interaction of samples with the modulated beam is discussed and the concept of spin-echo length $\delta$ is introduced.
+In this chapter, a review is given of relevant theory related to SEMSANS and the interpretation of measurements. First, the basic principles of SEMSANS as a neutron spin echo technique are explained and the way the beam is modulated is derived. Next, the interaction of samples with the modulated beam is discussed and the concept of spin-echo length $\delta$ and introduced as a way of characterizing a sample by considering its SESANS correlation function $G(\delta)$. Lastly, a reference sample that will be used throughout this work is introduced and characterized by its $G(\delta)$ and form factor $P(Q)$. 
 
 % I like 'Beam modulation through Larmor precession' as a phrase
 \subsection{Polarized neutrons and Larmor precession}
@@ -62,11 +62,11 @@ Using the concepts of polarized neutrons and Larmor precession, the basic concep
 \end{equation}
 Such a $y$-dependent $\phi$ is in practice created using magnetic fields at an angle $\theta_0$ with the beam axis $z$. Different precession devices exist which can create such fields as will be analysed and discussed in Section \ref{c3.3}.
 
-Finally, the modulation is created by applying an analyser to the beam afterwards \cite{mezei1972}. This again polarizes the beam in either the $+x$ or the $-x$ direction depending on the analyzer setting. Assuming a perfectly monochromatic source with $\lambda = \lambda_0$ for all neutrons and ignoring the effect of the sample for now, this creates an intensity modulation pattern on the position-sensitive detector at frequency $f_0 = \alpha\lambda_0$ of the form
+Finally, the modulation is created by applying an analyser to the beam afterwards \cite{mezei1972}. This again polarizes the beam in either the $+x$ or the $-x$ direction depending on the analyzer setting. Assuming a perfectly monochromatic source with wavelength $\lambda = \lambda_0$, this creates an intensity modulation pattern on the position-sensitive detector at frequency $f_0 = \alpha\lambda_0$ of the form
 \begin{equation}
 	I_{b,s}(y) = I_{0, b,s} \pm A_{b,s}\cos(2\pi f_0y) \label{eq:mono-modulation}
 \end{equation}
-where $I_{b,s}, A_{b,s}$ are experimentally observed quantities in the base case of an empty instrument ($b$) and an instrument with a sample ($s$) and the sign of the modulation depending on the $\pm x$ analyser setting \cite{parnell2023}. 
+where $I_{b,s}, A_{b,s}$ are experimentally observed quantities in the base case of an empty instrument ($b$) and for an instrument with a sample ($s$) and the sign of the modulation depending on the $\pm x$ analyser setting \cite{parnell2023}. 
 \subsection{Spin-echo length $\delta$ and measurement interpretation}
 \label{c2.3}
 When adding a sample to the instrument after the analyser at distance $L_s$ from the detector, a length scale known as the spin-echo length $\delta$ is accessed \cite{bouwman2011}, given by 
@@ -77,9 +77,13 @@ Assuming a measurement along the $y$-axis, it can be derived from the wave-vecto
 \begin{equation}
 	\frac{A_s(\delta)}{A_b(\delta)} = P(\delta) = e^{G(\delta) - \tau} \label{eq:sample-pol-reduction}
 \end{equation}
-with $\tau = \sigma t$ being the scattering power, which corresponds to the average number of scattering events for a neutron traversing the sample. $G(\delta)$ is the SESANS correlation function given by
+with $\tau = \sigma t$ being the scattering power, which corresponds to the average number of scattering events for a neutron traversing the sample. $t$ is the sample thickness and $\sigma$ is the total scattering cross-section defined by 
 \begin{equation}
-	G(\delta) = \frac{1}{k_0^2}\int_{-\infty}^\infty\int_{-\infty}^\infty\dfrac{d\sigma(\vec{Q})}{d\Omega}\cos(Q_y \delta)dQ_xdQ_y  \label{eq:G-analytical}
+	\sigma = \frac{1}{k_0^2}\int_{-\infty}^\infty\int_{-\infty}^\infty\dfrac{d\sigma(\vec{Q})}{d\Omega}dQ_xdQ_y  \label{eq:sigma-analytical}
+\end{equation}
+$G(\delta)$ is the SESANS correlation function given by
+\begin{equation}
+	G(\delta) = \frac{t}{k_0^2}\int_{-\infty}^\infty\int_{-\infty}^\infty\dfrac{d\sigma(\vec{Q})}{d\Omega}\cos(Q_y \delta)dQ_xdQ_y  \label{eq:G-analytical}
 \end{equation}
 This is the 1D expression for $G(\delta)$ matching the 1D detector that will be described in the next chapter. In words, $G(\delta)$ is a cosine transform of $d\sigma(\vec{Q})/d\Omega$ \cite{li2019} along the $y$-axis with regular integration over the $x$-axis. Although formally the integration range is infinite, for practical samples the relevant $Q$-range where $d\sigma(\vec{Q})/d\Omega$ is significantly greater than zero will be limited as will be discussed for a particular sample in the next section. This makes it possible to approximate this cosine transform integral over the finite $Q$-range accessible at a detector, relying on the principle that for large enough samples most neutrons will reach the detector \cite{rekveldt1996}. This framework has been extended to 2D using a two-dimensional cosine transform, making it possible to analyse anisotropic samples using a 2D modulated beam \cite{parnell2023}.
 For isotropic samples, radial integration is possible without loss of information and $G(\delta)$ can be stated using a Hankel transform instead of a cosine transform \cite{andersson2008}.
@@ -97,12 +101,12 @@ Using $\xi = \frac{\delta}{R}$, it can be derived that for $0\leq \xi \leq 2$, $
 \begin{equation}
 	G_0(\delta) = \left[1 - \left(\frac{\xi}{2}\right)^2\right]^{1/2}\left(1 + \frac{1}{8}\xi^2\right) + \frac{1}{2}\xi^2\left[1 - \left(\frac{\xi}{4}\right)^2\right]\ln \left[\frac{\xi}{2 + (4 - \xi^2)^{1/2}}\right] \label{eq:sample-G0}
 \end{equation}
-Outside of this range, $G_0(\xi) = 0$ \cite{krouglov2003}. Figure \ref{fig:analytical-G0} shows $G_0(\delta)$ for different values of $R$. 
+$G_0(\delta)$ is the normalized correlation function with key property $G_0(0) = 1$ as opposed to $G(0) = \tau$. Outside of this range, $G_0(\xi) = 0$ \cite{krouglov2003}. Figure \ref{fig:analytical-G0} shows $G_0(\delta)$ for different values of $R$. 
 
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\linewidth]{analytical-G0}
-	\caption{TODO}
+	\caption{Normalized SESANS correlation function $G_0(\delta)$ curves for three dilute mono-disperse solid sphere samples with different radii $R$. The corresponding analytical expression is given by Equation \eqref{eq:sample-G0}.}
 	\label{fig:analytical-G0}
 \end{figure}
 
@@ -118,9 +122,10 @@ This is a rapidly decaying oscillation with significant values in the range from
 \begin{figure}
 	\centering
 	\includegraphics[width=0.5\linewidth]{analytical-P-log}
-	\caption{TODO}
+	\caption{Solid sphere form factor $P(Q)$ for $R = 100\unit{\nano\meter}$ with $Q_{min}, Q_{max}$ as given by Equation \eqref{eq:sample-form-factor}. It can be seen that for $Q > Q_{max}$, $P(Q) < 10^{-3}$ with its oscillation peaks decreasing in amplitude.}
 	\label{fig:analytical-P}
 \end{figure}
+
 \newpage
 \begin{figure*}
 	\centering
@@ -131,13 +136,13 @@ This is a rapidly decaying oscillation with significant values in the range from
 
 \section{Instrument analysis for a cold source}
 \label{c3}
-In this chapter, the used SEMSANS instrument model is introduced and analysed. The cold neutron source and the applicable monochromators for different $\lambda_0$ ranges will be described and three different precession device options and their properties will be described. Additionally, the effect of a spread in wavelength $\lambda$ is described in terms of the observed modulation pattern as well as what is effectively measured. This is to account especially for the greater wavelength spread $\Delta\lambda/\lambda_0$ as encountered at higher $\lambda_0$ operating points accessible at a cold source, requiring the use of a velocity selector monochromator. In the last section the list of instrument design variants considered in this research is introduced. These will be analysed and simulated in Chapter \ref{c4:constraints} and Chapter \ref{c6:monte-carlo} respectively. 
+In this chapter, the used SEMSANS instrument model is introduced and analysed. The cold neutron source and the applicable monochromators for different $\lambda_0$ ranges will be described and three different precession device options and their properties will be described. Additionally, the effect of a spread in wavelength $\lambda$ is described in terms of the observed modulation pattern as well as what is effectively measured. This is to account especially for the greater wavelength spread $\Delta\lambda/\lambda_0$ as encountered at higher $\lambda_0$ operating points accessible at a cold source, requiring the use of a velocity selector monochromator. In the last section a list of instrument design variants considered in this research is introduced. These will be analysed and simulated in Chapter \ref{c4:constraints} and Chapter \ref{c6:monte-carlo} respectively. 
 
 \subsection{Instrument configuration}
 \label{c3.1}
-The general configuration of the family of SEMSANS instruments considered in this work is illustrated in Figure \ref{fig:instrument-config}. It is derivative of an existing study simulating a SEMSANS instrument using foil-flippers and the corresponding McStas instrument \texttt{SEMSANS\_Delft} \cite{bouwman2021b}. Neutrons enter the instrument from a beamline, after which they pass through a monochromator set to select neutrons with a wavelength around $\lambda_0$, with  $\Delta\lambda/\lambda_0$ depending on the choice of monochromator as described below. Next, they pass through a polarizer and two precession devices at locations $L_1, L_2$ respectively. As described in Chapter \ref{c2:theory}, a modulated neutron intensity pattern appears after the analyser, which scatters of the sample at distance $L_s$ from the position-sensitive detector at the end, causing different degrees of loss of visibility of the modulation pattern depending on the sample structure. 
+The general configuration of the family of SEMSANS instruments considered in this work is illustrated in Figure \ref{fig:instrument-config}. It is derivative of an existing study simulating a SEMSANS instrument using foil-flippers and the corresponding McStas instrument \texttt{SEMSANS\_Delft} \cite{bouwman2021b}. Neutrons enter the instrument from a beamline, after which they pass through a monochromator set to select neutrons with a wavelength around $\lambda_0$, with  $\Delta\lambda/\lambda_0$ depending on the choice of monochromator as described below. Next, they pass through a polarizer and two precession devices at locations $L_1, L_2$ respectively. As described in Chapter \ref{c2:theory}, a modulated neutron intensity pattern appears after the analyser, which scatters of the sample at distance $L_s$ from the position-sensitive detector at the end, causing different degrees of loss of visibility of the modulation pattern depending on the sample structure as discussed in Section \ref{c2.3}. 
 
-\subsection{Source and monochromators}
+\subsection{Source $\lambda$ spectrum and monochromators}
 \label{c3.2}
 The cold source beamline is assumed to have a spectrum corresponding to a Maxwell-Boltzmann distribution at $T = 20 \unit{\kelvin}$ given by 
 \begin{equation}
@@ -239,7 +244,7 @@ Substituting this retrieves Equation \eqref{eq:device-prec}. This gives also the
 \label{c3.4}
 The position sensitive detector used is $11\times11\unit{\milli\meter}$ with a resolution of $1001$ pixels along the $y$-axis, corresponding to a pixel size of approximately $p = 10\unit{\micro\meter}$ with detector height $h_d = 11\unit{\milli\meter}$. The beam is focussed at the central $10\times10\unit{\milli\meter}$ area. It is assumed that the neutron beam size and divergence is such that the full detector is used. As will be discussed in Chapter \ref{c4:constraints}, $h_d$ and $p$ limit the modulation frequencies $f = \alpha\lambda$ that can be sampled. The detector is placed at distance $L_s$ from the sample, meaning that ignoring divergence and assuming a straight beam, scattering from point $s_y = 0$ on the sample will be limited to angle $\theta_a = h_d/(2L_s)$ in small-angle approximation, resulting in a maximum wave-vector transfer of $Q_\text{max} \approx \frac{2\pi}{\lambda_0}\theta_a$. A fuller discussion of which angles are accepted by each point $y$ on the detector depending on beam collimation, sample size and detector characteristics is given in \cite{kusmin2017}. Generally speaking, it can be seen that a detector can be used to integrate an experimental estimate $G_\text{exp}(\delta)$ of $G(\delta)$ as given in Equation \eqref{eq:G-analytical} limited by such a $Q_\text{max}$, given by 
 \begin{equation}
-	G_\text{exp}(\delta) = \frac{1}{k_0^2}\int_{-Q_\text{max}}^{Q_\text{max}}\int_{-Q_\text{max}}^{Q_\text{max}}\dfrac{d\sigma(\vec{Q})}{d\Omega}\cos(Q_y \delta)dQ_xdQ_y  \label{eq:G-experimental}
+	G_\text{exp}(\delta) = \frac{t}{k_0^2}\int_{-Q_\text{max}}^{Q_\text{max}}\int_{-Q_\text{max}}^{Q_\text{max}}\dfrac{d\sigma(\vec{Q})}{d\Omega}\cos(Q_y \delta)dQ_xdQ_y  \label{eq:G-experimental}
 \end{equation}
 assuming a symmetric detector with an equal $Q$-range for $x,y$. For samples with significant scattering with $Q > Q_{max}$, the error of $G_\text{exp}(\delta)$ as estimator of $G(\delta)$ can be expected to be significant whereas for samples with larger characteristic lengths and scattering over lower $Q$-ranges, the error will be negligible with most scattered neutrons being picked up by the detector \cite{rekveldt1996} so that $G_\text{exp}(\delta)$ approximates $G(\delta)$ well. 
 
@@ -287,14 +292,14 @@ Firstly, there is the choice of $\lambda_0$ and the corresponding monochromator.
 	\centering
 	\begin{tabular}{|c|c|c|c|c|c|c|c|}
 		\hline
-		Label & $\lambda_0$ (Å) & $\Delta\lambda$ (Å) & Monochromator & Device & $\theta_0$ (degrees) & $B_{\text{min}}$ (mT) & $B_{\text{max}}$ (mT) \\
+		Label & $\lambda_0$ (Å) & $\Delta\lambda$ (Å) & Monochrom. & Device & $\theta_0$ (degrees) & $B_{\text{min}}$ (mT) & $B_{\text{max}}$ (mT) \\
 		\hline
 		ISO 4.321 & 4.321 & 0.04321 & PG & ISO & 20 & 0.1 & 15 \\
 		WSP 4.321 & 4.321 & 0.04321 & PG & WSP & 45 & 0.1 & 63 \\
-		FOIL 4.321 & 4.321 & 0.04321 & PG & FOIL & 11.0138 & 0.3 & 30 \\
+		FOIL 4.321 & 4.321 & 0.04321 & PG & FOIL & 11.013 & 0.3 & 30 \\
 		ISO 8 & 8 & 0.8 & VS & ISO & 20 & 0.1 & 15 \\
 		WSP 8 & 8 & 0.8 & VS & WSP & 45 & 0.1 & 63 \\
-		FOIL 8 & 8 & 0.8 & VS & FOIL & 20.71416 & 0.3 & 30 \\
+		FOIL 8 & 8 & 0.8 & VS & FOIL & 20.714 & 0.3 & 30 \\
 		\hline
 	\end{tabular}
 	\caption{Various instrument design variants combining different $\lambda_0$ and monochromator pairings with the various precession device options. Designs are labelled by combining their device type and the value of $\lambda_0$ in Å.}
