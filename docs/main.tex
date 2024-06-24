@@ -267,7 +267,7 @@ The usual description of SEMSANS modulation patterns as given in \eqref{eq:mono-
 \subsubsection{Modulation envelope for Gaussian $\lambda$ spectrum}
 Assuming a Gaussian wavelength distribution as given by Equation \eqref{eq:gauss-spectrum} and neglecting wavelength-specific effects like foil flipper polarization loss, it can be shown using Fourier analysis that the base intensity modulation becomes
 \begin{equation}
-	I_b(y) = I_{0,b} + A_bE(y)\cos(2\pi\alpha\lambda_0y) \label{eq:poly-base-modulation}
+	I_b(y) = I_{0,b} \pm A_bE(y)\cos(2\pi\alpha\lambda_0y) \label{eq:poly-base-modulation}
 \end{equation}
 The envelope $E(y)$ is a Gaussian and given by
 \begin{equation}
@@ -425,7 +425,7 @@ Using this approach gives highly optimistic order of magnitude estimates of the 
 
 \subsection{Sample scattering and intensity}
 \label{c4.4}
-Although so far the the accessible $\delta$-range and detector intensity have been discussed separately, the characteristic length of the sample measured will have a tangible effect on the measured intensity as well as the quality of $G_{exp}(\delta)$ as estimate of $G(\delta)$ limited to $Q_{max}$ for lower $\delta$ and higher $\lambda_0$. This effect was first discussed in the context of SESANS with an instrument for which $\lambda_0 = 2$Å and $\theta_a \approx 30\unit{\milli\radian}$ \cite{rekveldt1996}, where it was concluded that for characteristic lengths larger than $5\unit{\nano\meter}$ SESANS can be used to reliably estimate $G(\delta)$. Using $L_s = 1.8\unit\meter$ for the instruments considered here, $\theta_a \approx h_d / (2L_s) = 3\unit{\milli\radian}$. With $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å, this estimated limit translates to about $100 \unit{\nano\meter}$ and $200 \unit{\nano\meter}$ respectively. This indicates that true $\delta$-range might be more limited using current $h_d,L_s$ and the colder wavelengths. This effect is here verified using a very primitive non-randomized computational approach from which deviation from the ideal regime in which almost all scattered neutrons reach the detector \cite{rekveldt1996} can be seen. 
+Although so far the the accessible $\delta$-range and detector intensity have been discussed separately, the characteristic length of the sample measured will have a tangible effect on the measured intensity as well as the quality of $G_{exp}(\delta)$ as estimate of $G(\delta)$ limited to $Q_{max}$ for lower $\delta$ and higher $\lambda_0$. This effect was first discussed in the context of SESANS with an instrument for which $\lambda_0 = 2$Å and $\theta_a \approx 30\unit{\milli\radian}$ \cite{rekveldt1996}, where it was concluded that for characteristic lengths larger than $5\unit{\nano\meter}$ SESANS can be used to reliably estimate $G(\delta)$. Using $L_s = 1.8\unit\meter$ for the instruments considered here, $\theta_a \approx h_d / (2L_s) = 3\unit{\milli\radian}$. With $\lambda_0 = 4.321$Å and $\lambda_0 = 8$Å, this estimated limit translates to about $100 \unit{\nano\meter}$ and $200 \unit{\nano\meter}$ respectively. This indicates that the true $\delta$-range might be more limited using current $h_d,L_s$ and the colder wavelengths. This effect is here verified using a very primitive non-randomized computational approach from which deviation from the ideal regime in which almost all scattered neutrons reach the detector \cite{rekveldt1996} can be seen. 
 \begin{figure}[htbp]
 	\centering
 	\begin{subfigure}[b]{0.49\textwidth}
@@ -597,7 +597,7 @@ In conclusion, combining the constraint framework introduced in Chapter \ref{c4:
 \newpage
 \section{Monte Carlo simulations of designs using McStas}
 \label{c6:monte-carlo}
-In this chapter, Monte Carlo simulations of the instrument design variants using McStas \cite{willendrup2020} will be presented. The goal is to complement the analysis and constraints discussed in Chapter $\ref{c4:constraints}$ and provide an understanding of how instruments might behave in practice for a range of samples. 
+In this chapter, Monte Carlo simulations of the instrument design variants using McStas \cite{willendrup2020} will be presented. The goal is to complement the analysis and constraints discussed in Chapter $\ref{c4:constraints}$ and provide an understanding of how instruments might behave in practice for a range of samples and how measurement data can be analysed. 
 
 % after all the analysis and discussion of constraints/optimizing using these, introduce monte carlo simulations as a step closer to a practical instruments and a way to verify identified limitations and see them in play. This last aspect could be an interesting part of the discussion of simulation results as well, you can really point out narrowing modulation envelopes, modulation periods becoming too big for the detecto retcetera. 
 % I expect some designs to not be able to measure specific samples at all or barely to the extent that showing them in a plot is a bit silly. 
@@ -633,66 +633,168 @@ To simulate the instruments, version 3.4 of the raytracing software package McSt
 The \texttt{SANS\_spheres2} sample component is used to model the described sample. Although most of its parameters correspond directly to those listed above, two that deserve mention are \texttt{Qmind} and \texttt{Qmaxd} which define the simulated $Q$-range. As the sample $R$ values span almost two orders of magnitude, the corresponding $Q$ range is quite different for the three samples and proportional to $1/R$. This is accounted for by using \texttt{Qmind}$=0.1/R$, \texttt{Qmaxd}$=10/R$, matching the sample $Q$-range as discussed in Section \ref{c2.4}.
 
 \subsubsection{Data analysis}
-To estimate $P(\delta) = e^{G(\delta)  - \tau}$, the modulation pattern as given in Equation \eqref{eq:poly-base-modulation} is fitted with variable amplitude to $I_{sum} = I_{up} - I_{down}$, the difference between the intensity patterns of the two analyser settings. Only the middle $8\unit{\milli\meter}$ is used to avoid boundary effects as depicted in Figure \ref{fig:simplified-scattering} and also seen in simulation intensity patterns. In practice, this means a Gaussian is fitted with a slight correction proportional to $I_{0,up} - I_{0,down}$ which is close to $0$. The resulting amplitudes $A_b, A_s$ with and without a sample at a given $B$ or $\delta$ setting are then related to $P(\delta)$ via $P(\delta) = A_s/A_b$. As discussed in Section \ref{c3.6}, this can be expected to result in an error proportional to the width of the $\lambda$-spectrum, as a range of $\delta$'s is effectively sampled, each having their own $G(\delta)$ and $\tau(\delta)$. And as discussed in Sections \ref{c3.4} and \ref{c4.4}, the limited $Q$-range of the detector will result in incomplete detection of scattering for samples with smaller radii like $R = 50 \unit{\nano\meter}$ and a greater $Q$-range, limiting the accuracy of $G_\text{exp}(\delta)$. For these reasons, the value of $P(\delta)$ computed is to be understood as an estimate.  
+To estimate $P(\delta) = e^{G(\delta)  - \tau}$, two data analysis methods are used on the simulation data. The first is based on fitting an expected modulation pattern as done elsewhere \cite{bouwman2011}\cite{parnell2023}, the second considers the RMS of the modulation pattern. The advantage of the second method is that it is more robust and better suited for real measurement conditions where many factors such as beam characteristics shape the observed modulation profile. Both rely on computing a quantity called the polarization $Pol(y)$\footnote{The choice for $Pol(y)$ instead of the more conventional $P(y)$ is deliberate and to avoid further overloading of $P$, which is already used in $P(\delta)$ and form factor $P(Q)$.}, defined as 
+$$Pol(y) = \frac{I_{up}(y) - I_{down}(y)}{I_{up}(y) + I_{down}(y)}$$
+Here $I_{up}, I_{down}$ correspond to simulated measurements using the $\pm x$ analyser settings. Intuitively, this gives a normalized expression for the modulation amplitude, allowing for some variation in total measured intensity $I_{up}(y) + I_{down}(y)$ across the detector. The signal at the boundaries of the detector is still not useful due to effects such as discussed in Section \ref{c4.4} and depicted in Figure \ref{fig:simplified-scattering} and only the middle $6\unit{\milli\meter}$ is used when estimating $P(\delta)$ for this reason.
+
+In the first method, a modulation pattern with a Gaussian envelope similar to Equation \eqref{eq:poly-base-modulation} is fitted with variable amplitude to $Pol(y)$. Because $Pol(y)$ is used, $I_0$ disappears from the expression and $Pol_{b,s}(y)$ can largely be described by just $Pol_{\text{gauss}}(y) = A_{b,s}E(y)\cos(2\pi\alpha\lambda_0y)$ with fitted amplitudes $A_{b,s}$. In practice, a small error term $\epsilon$ is included to compensate for a potential non-zero average. This gives the final fitting function with parameter $A_{b,s}$
+\begin{equation}
+	Pol_{\text{fit}}(y) = \epsilon+ A_{b,s}E(y)\cos(2\pi\alpha\lambda_0y) \label{eq:gauss-fit-function}
+\end{equation}
+The resulting amplitudes $A_b, A_s$ with and without a sample at a given $B$ or $\delta$ setting are then related to $P(\delta)$ via $P_{exp}(\delta) = A_s/A_b$. 
+
+In the second method, the RMS of $Pol(y)$ is computed as $RMS_{b,s}$ and again $P_{exp}(\delta)$ is given by the ratio $P_{exp}(\delta) = RMS_s/RMS_b$. The correctness of this method can be seen from the fact that for a single sinusoidal modulation the RMS is linearly proportional to the modulation amplitude. 
+
+%As discussed in Section \ref{c3.6}, this can be expected to result in an error proportional to the width of the $\lambda$-spectrum, as a range of $\delta$'s is effectively sampled, each having their own $G(\delta)$ and $\tau(\delta)$. And as discussed in Sections \ref{c3.4} and \ref{c4.4}, the limited $Q$-range of the detector will result in incomplete detection of scattering for samples with smaller radii like $R = 50 \unit{\nano\meter}$ and a greater $Q$-range, limiting the accuracy of $G_\text{exp}(\delta)$. For these reasons, the value of $P(\delta)$ computed is to be understood as an estimate.  
 \subsection{Results}
-The result of the described simulation and data analysis is shown in Figure \ref{fig:simulation-plot}, with each subfigure showing simulated measurements within the accessible $\delta$-ranges for each design.
+The result of the described simulation and data analysis using both methods is shown in Figures \ref{fig:simulation-plot-gauss}, \ref{fig:simulation-plot-rms}, with each subfigure showing simulated measurements within the accessible $\delta$-ranges for each design. Additionally, Figure \ref{fig:simulation-raw-intensity} shows an example of how raw simulation data is processed and fitted to $P_{exp}(\delta)$ in the two ways. The corresponding values are $P_{exp} = 0.52187 \pm 0.0002$ when using the Gauss method and $P_{exp} = 0.516 \pm 0.004$ when using the RMS. The analytical value is $P(\delta) = 0.501906$, which is incompatible with both estimates and their standard error.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-raw-intensity-up}
+		\caption{$I_{b,up}$ and $I_{s,up}$}
+		\label{fig:fig:simulation-raw-intensity-up}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-raw-intensity-down}
+		\caption{$I_{b,down}$ and $I_{s,down}$}
+		\label{fig:simulation-raw-intensity-down}
+	\end{subfigure}
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-raw-intensity-differential}
+		\caption{$I_{s,up}$}
+		\label{fig:simulation-raw-intensity-differential}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-raw-intensity-pol}
+		\caption{$Pol_b, Pol_s$}
+		\label{fig:simulation-raw-intensity-pol}
+	\end{subfigure}
+	\caption{TODO}
+	\label{fig:simulation-raw-intensity}
+\end{figure}
 
 \begin{figure}[p]
 	\centering
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{simulation-plot-FOIL-4.321}
+		\includegraphics[width=\textwidth]{simulation-plot-gauss-FOIL-4.321}
 		\caption{FOIL 4.321}
-		\label{fig:simulation-plot-FOIL-4.321}
+		\label{fig:simulation-plot-gauss-FOIL-4.321}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{simulation-plot-FOIL-8}
+		\includegraphics[width=\textwidth]{simulation-plot-gauss-FOIL-8}
 		\caption{FOIL 8}
-		\label{fig:simulation-plot-FOIL-8}
+		\label{fig:simulation-plot-gauss-FOIL-8}
 	\end{subfigure}
 	\centering
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{simulation-plot-WSP-4.321}
+		\includegraphics[width=\textwidth]{simulation-plot-gauss-WSP-4.321}
 		\caption{WSP 4.321}
-		\label{fig:simulation-plot-WSP-4.321}
+		\label{fig:simulation-plot-gauss-WSP-4.321}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{simulation-plot-WSP-8}
+		\includegraphics[width=\textwidth]{simulation-plot-gauss-WSP-8}
 		\caption{WSP 8}
-		\label{fig:simulation-plot-WSP-8}
+		\label{fig:simulation-plot-gauss-WSP-8}
 	\end{subfigure}
 	\centering
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{simulation-plot-ISO-4.321}
+		\includegraphics[width=\textwidth]{simulation-plot-gauss-ISO-4.321}
 		\caption{ISO 4.321}
-		\label{fig:simulation-plot-ISO-4.321}
+		\label{fig:simulation-plot-gauss-ISO-4.321}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{simulation-plot-ISO-8}
+		\includegraphics[width=\textwidth]{simulation-plot-gauss-ISO-8}
 		\caption{ISO 8}
-		\label{fig:simulation-plot-ISO-8}
+		\label{fig:simulation-plot-gauss-ISO-8}
 	\end{subfigure}
-	\caption{Estimates of $P(\delta)$ derived from a fit of a Gaussian modulation envelope to detector intensity simulation data. Measurements using each of the six instruments were simulated using three samples as specified in Table \ref{tab:sample-thickness} together with the corresponding analytical $P(\delta)$. In most cases the error-bars are too small to be seen with exception of FOIL 4.321, FOIL 8, which were simulated using $10^7$ neutrons per measurement instead of $10^8$.}
-	\label{fig:simulation-plot}
+	\caption{$P_{exp}(\delta)$ values derived from a fit of a Gaussian modulation envelope to detector intensity simulation data. Measurements using each of the six instruments were simulated using three samples as specified in Table \ref{tab:sample-thickness} together with the corresponding analytical $P(\delta)$. In most cases the error-bars are too small to be seen with exception of FOIL 4.321, FOIL 8, which were simulated using $10^7$ neutrons per measurement instead of $10^8$.}
+	\label{fig:simulation-plot-gauss}
 \end{figure}
+
+\begin{figure}[p]
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-plot-rms-FOIL-4.321}
+		\caption{FOIL 4.321}
+		\label{fig:simulation-plot-rms-FOIL-4.321}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-plot-rms-FOIL-8}
+		\caption{FOIL 8}
+		\label{fig:simulation-plot-rms-FOIL-8}
+	\end{subfigure}
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-plot-rms-WSP-4.321}
+		\caption{WSP 4.321}
+		\label{fig:simulation-plot-rms-WSP-4.321}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-plot-rms-WSP-8}
+		\caption{WSP 8}
+		\label{fig:simulation-plot-rms-WSP-8}
+	\end{subfigure}
+	\centering
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-plot-rms-ISO-4.321}
+		\caption{ISO 4.321}
+		\label{fig:simulation-plot-rms-ISO-4.321}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{simulation-plot-rms-ISO-8}
+		\caption{ISO 8}
+		\label{fig:simulation-plot-rms-ISO-8}
+	\end{subfigure}
+	\caption{$P_{exp}(\delta)$ values derived using the RMS method together with analytical $P(\delta)$ curves for three different samples. The data is the same as shown in Figure \ref{fig:simulation-plot-gauss}.}
+	\label{fig:simulation-plot-rms}
+\end{figure}
+
 \subsection{Discussion}
-None of the instruments were able to fully characterize the $R=50\unit{\nano\meter}$ sample, with the previously computed (hard) constraints listed limiting the $\delta$-range. Although the instruments operating at $\lambda_0 = 4.321$Å were able to measure a somewhat wider range, all that can be said about these and those with $\lambda_0 = 8$Å is that they managed to estimate $P(\infty) = e^{-\tau}$ for this sample to differing degrees of accuracy. All instruments were able to measure the $R = 2000 \unit{\nano\meter}$ sample well within their given $\delta$ limitations, with all designs except WSP 4.321 and ISO 4.321 being able to measure up to $\delta \approx 2R$. Going by the analysis presented in Section \ref{c4.4}, it was expected that for $\lambda_0 = 4.321, 8$Å the approximate lower limit at which SEMSANS ceases to approximate $P(\delta)$ well is $100, 200\unit{\nano\meter}$ respectively. This appears to be reflected in the increasing error compared to the analytical expression for $R = 300\unit{\nano\meter}$ which has not been corrected for such an effect. The error is greater for $\lambda_0 = 8$Å which makes sense given what was discussed in Section \ref{c4.3}. This error can be reduced by fitting a smaller height than the centre $8\unit{\milli\meter}$, trading correctness of the estimate for increased uncertainty in $P(\delta)$, which can be understood by considering Figure \ref{fig:simplified-scattering} and the fraction of scattered neutrons that is 'missing' from each point on the detector. 
+When comparing Figures \ref{fig:simulation-plot-gauss}, \ref{fig:simulation-plot-rms}, it appears that generally speaking both analysis methods give similar results. While the RMS method is more noise sensitive as can be seen from fits like Figure \ref{fig:simulation-plot-rms-FOIL-4.321} as compared to \ref{fig:simulation-plot-gauss-FOIL-4.321}, it seems to give more consistent results, giving a more reasonable fit of the $R=50\unit{\nano\meter}$ sample by appearing to capture some of the curvature of $P(\delta)$ in Figure \ref{fig:simulation-plot-rms-WSP-4.321}. Although corrections compensating for a too low detector $Q$-range \cite{kusmin2017} were not performed, it could be that the corrected analytical $P(\delta)$ curve for this sample looks somewhat like the $P_{exp}(\delta)$ fitted to data. Both methods also give a $P_{exp}(\delta)$ that is shifted upwards compared to the expected $P(\delta)$ for all instruments with $\lambda_0 = 8$Å, indicating that $P_{exp}(\delta)$ probably accurately describes the fitted $y$-range of $Pol(y)$ data but cannot be simply related to a $P(\delta)$. Fitting only the middle $2\unit{\milli\meter}$ instead of the middle $6\unit{\milli\meter}$ of the detector reduces this error somewhat but not entirely. This can perhaps be explained by the relatively high $\tau = 0.6893$ as listed in Table \ref{tab:sample-thickness}, causing a relatively higher degree of multiple scattering and a larger fraction of scattered neutrons to go undetected making $P_{exp}(\delta)$ a poor estimate of $P(\delta)$. Another reason could be the greater $\Delta\lambda$ of designs at $\lambda_0 = 8$Å, causing errors of the type discussed in Section \ref{c3.6}.
+% TODO add table illustrating different intensity
+
+% None of the instruments were able to fully characterize the $R=50\unit{\nano\meter}$ sample, with the previously computed (hard) constraints listed limiting the $\delta$-range. 
+
+
+%Although the instruments operating at $\lambda_0 = 4.321$Å were able to measure a somewhat wider range, all that can be said about these and those with $\lambda_0 = 8$Å is that they managed to estimate $P(\infty) = e^{-\tau}$ for this sample to differing degrees of accuracy. All instruments were able to measure the $R = 2000 \unit{\nano\meter}$ sample well within their given $\delta$ limitations, with all designs except WSP 4.321 and ISO 4.321 being able to measure up to $\delta \approx 2R$. Going by the analysis presented in Section \ref{c4.4}, it was expected that for $\lambda_0 = 4.321, 8$Å the approximate lower limit at which SEMSANS ceases to approximate $P(\delta)$ well is $100, 200\unit{\nano\meter}$ respectively. This appears to be reflected in the increasing error compared to the analytical expression for $R = 300\unit{\nano\meter}$ which has not been corrected for such an effect. The error is greater for $\lambda_0 = 8$Å which makes sense given what was discussed in Section \ref{c4.3}. This error can be reduced by fitting a smaller height than the centre $8\unit{\milli\meter}$, trading correctness of the estimate for increased uncertainty in $P(\delta)$, which can be understood by considering Figure \ref{fig:simplified-scattering} and the fraction of scattered neutrons that is 'missing' from each point on the detector. 
+
+\subsubsection{Comparison of analysis methods}
+When comparing Figures \ref{fig:simulation-plot-gauss}, \ref{fig:simulation-plot-rms}, it appears that generally speaking both analysis methods give similar results. While the RMS method is more noise sensitive as can be seen from fits like Figure \ref{fig:simulation-plot-rms-FOIL-4.321} as compared to \ref{fig:simulation-plot-gauss-FOIL-4.321}, it seems to give more consistent results, giving a more reasonable fit of the $R=50\unit{\nano\meter}$ sample by appearing to capture some of the curvature of $P(\delta)$. Although corrections compensating for a too low detector $Q$-range \cite{kusmin2017} were not performed, it could be that the corrected analytical $P(\delta)$ curve for this sample looks somewhat like what is fitted. 
 
 % Did the simulations match the precomputed limits? Are the limits (to the extent that they are not absolute but rather somewhat chosen heuristically) good enough, too strict? Is it in practice possible to measure even at field strenghts outside of the range?
 
 \newpage
 \section{Conclusion and future work}
-In this work, the possibility of realizing a SEMSANS instrument at the new cold source at the Hoger Onderwijs Reactor at the Reactor Institute in Delft was explored through a combination of mathematical analysis, constrained optimization and Monte Carlo simulations. After providing an overview of relevant theory and introducing a simplified instrument model, a range of designs combining different precession device and monochromator options were presented. These were analysed in detail and measurements of known samples were simulated using the raytracing software package McStas \cite{willendrup2020}. 
+In this work, the possibility of realizing a SEMSANS instrument at the new cold source at the Hoger Onderwijs Reactor at the Reactor Institute in Delft was explored through a combination of mathematical analysis, constrained optimization and Monte Carlo simulations. After providing an overview of relevant theory and introducing a simplified instrument model, six combinations of three precession device options and two monochromator types with compatible wavelength $\lambda_0$ were presented. These were analysed in detail and measurements of known samples were simulated using the raytracing software package McStas \cite{willendrup2020}. 
 
-The goal was to explore possibilities for an instrument for the target range $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$ and the lower $\delta$ values of $10 - 100 \unit{\nano\meter}$ proved to be an inherent challenge to cold neutron instruments, especially those at $\lambda_0 = 8$Å. 
+The goal was to explore possibilities for an instrument that could be used to measure processes in the range of $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$. It was shown by optimizing all available free parameters that when considering a beam size and detector height of $10\unit{\milli\meter}$ in an instrument no more than about $5 \unit\meter$ in length, it is impossible to measure this full range keeping the distance from sample to detector $L_s$ constant. This might be possible however if a larger beam and detector is used or if more powerful precession devices become available as these were identified to be limiting factors both for an initial set of designs and optimized designs optimized for 
 
 
 \printbibliography
