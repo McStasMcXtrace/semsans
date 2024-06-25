@@ -1,6 +1,6 @@
 #!/bin/bash
 # Example usage:
-# ./full-simulation.sh 100000 4 5 0,0.020908 2.165 0.02 10000 0.001 0.095993 iso iso_empty GPU
+# ./full-simulation.sh 100000 4 5 0,0.020908 2.165 0.02 10000 0.001 0.095993 1.8 iso iso_empty GPU
 
 # Check if the number of arguments provided is correct
 if [ "$#" -ne 13 ]; then

@@ -1,7 +1,16 @@
-# BEP
+# SEMSANS at a cold source 
 
-Repository for my thesis project. The goal is to develop SEMSANS instruments at cold neutron sources to probe the sub-micron range and this repository will contain the relevant simulations.
+Repository for my bachelor thesis project about the analysis, design and optimization of a spin-echo modulated small angle neutron scattering (SEMSANS) instrument to potentially be realized at the new cold source at the Reactor Institute in Delft. The goal of the project is to explore the possibility for an instrument that can measure at characteristic lengths from 20 nm to 5 μm at a single sample to detector range, making it possible to study time processes such as milk turning into yoghurt or curd that span this entire range without moving the sample during measurement.
 
-## Installation
+## Requirements
 
-To run the notebooks, first install [McStas](https://www.mcstas.org/) 3.4. At the time of writing for Ubuntu, `sudo apt install mcstas-suite-python-ng` installs everything you need. Next, create a new Python environment and install [McStasScript](https://pypi.org/project/McStasScript/) 0.0.67 into it.
+To run the instrument simulations, first install [McStas](https://www.mcstas.org/) 3.4. At the time of writing for Ubuntu, `sudo apt install mcstas-suite-python-ng` installs everything you need. In order to run GPU accelerated simulations, a Nvidia GPU and an installation of the [Nvidia HPC SDK](https://developer.nvidia.com/hpc-sdk) is required but simulations can also be performed on CPU. Invoking McStas and basic data operations are performed using shell scripts, requiring use of Linux or alternatives like Windows Subsystem for Linux (WSL).
+
+Python 3.12.3 is used and the usual complement of scientific Python packages like `numpy` and `scipy` is required to run notebooks and scripts that are used for simulation script generation, data analysis, instrument optimization and other purposes. 
+
+## Overview
+McStas instrument files (`.instr`) and components (`.comp`) are used to define simulations and can be found in [instr](instr/). `foil.instr`, `iwsp.instr` and `iso.instr` represent SEMSANS instruments with respectively ferromagnetic foil flippers, (idealized) Wollaston prisms and isosceles triangles as precession devices. These instruments contain a sample, empty instruments are also provided for easy simulation with and without sample. The corresponding precession device components used by each of these are `Foil_flipper_magnet.comp`, `Pol_triafield_y` and `Pol_IdealWSP`. 
+
+A simulated measurement over a given $B$-field range with and without sample and with analyser in $\pm x$ ('up', and 'down') directions can be performed by running [full-simulation.sh](full-simulation.sh). This will invoke `mcrun` 4 times and it can be run on the CPU or GPU depending on the `mode` parameter passed to `full-simulation.sh`. To simulate many different measurements using various instruments and samples, [simulation-driver.ipynb](simulation-driver.ipynb) can be used to generate a script called `simulate.sh`, which can be run to perform all measurement simulations performed for this project. This will take a couple of hours depending on the hardware configuration and GPU support. The simulated instruments are specified in [instruments.csv](instruments.csv), with simulations of instruments `2a` through `3c` being included in the paper. These can be loaded as `Instrument` objects (as defined in [instrument.py](instrument.py)), which also makes it possible to automatically compute estimates of $\delta$-constraints. This class is also used in instrument optimization in [optimization.ipynb](optimization.ipynb).
+
+Finally, [data-analysis.ipynb](data-analysis.ipynb) can be used to analyze the simulation data and make plots of $P_{exp}(\delta)$ and analytical $P(\delta)$, reproducing those given in the thesis.
