@@ -124,12 +124,12 @@ This is a rapidly decaying oscillation with significant values in the range from
 \end{figure}
 
 \newpage
-\begin{figure*}
+\begin{figure}[hbtp]
 	\centering
-	\includegraphics[width=\linewidth]{config-placeholder}
-	\caption{PLACEHOLDER IMAGE, TO BE REPLACED}
+	\includegraphics[width=\linewidth]{instrument-configuration}
+	\caption{Schematic of the SEMSANS instrument configuration considered in this chapter, lengths and dimensions are not to scale. Neutrons are emitted from the source (S) after which they pass through a monochromator (MC) and are polarized in the $+x$ direction by a polarizer (P). The polarized neutrons travel through two precession devices (shown is a Wollaston prism as discussed in Section \ref{c3.3}) at distances $L_1, L_2$ from the detector and have field strength $\pm B_1$ and $\pm B_2$ in different field regions to create a $y$-dependence in the precession angle as discussed in Section \ref{c2.2}. The devices have depth $d_p$, which is also the approximate length travelled by neutrons through them. Next, the analyser (A) creates a modulated intensity pattern which scatters of the sample at distance $L_s$ with thickness $t$. This scattered intensity pattern arrives at the detector (D) with height $h_d$. The sample can be omitted to measure the unscattered modulation pattern, making it possible to compute the decrease in modulation amplitude related to $G(\delta)$ as per Equation \eqref{eq:sample-pol-reduction}.}
 	\label{fig:instrument-config}
-\end{figure*}
+\end{figure}
 
 \section{Instrument analysis for a cold source}
 \label{c3}
@@ -145,7 +145,7 @@ The cold source beamline is assumed to have a spectrum corresponding to a Maxwel
 \begin{equation}
 	f_\lambda(\lambda) = \sqrt{\frac{2}{\pi}}\left(\frac{1}{mk_BT}\right)^{\frac{3}{2}}\frac{h^3}{\lambda^4}e^{-\frac{h^2}{2k_BTm\lambda^2}} \label{eq:cold-source-spectrum}
 \end{equation}
-This distribution is shown in Figure \ref{fig:source-spectrum}, with the thermal distribution at $T=290 \unit{\kelvin}$ also shown for reference. For simplicity, a uniform rectangular beam of size $10\times10\unit{\milli\meter}$ is used to model the beam and it is focussed on the middle $10\times10\unit{\milli\meter}$ of the detector. Each neutron originating from point $(b_x,b_y)$ in the beam will be aimed at a uniformly sampled random point $(d_x, d_y)$ on the detector, so assuming a distance $d = 5\unit\meter$ from beamline to detector the divergence will be at most $\psi_0 = 2\unit{\milli\radian}$ along the $x$ or $y$ axis and about $\psi_0 = 2.8\unit{\milli\radian}$ in total. This model corresponds to a rectangular setting of the \texttt{Source\_simple} McStas source component which will be used in Monte Carlo simulations in Chapter \ref{c6:monte-carlo}.  
+This distribution is shown in Figure \ref{fig:source-spectrum}, with the thermal distribution at $T=290 \unit{\kelvin}$ also shown for reference. For simplicity, a uniform rectangular beam of size $10\times10\unit{\milli\meter}$ is used to model the beam and it is focussed on the middle $10\times10\unit{\milli\meter}$ of the detector. Each neutron originating from point $(b_x,b_y)$ in the beam will be aimed at a uniformly sampled random point $(d_x, d_y)$ on the detector, so assuming a distance $L = 5\unit\meter$ from beamline to detector the divergence will be at most $\psi_0 = 2\unit{\milli\radian}$ along the $x$ or $y$ axis and about $\psi_0 = 2.8\unit{\milli\radian}$ in total. This model corresponds to a rectangular setting of the \texttt{Source\_simple} McStas source component which will be used in Monte Carlo simulations in Chapter \ref{c6:monte-carlo}.  
 
 % The peak for $T=20 \unit{\kelvin}$ corresponds to $E = k_bT = 1.7 \unit{\milli\electronvolt}$ as opposed to $E = 25.0 \unit{\milli\electronvolt}$ for thermal neutrons. 
 \subsubsection{Monochromators}
@@ -190,29 +190,30 @@ For $\lambda \neq \lambda_0$ this will cause a depolarization as was previously 
 	\centering
 	\begin{subfigure}[b]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{source-spectrum}
-		\caption{CAPTION FOR ISO}
+		\includegraphics[width=\textwidth]{iso-schematic}
+		\caption{Isosceles triangle}
 		\label{fig:precession-devices:iso}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{source-spectrum}
-		\caption{CAPTION FOR WSP}
+		\includegraphics[width=\textwidth]{wp-schematic}
+		\caption{Magnetic Wollaston prism}
 		\label{fig:precession-devices:wsp}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.3\textwidth}
 		\centering
-		\includegraphics[width=\textwidth]{source-spectrum}
-		\caption{CAPTION FOR FOIL}
+		\includegraphics[width=\textwidth]{foil-schematic}
+		\caption{Ferromagnetic foil flipper}
 		\label{fig:precession-devices:foil}
 	\end{subfigure}
-	\caption{TODO: THIS SHOULD CONTAIN 3 SUBFIGURES SHOWCASING THE DEVICE GEOMETRIES NEXT TO EACH OTHER TO FACILITATE COMPARISON}
+	\caption{Schematics for the three different types of precession devices. Assuming positive $B$, the red areas represent a magnetic field in the $+y$ direction and blue areas a field in the $-y$ direction, with exception of Figure \ref{fig:precession-devices:foil}. The reason for this is that the field inside the ferromagnetic foil effectively flips the precession of neutrons of the right $\lambda_0$, causing the positive field after the foil to have the effect of a negative field, simulating the fields seen in a Wollaston prism as shown in Figure \ref{fig:precession-devices:wsp}. For all precession devices the field interfaces are canted by $\theta_0$ in the $yz$-plane and all have depth $d_p = 0.3\unit\meter$ as indicated in Subsection \ref{c3.3.4}. Only for Wollaston prisms $\theta_0 = 45 ^\circ$ as shown, with isosceles triangles in practice having $\theta_0 = 20^\circ$ and $\theta_0$ being a function of $\lambda_0$ in the case of foil flippers.}
 	\label{fig:precession-devices}
 \end{figure}
 
 \subsubsection{Device $\alpha$ and characteristics}
+\label{c3.3.4}
 To summarize the above discussion of the three available devices, once device-specific conditions are met a pair of any of them have in absolute terms the same precession-angle profile given by Equation \eqref{eq:precession-freq} with $\alpha = \frac{(B_1 + B_2)}{\pi\tan\theta_0}$
 \begin{equation}
 	\phi = 2c\lambda (B_1 + B_2)\frac{y}{\tan\theta_0} \label{eq:device-prec}
