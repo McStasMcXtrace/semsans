@@ -255,11 +255,10 @@ The model sample that is considered in this work is a dilute mono-disperse solut
 In general, $L_s$ can be varied in a given instrument to measure different samples in practical SEMSANS instrument designs \cite{kusmin2017}. However, as mentioned in Section \ref{c1.2}, one of the target applications of the instrument is to study processes in colloids like milk turning into yoghurt which encompass the full target range of $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$. This means that it is not practical to adjust $L_s$ in the middle of measurements as it would require precise remote control of the sample holder. It is assumed that such control is not available in this model and that for a given sample measurement $L_s$ is fixed, although measurements can be performed at different $L_s$.  
 
 \subsubsection{Permissible sample positions $L_s$}
-When placing a sample in a given instrument, an important criterion is that $h_d/L_s$ needs to be small enough so that the small-angle approximation $Q_{max} \approx \frac{2\pi}{\lambda_0}\frac{h_d}{2L_s}$ remains valid. As derived in Appendix \ref{appendix-a}, a third-order approximation of $Q_{max}$ is given by
-$$Q_{max} \approx  k(\frac{h_d}{2L_s} - \frac{3h_d^3}{64L_s^3})$$
-making the relative approximation error proportional to $\epsilon_\angle = \frac{3h_d^2}{32L_s^2}$. What values of $h_d/L_s$ and $\epsilon_\angle$ are permissible is unclear as no studies appear to have been done investigating this specifically. Values like $\theta_a \approx 30\unit{\milli\radian}$ are used in SESANS \cite{rekveldt1996} however, indicating that a tenfold increase might be feasible although it is not obvious if this can be translated to a SEMSANS acceptance angle. To be on the safe side, $\theta_a = \arctan\left(h_d / (2L_s)\right) = 15\unit{\milli\radian}$ will be used as an upper limit in this work, translating to a lower limit of $L_{s,min} = 0.366\unit{\meter}$ for $h_d = 11\unit{\milli\meter}$. 
-The upper limit of $L_s$ is determined by the depth of the second precession device $d_p$, its position $L_2$ and sample thickness $t$, giving $L_{s,max} = L_2 - d_p / 2 - t/2$, which evaluates to $L_{s,max} = 1.845 \approx 1.8\unit\meter$ for $L_s$ and assuming maximum sample depth $t=0.01\unit\meter$. Analyser and sample holder dimensions will in practice further limit $L_s$ but this is ignored in this simple model.
-
+When placing a sample in a given instrument, an important criterion is that $h_d/L_s$ needs to be small enough so that the small-angle approximation $Q_{max} \approx \frac{2\pi}{\lambda_0}\frac{h_d}{2L_s}$ remains valid. It can be derived that a third-order approximation of $Q_{max}$ is given by
+$$Q_{max} = \frac{4\pi}{\lambda_0}\sin(\frac{\arctan\frac{h_d}{2L_s}}{2}) \approx  \frac{2\pi}{\lambda_0}(\frac{h_d}{2L_s} - \frac{3h_d^3}{64L_s^3})$$
+making the relative approximation error proportional to $\epsilon_\angle = \frac{3h_d^2}{32L_s^2}$. What values of $h_d/L_s$ and $\epsilon_\angle$ are permissible is unclear as no studies appear to have been done investigating this specifically. Values like $\theta_a \approx 30\unit{\milli\radian}$ are used in SESANS \cite{rekveldt1996} however, indicating that a tenfold increase might be feasible although it is not obvious if this can be translated to a SEMSANS acceptance angle. To be on the safe side, $\theta_a = \arctan\left(h_d / (2L_s)\right) = 15\unit{\milli\radian}$ will be used as an upper limit in this work, translating to a lower limit of $L_{s,min} = 0.366\unit{\meter}$ for $h_d = 11\unit{\milli\meter}$ with $\epsilon_\angle = 8.5 \cdot 10^{-5}$. 
+The upper limit of $L_s$ is determined by the depth of the second precession device $d_p$, its position $L_2$ and sample thickness $t$, giving $L_{s,max} = L_2 - d_p / 2 - t/2$, which evaluates to $L_{s,max} = 1.845 \approx 1.8\unit\meter$ for $L_s$ and assuming maximum sample depth $t=0.01\unit\meter$. Factors like analyser and sample holder dimensions will in practice further limit $L_s$ but this is ignored in this simple model.
 %% TODO: add min Q from pixel size? I guess in small angle approximation this is already in there? In fact probably Q_max will already be related to the period although I need to figure out how exactly. 
 \subsection{Polychromatic SEMSANS}
 \label{c3.6}
@@ -284,7 +283,7 @@ At first glance, it is clear that the effect of a sample on the modulation will 
 \begin{equation}
 	I_s(y) = I_{0,s} + \int_{-\infty}^\infty f_{\text{gauss}}(\lambda)e^{G(\lambda^2 L_s\alpha) - \tau(\lambda)}A_b\cos(2\pi\alpha\lambda y)d\lambda \label{eq:poly-sample-modulation}
 \end{equation}
-per linearity describes the modulation pattern. Qualitatively it can be seen that for greater $\sigma$, a greater $\delta$ range is accessed around a central value corresponding to $\lambda_0$ and reflected in the spectrum. This means that estimating $G(\delta)$ from the visibility will introduce error depending on the specific sample and the $\delta$-resolution will be limited. One way to avoid this problem is to compute the Fourier spectrum and consider the transfer of the sample in the frequency domain. This does bring with it new problems such as frequency resolution limitations. 
+per linearity describes the modulation pattern. Qualitatively it can be seen that for greater $\sigma$, a greater $\delta$ range is accessed around a central value corresponding to $\lambda_0$ and reflected in the spectrum. This means that estimating $G(\delta)$ from the visibility will introduce error depending on the specific sample and the $\delta$-resolution will be limited. One way to avoid this problem is to compute the Fourier spectrum and consider the effect of the sample in the frequency domain. This does bring with it new problems such as frequency resolution limitations. 
 
 
 \subsection{Instrument design variants}
@@ -349,7 +348,7 @@ This is equivalent to $\delta_{min,s}$ as it satisfies $\delta_{min,s} Q_{max} =
 \subsubsection{Modulation envelope width}
 As discussed before, the modulation can be described by a Gaussian envelope with a FWHM as given by Equation \eqref{eq:poly-base-modulation-fwhm}. Using $\delta = \lambda_0^2L_s\alpha$ and given a $FWHM_{e,min}$, this can be rewritten to a maximum $\delta$ value
 $$\delta_{max,e} = \frac{\sqrt{2\ln 2}\lambda_0^2 L_s}{\pi\sigma FWHM_{e,min}}$$
-In this way, the intuitive notion that the envelope should not become too narrow to measure enough signal can be translated to a concrete limit by choosing $FWHM_{e,min}$. For monochromators with a low $\Delta\lambda$ and a corresponding low $\sigma$ such as PG monochromators, this will in practice not normally be a limit but it can be when using velocity selectors. The chosen value in this work for $FWHM_{e,min}$ is $2 \unit{\milli\meter}$, so about $18.2$\% of the detector height $h_d$ and is somewhat permissive.  
+In this way, the intuitive notion that the envelope should not become too narrow to measure enough signal can be translated to a concrete limit by choosing $FWHM_{e,min}$. For monochromators with a low $\Delta\lambda$ and a corresponding low $\sigma$ such as PG monochromators, this will in practice not normally be a limit but it can be when using velocity selectors. The chosen value in this work for $FWHM_{e,min}$ is $2 \unit{\milli\meter}$, so about $18.2$\% of the detector height $h_d$ and it is somewhat permissive.  
 
 \subsubsection{Precession device limitations}
 In terms of instrument design, the engineering of precession devices with a high $\alpha$ and optimizing their positions from the detector $L_1, L_2$ perhaps has the greatest impact on $\delta$-range. The importance of $L_1, L_2$ comes from the focussing condition, which is $B_1L_1 = -B_2L_2$ for two devices. As $\alpha\propto B_1 + B_2$ and $B_1, B_2$ are each limited by device-specific $B_{min}, B_{max}$ as given by Table \ref{tab:device-properties}, $B_1 + B_2$ is bounded by
@@ -638,7 +637,7 @@ To estimate $P(\delta) = e^{G(\delta)  - \tau}$, two data analysis methods are u
 $$Pol(y) = \frac{I_{up}(y) - I_{down}(y)}{I_{up}(y) + I_{down}(y)}$$
 Here $I_{up}, I_{down}$ correspond to simulated measurements using the $\pm x$ analyser settings. Intuitively, this gives a normalized expression for the modulation amplitude, allowing for some variation in total measured intensity $I_{up}(y) + I_{down}(y)$ across the detector. The signal at the boundaries of the detector is still not useful due to effects such as discussed in Section \ref{c4.4} and depicted in Figure \ref{fig:simplified-scattering} and only the middle $6\unit{\milli\meter}$ is used when estimating $P(\delta)$ for this reason.
 
-In the first method, a modulation pattern with a Gaussian envelope similar to Equation \eqref{eq:poly-base-modulation} is fitted with variable amplitude to $Pol(y)$. Because $Pol(y)$ is used, $I_0$ disappears from the expression and $Pol_{b,s}(y)$ can largely be described by just $Pol_{\text{gauss}}(y) = A_{b,s}E(y)\cos(2\pi\alpha\lambda_0y)$ with fitted amplitudes $A_{b,s}$. In practice, a small error term $\epsilon$ is included to compensate for a potential non-zero average. This gives the final fitting function with parameter $A_{b,s}$
+In the first method, a modulation pattern with a Gaussian envelope similar to Equation \eqref{eq:poly-base-modulation} is fitted with variable amplitude to $Pol(y)$. Because $Pol(y)$ is used, $I_0$ disappears from the expression and $Pol_{b,s}(y)$ can largely be described by just $Pol_{\text{gauss}}(y) = A_{b,s}E(y)\cos(2\pi\alpha\lambda_0y)$ with fitted amplitudes $A_{b,s}$. In practice, a small error term $\epsilon$ is included to compensate for a potential non-zero average. This gives the final fitting function with parameters $A_{b,s}, \epsilon$
 \begin{equation}
 	Pol_{\text{fit}}(y) = \epsilon+ A_{b,s}E(y)\cos(2\pi\alpha\lambda_0y) \label{eq:gauss-fit-function}
 \end{equation}
@@ -807,18 +806,18 @@ The purpose of this work was to give a first understanding of what is possible i
 \newpage
 \printbibliography
 
-\appendix
-\section{Limitations of SEMSANS theory at lower end of $\delta$ range}
-\label{appendix-a}
-In elastic scattering, the initial and final wave vectors $k_i$, $k_f$ are related through wave vector transfer $Q = |k_f - k_i| = k 2\sin\theta$ with $2\theta$ being the angle between $k_i, k_f$ and $|k_i| = |k_f| = k$ due to elasticity. In normal SEMSANS theory, the small-angle approximation must hold so that $Q_y = k2\theta$ or with $2\theta \approx \frac{y}{L_s}$, $Q_y = k\frac{y}{L_s}$. Using this approximation, it can be seen that $\phi_t = \delta Q_y$, which means that the modulation amplitude $A_s(\delta), A_b(\delta)$ with and without sample is related to $G(\delta)$
+%\appendix
+%\section{Limitations of SEMSANS theory at lower end of $\delta$ range}
+%\label{appendix-a}
+%In elastic scattering, the initial and final wave vectors $k_i$, $k_f$ are related through wave vector transfer $Q = |k_f - k_i| = k 2\sin\theta$ with $2\theta$ being the angle between $k_i, k_f$ and $|k_i| = |k_f| = k$ due to elasticity. In normal SEMSANS theory, the small-angle approximation must hold so that $Q_y = k2\theta$ or with $2\theta \approx \frac{y}{L_s}$, $Q_y = k\frac{y}{L_s}$. Using this approximation, it can be seen that $\phi_t = \delta Q_y$, which means that the modulation amplitude $A_s(\delta), A_b(\delta)$ with and without sample is related to $G(\delta)$
 % $$G(\delta) = \frac{t}{k^2}\int_{Q_{x,min}}^{Q_{x,max}}\int_{Q_{y,min}}^{Q_{y,max}}\dfrac{d\sigma}{d\Omega}(Q)\cos(\delta Q_y)dQ_ydQ_x$$
-by the formula
-$$\frac{A_s(\delta)}{A_b(\delta)} = e^{G(\delta) - \tau}$$
-It can be shown that the generally correct expression for $Q_y$ is 
-$$Q_y = 2k\sin(\frac{\arctan\frac{y}{L_s}}{2})$$
+%by the formula
+%$$\frac{A_s(\delta)}{A_b(\delta)} = e^{G(\delta) - \tau}$$
+%It can be shown that the generally correct expression for $Q_y$ is 
+%$$Q_y = 2k\sin(\frac{\arctan\frac{y}{L_s}}{2})$$
 %This can be simplified to the somewhat lengthy expression
 %$$Q_y = 2k \frac{\frac{y}{L_s}}{\sqrt{2}\sqrt{\frac{y^2}{L_s^2} + 1 }\sqrt{\frac{1}{\sqrt{\frac{y^2}{L_s^2} + 1}}+1}}$$ 
-Considering again small $\frac{y}{L_s}$, it can be derived using a Taylor expansion that in third-order approximation 
-$$Q_y \approx  k(\frac{y}{L_s} - \frac{3y^3}{8L_s^3})$$
+%Considering again small $\frac{y}{L_s}$, it can be derived using a Taylor expansion that in third-order approximation 
+%$$Q_y \approx  k(\frac{y}{L_s} - \frac{3y^3}{8L_s^3})$$
 %So a more accurate relation between $\phi_t$ and $Q, \delta_y$ is given by $$\phi_t = \frac{\delta Q_y}{1 - \frac{3y^2}{8L_s^2}}$$ This appears to give an indication of up to which angles the SEMSANS theory gives a correct description of the amplitude decrease.
 \end{document}
