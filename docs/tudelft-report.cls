@@ -30,7 +30,8 @@
 
 \RequirePackage{graphicx}   % Enhanced support for images
 \RequirePackage{float}      % Improved interface for floating objects
-\RequirePackage[labelfont=bf,justification=centering,footnotesize]{caption} % Captions
+\RequirePackage[labelfont=bf,footnotesize]{caption} % Captions
+% \RequirePackage[labelfont=bf,justification=centering,footnotesize]{caption} % Captions
 \RequirePackage{subcaption} % Support for sub-captions
 \RequirePackage{pdfpages}   % Include PDF documents
 
