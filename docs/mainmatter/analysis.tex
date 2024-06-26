@@ -24,7 +24,7 @@ This distribution is shown in Figure \ref{fig:source-spectrum}, with the thermal
 
 % The peak for $T= \SI{20}{\kelvin}$ corresponds to $E = k_bT = \SI{1.7}{\milli\electronvolt}$ as opposed to $E = \SI{25.0}{\milli\electronvolt}$ for thermal neutrons. 
 \subsection{Monochromators}
-A monochromator is used to select a narrow band of wavelengths around a central wavelength $\lambda_0$. In a practical instrument, a pyroletic graphite (PG) crystal monochromator can be used to do this up to roughly $\lambda_0 \approx 4.5 $Å. For greater wavelengths, a helical velocity selector (VS) can be used to select neutrons travelling at the right velocity. This is a mechanical device rotating at a great speed, and a lower practical limit of $\lambda_0 \approx 7$Å is used as lower $\lambda_0$ would require a too great RPM. Both types of monochromator are characterized by $\Delta\lambda/\lambda_0$, the ratio of the full-width-half-maximum (FWHM) of wavelengths $\Delta\lambda$ passed through and $\lambda_0$. In PG crystals, this is a function of the mosaicity of the crystal \cite{shapiro1972} and for VS monochromators it depends on the ratio of the angular aperture of slits and the pitch angle \cite{szewc2010}. This ratio is taken to be $\Delta\lambda/\lambda_0 = 0.01$ and $\Delta\lambda/\lambda_0 = 0.1$ for PG and VS monochromators respectively, roughly corresponding to the characteristics of components available for an eventual realization. In both analysis and simulations, the transfer of monochromators is taken to be a Gaussian centered at $\lambda_0$ with $\sigma = \frac{1}{2\sqrt{2\ln 2}}\Delta\lambda$. So in practice, the following Gaussian distribution will be used as a source spectrum in both analysis and simulations.
+A monochromator is used to select a narrow band of wavelengths around a central wavelength $\lambda_0$. In a practical instrument, a pyroletic graphite (PG) crystal monochromator can be used to do this up to roughly $\lambda_0 \approx \SI{4.4}{\angstrom}$. For greater wavelengths, a helical velocity selector (VS) can be used to select neutrons travelling at the right velocity. This is a mechanical device rotating at a great speed, and a lower practical limit of $\lambda_0 \approx \SI{7}{\angstrom}$ is used as lower $\lambda_0$ would require a too great RPM. Both types of monochromator are characterized by $\Delta\lambda/\lambda_0$, the ratio of the full-width-half-maximum (FWHM) of wavelengths $\Delta\lambda$ passed through and $\lambda_0$. In PG crystals, this is a function of the mosaicity of the crystal \cite{shapiro1972} and for VS monochromators it depends on the ratio of the angular aperture of slits and the pitch angle \cite{szewc2010}. This ratio is taken to be $\Delta\lambda/\lambda_0 = 0.01$ and $\Delta\lambda/\lambda_0 = 0.1$ for PG and VS monochromators respectively, roughly corresponding to the characteristics of components available for an eventual realization. In both analysis and simulations, the transfer of monochromators is taken to be a Gaussian centered at $\lambda_0$ with $\sigma = \frac{1}{2\sqrt{2\ln 2}}\Delta\lambda$. So in practice, the following Gaussian distribution will be used as a source spectrum in both analysis and simulations.
 \begin{equation}
 	f_\text{gauss}(\lambda) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{1}{2}(\frac{\lambda - \lambda_0}{\sigma})^2} \label{eq:gauss-spectrum}
 \end{equation}
@@ -94,17 +94,16 @@ To summarize the above discussion of the three available devices, once device-sp
 	\phi = 2c\lambda (B_1 + B_2)\frac{y}{\tan\theta_0} \label{eq:device-prec}
 \end{equation}
 the contribution of each separate device being $\phi_i = \frac{2c\lambda B_i y}{\tan\theta_0}$. $\theta_0$ is a function of $\lambda_0$ for foil flippers and is fixed for Wollaston prisms and isosceles triangles, meaning that $B_1, B_2$ will in practice be set to vary $\alpha$. Table \ref{tab:device-properties} summarizes device characteristics as they appear in literature that will be used in this research. All devices are assumed to have depth $d_p = \SI{0.3}{\meter}$, limiting possible values of $L_1, L_2$ and $L_s$. 
-
 \begin{table}[h!]
 	\centering
-	\begin{tabular}{|c|c|c|c|c|c|}
-		\hline
+	\begin{tabular}{c|c c c c c}
+		\toprule
 		Name & Label & $\theta_0$ (degrees) & $B_{\text{min}}$ (mT) & $B_{\text{max}}$ (mT) & Source \\
-		\hline
+		\midrule
 		Isosceles triangle & ISO & 20 & 0.1 & 15 & \cite{kusmin2017} \\
 		Wollaston prism & WSP & 45 & 0.1 & 63 & \cite{li2021} \\
 		Foil flipper & FOIL & - & 0.3 & 30 & \cite{bouwman2011} \\
-		\hline
+		\bottomrule
 	\end{tabular}
 	\caption{Precession device characteristics including the source of the values used. For a foil flipper, $\theta_0$ needs to be set to match $\lambda_0$ and is omitted, its range is sufficient for all $\lambda_0$'s considered in this research.}
 	\label{tab:device-properties}
