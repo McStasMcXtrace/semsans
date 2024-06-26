@@ -163,24 +163,26 @@ per linearity describes the modulation pattern. Qualitatively it can be seen tha
 
 \section{Instrument design variants}
 \label{c3.7}
-Using the basic instrument configuration described and analysed in this chapter with the various options in terms of monochromator and precession devices, a few design variants can be formulated exploring the different options for these component types. Firstly, there is the choice of $\lambda_0$ and the corresponding monochromator. Two considered options are $\lambda_0 = 4.321$Å with a PG monochromator giving $\Delta\lambda = 0.04321$Å and $\lambda_0 = 8$Å with a VS monochromator giving $\Delta\lambda = 0.8$Å. These two sources are combined with each of the three precession device options as characterized in Table \ref{tab:device-properties}, giving Table \ref{tab:design-variants} which includes the appropriate $\theta_0$ needed to achieve $\phi_{foil} = \pi$ in the case of foil flippers. These instruments will first be analysed in the next chapter to estimate their $\delta$-range by using constraints as well as their relative source intensity. In Chapter \ref{c6:monte-carlo}, Monte Carlo simulation results of these instruments on a three representative samples are discussed. 
+Using the basic instrument configuration described and analysed in this chapter with the various options in terms of monochromator and precession devices, a few design variants can be formulated exploring the different options for these component types. Firstly, there is the choice of $\lambda_0$ and the corresponding monochromator. Two considered options are $\lambda_0 = \SI{4.321}{\angstrom}$ with a PG monochromator giving $\Delta\lambda = \SI{0.4321}{\angstrom}$ and $\lambda_0 = \SI{8}{\angstrom}$ with a VS monochromator giving $\Delta\lambda = \SI{0.8}{\angstrom}$. These two sources are combined with each of the three precession device options as characterized in Table \ref{tab:device-properties}, giving Table \ref{tab:design-variants} which includes the appropriate $\theta_0$ needed to achieve $\phi_{foil} = \pi$ in the case of foil flippers. These instruments will first be analysed in the next chapter to estimate their $\delta$-range by using constraints as well as their relative source intensity. In Chapter \ref{c6:monte-carlo}, Monte Carlo simulation results of these instruments on a three representative samples are discussed. 
 
 What the designs have in common are the precession device positions $L_1 = \SI{4.0}{\meter}, L_2 = \SI{2.0}{\meter}$. Additionally, the detector dimensions are $11\times 11~\unit{\milli\meter}$ with pixel size $p = \SI{10.98}{\micro\meter}$ and a distance from source to detector of $d = \SI{5}{\meter}$, summarizing from what is given above. For simplicity and to facilitate comparison, the approximate maximum value of $L_s = \SI{1.8}{\meter}$ will be used in all calculations for the designs, including the computed constraints in Chapter \ref{c4:constraints} and the Monte Carlo simulations presented in Chapter \ref{c6:monte-carlo}. The possibility of optimizing distances $L_1, L_2, L_s$ together with $\lambda_0$ for a given choice of monochromator and precession device is discussed in Chapter \ref{c5:optimization}.  
 
 
+
+
 \begin{table}[h!]
 	\centering
-	\begin{tabular}{|c|c|c|c|c|c|c|c|}
-		\hline
+	\begin{tabular}{ c|c c c c c c c }
+		\toprule
 		Label & $\lambda_0$ (Å) & $\Delta\lambda$ (Å) & Monochrom. & Device & $\theta_0$ (degrees) & $B_{\text{min}}$ (mT) & $B_{\text{max}}$ (mT) \\
-		\hline
+		\midrule
 		ISO 4.321 & 4.321 & 0.04321 & PG & ISO & 20 & 0.1 & 15 \\
 		WSP 4.321 & 4.321 & 0.04321 & PG & WSP & 45 & 0.1 & 63 \\
 		FOIL 4.321 & 4.321 & 0.04321 & PG & FOIL & 11.013 & 0.3 & 30 \\
 		ISO 8 & 8 & 0.8 & VS & ISO & 20 & 0.1 & 15 \\
 		WSP 8 & 8 & 0.8 & VS & WSP & 45 & 0.1 & 63 \\
 		FOIL 8 & 8 & 0.8 & VS & FOIL & 20.714 & 0.3 & 30 \\
-		\hline
+		\bottomrule
 	\end{tabular}
 	\caption{Various instrument design variants combining different $\lambda_0$ and monochromator pairings with the various precession device options. Designs are labelled by combining their device type and the value of $\lambda_0$ in Å.}
 	\label{tab:design-variants}
