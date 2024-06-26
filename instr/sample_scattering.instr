@@ -1,4 +1,4 @@
-DEFINE INSTRUMENT SAMPLE_SCATTERING(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, triacoil_depth=0.3, triacoil_height=0.05459553513993035, R=10000, t=0.001, theta0=0.095993, L_s=1.8)
+DEFINE INSTRUMENT SAMPLE_SCATTERING(L0=2.165, DL=0.02, R=10000, t=0.001, L_s=1.8)
 
 DECLARE
 %{
@@ -21,7 +21,7 @@ COMPONENT src = Source_simple(
     focus_yh=0.01, 
     lambda0=L0, 
     dlambda=DL,
-    gauss=1)
+    gauss=0)
 AT (0, 0, 0) RELATIVE PREVIOUS
 
 COMPONENT sans_spheres = SANS_spheres2(xwidth=0.02, 
@@ -38,11 +38,10 @@ COMPONENT sans_spheres = SANS_spheres2(xwidth=0.02,
 	Qmaxd = 10 / R)
 AT (0, 0, 5 - L_s) RELATIVE src
 
-COMPONENT det = PSD_monitor(xwidth=0.011, yheight=0.011, filename="det",ny=1001, nx=1)
+COMPONENT det = PSD_monitor(xwidth=0.011, yheight=0.011, filename="det",ny=5000, nx=1)
 AT(0,0,5) RELATIVE src
 
 FINALLY
 %{
 %}
-
 END
