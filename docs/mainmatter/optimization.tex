@@ -1,0 +1,121 @@
+\chapter{Constrained optimization of instrument parameters}
+\label{chapter:optimization}
+\label{c5:optimization}
+As was illustrated in the previous chapters, the practical performance of a SEMSANS instrument in terms of $\delta$-range and intensity is a function of all of its parameters and components, making the design of instruments optimizing one or both of these design criteria a challenge. Although the analysis in Chapter \ref{c4:constraints} of the design variants listed in Table \ref{tab:design-variants} gives a first understanding of what is possible when designing an instrument at a cold source using different precession device choices and monochromator-$\lambda_0$ pairings, these designs are not optimized and are derivative of a simple previously simulated design \cite{bouwman2021b} using foil flippers and a thermal neutron source. In this chapter, the problem of designing an instrument is approached as a constrained optimization problem within the framework presented in Chapter \ref{c4:constraints}, focussing in particular on optimizing the accessible $\delta$-range. The goal is to provide an understanding of what is possible using different precession devices and monochromators when optimizing the parameters $\lambda_0, L_1, L_2, L_s$, with each parameter being appropriately bounded to ensure that $\lambda_0$ is compatible with the monochromator, $L_s$ allows a small-angle approximation together with detector height $h_d$ etc. 
+To optimize an instrument computationally, an objective function needs to be formulated. Before this is done, some additional constraints are introduced which complete a formal description of the design constraints.
+% TODO: change  precession devices and monochromators to 'precession devices, monochromators and detectors' if I do find time for h_d variation
+%Two detector models will be considered: the first is the $11\times 11\unit{\milli\meter}$ detector with height $h_d = 11\unit{\milli\meter}$ and pixel size $p = 11\unit{\micro\meter}$ introduced in Section \ref{c3.4} and considered in the calculations presented in Chapter \ref{c4:constraints} as well as the simulations of Chapter \ref{c6:monte-carlo}; the second is a $40\times 40\unit{\milli\meter}$ detector with $h_d = 40\unit{\milli\meter}$ and the same pixel size $p = 11\unit{\micro\meter}$.
+
+
+% TODO: FINISH THIS CHAPTER, ADDING OPTIMAL INSTRUMENT DESIGNS AND PERFORMANCE.
+%The problem of designing an instrument suitable for a specific length range like $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$ subject to the various constraints indicated in the previous chapter can be aptly described as a constrained optimization problem. This does require a formulation of an objective function to maximize and generally speaking this is easier said than done if all factors including instrument cost, intensity etc. are to be taken into account in addition to the $\delta$-range. In this section, the function that is maximized only depends on the $\delta$-range and consequently it should be understood as a speculative exploration of the instrument parameter-space rather than a final optimization of instruments to realize. At best, the presented optimal instruments represent the best one can do in terms of $\delta$-range in the framework of parameters and constraints considered in this research.
+
+\section{Additional constraints for optimization}
+\label{c5.1}
+Although in an experimental setting this is obvious, the physical dimensions of in particular the precession components also play a role as well as the length of the total assembly. These restrictions complete the instrument description and make it possible to optimize instrument configurations computationally. If $L_1, L_2$ are considered to be the centre positions of the precession devices with depths $d_1, d_2$, the following condition limits $L_1$
+$$L_1 \geq L_2 + \frac{d_1 + d_2}{2}$$
+Similarly, the distance from sample to detector $L_s$ is bounded at least by
+$$L_2 \geq L_s + \frac{d_2}{2}$$
+This scheme could be further extended by considering the dimensions of the analyser, sample holder, monochromator etc. Additionally, $L_1$  will be bounded by in any case the length of the experiment hall the instrument is constructed in as well as by other factors. For simplicity, all precession devices are considered to have depth $d_1 = d_2 = 0.3\unit\meter$ as indicated in Chapter \ref{c3}. 
+% and $L_s = 1.33\unit{\meter}$ for $h_d = 40\unit{\milli\meter}$.
+
+%Although the modulation mechanism of SEMSANS appears to complicate this, it appears that the error 
+% TODO: add spicy discussion in which I basically say: look, the error in the relation between phi_t and Q only becomes comparatively large for high delta, which corresponds to small Q making the error quite small again. So there is the crosswise effect which appears to make perhaps greater angles accessible across the board!
+
+\section{Two possible $\delta$-range objective functions}
+\label{c5.2}
+Given the $\delta$ constraints formulated in Chapter \ref{c4:constraints} let $(\delta_{i, min},\delta_{i, max})$ be the final $\delta$ interval subject to these constraints and let $(\delta_{t, min},\delta_{t, max})$ be a target interval. If these overlap, let the overlap interval be given by $(\delta_{o, min},\delta_{o, max})$. A first objective function $g_1$ to maximize is ratio of the length of the overlap and the length of the target interval
+$$g_1 = \begin{cases}
+	\frac{\delta_{o, max}-\delta_{o, min}}{\delta_{t, max} - \delta_{t, min}},\text{ if $\delta$-ranges overlap}\\
+	0,\text{ else}
+\end{cases}$$
+A potential problem with this objective function is that it does not take into consideration that the instrument should perform well across different length ranges and is biased towards the higher $\delta$ values in optimal designs. An intuitive way to optimize for coverage of different length ranges is achieved by looking at these on a logarithmic scale and considering the overlap there, which can be expressed using a second objective function $g_2$ as follows 
+$$g_2 = \begin{cases}
+	\frac{\ln(\delta_{o, max}/\delta_{o, min})}{\ln(\delta_{t, max}/\delta_{t, min})},\text{ if $\delta$-ranges overlap}\\
+	0,\text{ else}
+\end{cases}$$
+%$g_1, g_2$ are two functions that can be optimized computationally to design instruments that best match a given target range like $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$ or another preferred range. 
+
+\section{Optimization scheme}
+\label{c5.3}
+Similar to in the previous chapter, all different pairings of precession devices and monochromators are considered. However, $\lambda_0, L_1, L_2, L_s$ are now free parameters with $\lambda_0$ being bounded by the approximate $\lambda$-band of the respective monochromator within the cold source spectrum, taken to be $3.0 - 4.4$Å and $8.0 - 12.0$Å for PG and VS respectively, and lengths bounded by the constraints given above. 
+The instruments are optimized for target range $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$ using objective function $g_2$, which prioritizes spanning all orders of magnitude of $\delta$ of the range. $L_1$ is limited to $5 \unit\meter$ to ensure a reasonable intensity for all designs. 
+
+The used optimization routine is essentially a constrained random-search of the parameter space, generating $100000$ valid options for each combination of precession device and monochromator, choosing the generated combination of parameters which maximizes $g_2$. This is done by first generating a set of parameters each within their individual ranges and post-processing this to a parameter set which satisfies all constraints such as $L_1>L_2$ etc. by for instance swapping $L_1, L_2$ if $L_1 < L_2$. Naturally, the generated combination of parameters will not strictly be the (global) optimum and a certain level of noise in solution generation is expected. More proper methods like simulated annealing or gradient descent could be used to achieve more accurate optimal solutions with less noise but this is beyond the scope of this work.
+
+
+% TODO: Switch to simulated annealing OR gradient descent for COOL OPTIMIZATION VIBES
+% TODO: Add list of constraints somewhere to improve reproducibility?
+
+\section{Optimized instruments}
+The optimized instruments and their parameters are given in Table \ref{tab:optimized-designs}, their labels indicating the combination of monochromator and precession device of the instrument, which the parameters are optimized for in the sense of maximizing $g_2$. Their $\delta$-range and $Q_{max}$ is given in Table \ref{tab:optimized-designs-performance}, with $\delta_{min}, \delta_{max}$ being derived from Table \ref{tab:optimized-designs-delta-constraints} like in Section \ref{c4.2}.
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c | c c c c c}
+		\toprule
+		Label & $\lambda_0$(Å) & $\Delta\lambda$(Å) & $L_1$($\unit{\meter}$) & $L_2$($\unit{\meter}$) & $L_s$($\unit{\meter}$) \\
+		\midrule
+		FOIL PG & 3.11 & 0.031 & 4.836 & 2.521 & 2.361 \\
+		WSP PG & 4.4 & 0.044 & 4.827 & 0.518 & 0.358 \\
+		ISO PG & 4.4 & 0.044 & 4.742 & 0.521 & 0.361 \\
+		FOIL VS & 10.07 & 1.007 & 3.19 & 1.599 & 1.124 \\
+		WSP VS & 8.86 & 0.886 & 4.764 & 1.438 & 1.278 \\
+		ISO VS & 12.0 & 1.2 & 4.838 & 0.79 & 0.63 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Optimized design parameters for each combination of precession device option and monochromator. }
+	\label{tab:optimized-designs}
+\end{table}
+Comparing the $\delta$-ranges in Table \ref{tab:optimized-designs-performance} with those of the unoptimized designs in Table \ref{tab:designs-final-ranges}, a first obvious difference is that far lower $\delta_{min}$ values are accessible to the optimized instruments. This comes at the cost of $\delta_{max}$ however with the new instruments optimized for $g_2$ in every case having a lower $\delta_{max}$. Comparing Table \ref{tab:optimized-designs-delta-constraints} to \ref{tab:designs-delta-constraints} shows that in both cases $\delta_{min,s}$ is the limiting factor, meaning that with $L_s$ and other parameters being optimized as far as possible, the detector height $h_d$ appears to restrict both the original and the optimized designs. The trend that in the upper $\delta$-range instruments with a PG monochromator and smaller $\lambda_0$ are more limited by their precession devices ($\delta_{max,d}$) and instruments with a VS monochromator and larger $\lambda_0$ more by the modulation envelope narrowing ($\delta_{max,e}$) also remains, as can be seen in Table \ref{tab:optimized-designs-delta-constraints}.
+
+
+Another difference is in $\theta_a$, taken to be approximately $\arctan(h_d/(2L_s))$. The optimized designs WSP PG and ISO PG have $\theta_a \approx 15\unit{\milli\radian}$ which is the used limit in optimization (see Section \ref{c3.5}). This means on one hand that if greater $\theta_a$ is possible, these instruments could probably be optimized further. On the other hand, if $15\unit{\milli\radian}$ is not feasible and the true limit is closer to $10\unit{\milli\radian}$ or $5\unit{\milli\radian}$, these designs cannot be realized and should be recomputed using a more appropriate limit. 
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c|cc|ccc}
+		\toprule
+		Label & $\delta_{\text{min,s}}$ (nm) & $\delta_{\text{min,d}}$ (nm) & $\delta_{\text{max,s}}$ (nm) & $\delta_{\text{max,e}}$ (nm) & $\delta_{\text{max,d}}$ (nm) \\
+		\midrule
+		FOIL PG & 66.67 & \textbf{66.73} & 6674.06 & 32363.43 & \textbf{3478.05} \\
+		WSP PG & \textbf{14.29} & 8.48 & 1430.77 & 6937.98 & \textbf{572.85} \\
+		ISO PG & \textbf{14.45} & 8.34 & 1446.42 & 7013.89 & \textbf{137.55} \\
+		FOIL VS & \textbf{102.89} & 100.87 & 10298.88 & \textbf{4994.07} & 5055.08 \\
+		WSP VS & \textbf{103.0} & 34.23 & 10310.73 & \textbf{4999.81} & 6509.71 \\
+		ISO VS & \textbf{68.69} & 68.5 & 6875.64 & 3334.09 & \textbf{1677.05} \\
+		\bottomrule
+	\end{tabular}
+	\caption{Calculated $\delta$ constraints for optimized designs with the constraints limiting the final $\delta$-range listed in Table \ref{tab:optimized-designs-performance} marked in bold for each design.}
+	\label{tab:optimized-designs-delta-constraints}
+\end{table}
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{c | c c c c}
+		\toprule
+		Label & $Q_{\text{max}}$ ($\text{\AA}^{-1}$) & $\theta_a$ ($\unit{\milli\radian}$) & $\delta_{min}$ (nm) & $\delta_{max}$ (nm) \\
+		\midrule
+		FOIL PG & 0.00471 & 2.33 & 66.73 & 3478.05 \\
+		WSP PG & 0.02198 & 15.375 & 14.29 & 572.85 \\
+		ISO PG & 0.02174 & 15.217 & 14.45 & 137.55 \\
+		FOIL VS & 0.00305 & 4.894 & 102.89 & 4994.07 \\
+		WSP VS & 0.00305 & 4.303 & 103.0 & 4999.81 \\
+		ISO VS & 0.00457 & 8.734 & 68.69 & 1677.05 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Key characteristics of optimized designs, with $\delta_{min}, \delta_{max}$ being computed using the constraints listed in Table \ref{tab:optimized-designs-delta-constraints}}
+	\label{tab:optimized-designs-performance}
+\end{table}
+
+In conclusion, combining the constraint framework introduced in Chapter \ref{c4:constraints} with the method of numerical optimization has made it possible to identify the detector height $h_d$ (and the corresponding beam height, see Sections \ref{c3.2}, \ref{c3.4}) as a limitation for all SEMSANS instruments of the type described in Chapter \ref{c3} with length constraint $L_1 \leq 5 \unit\meter$. Increasing the beam height and detector height from $h_d = 11\unit{\milli\meter}$ to perhaps $h_d = 40\unit{\milli\meter}$ could be a first step towards realizing an instrument with $\delta$-range $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$. An alternative would be to design a more powerful type of precession device.
+
+%\section{Optimal designs for a larger detector height $h_d$}
+%To complete the discussion
+
+% TODO: find time to actually, properly talk about optimization results with bigger h_d without just rambling and stuff.
+
+% The resulting optimal instrument parametrizations confirm patterns already visible in the previous chapter. For instance, isosceles triangles seem to be a very bad pairing with a PG monochromator. It can also be seen that instruments with PG monochromators are generally bounded on the upper end by field strength and those with velocity selectors by the narrowing of their envelope caused by wavelength spread. Similarly, almost all instruments are bounded by the condition that at least one period must be visible on the detector, with especially instruments at greater wavelengths $\lambda_0$ suffering from this limitation.  
+% add further points that come up, maybe after writing a similar section for designs and their computed limitations
+
+

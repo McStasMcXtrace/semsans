@@ -1,0 +1,20 @@
+\chapter{Introduction}
+\label{chapter:introduction}
+\label{c1:introduction}
+In many industries, there is the need to analyse the structure of materials at length scales ranging from nanometres to micrometers. To do this, different methods exist such as scattering techniques, microscopy and analysis based on macroscopic properties. What is unique about scattering techniques however is that they can probe the bulk of the sample at these length scales \cite{bouwman2021}.
+
+% I need to add a better bridge between these two sections, they are both good but lack coupling.
+
+\section{Small-angle scattering}
+\label{c1.1}
+Different scattering techniques exist based on X-rays and neutrons. Generally speaking, because these are reciprocal space methods, larger length-scales correspond to smaller scattering angles and vice versa. This is the motivation behind small-angle scattering methods like Small Angle X-ray Scattering (SAXS) and Small Angle Neutron Scattering (SANS) which are used to analyse materials at length scales from $1 \unit{\nano\meter}$ to a few $100 \unit{\nano\meter}$, which are significantly larger than for instance crystal lattice constants of a few $\unit{Å}$ that can be determined using techniques like X-ray diffraction. Past the upper limit of a few $100 \unit{\nano\meter}$ such small-angle techniques become infeasible for realistic beam sizes and samples, as the deflection of particles in a beam is too slight to learn something about the sample.
+
+For neutrons, spin polarization can be used to label trajectories across the beam, a technique called neutron spin echo \cite{mezei1972}. This principle has been applied in the SANS-derivative techniques SESANS \cite{rekveldt1996} and SEMSANS \cite{bouwman2009}\cite{bouwman2011} to make smaller angles and correspondingly the larger length scales up to about $10 \unit{\micro\meter}$ accessible using polarized neutrons. Formulated differently, these techniques can be seen to measure a type of real-space density correlation function $G(\delta)$ \cite{krouglov2003}\cite{andersson2008} as will also be discussed in Chapter \ref{c2:theory}.
+
+\section{SEMSANS at the Reactor Institute Delft}
+\label{c1.2}
+
+SEMSANS instruments have previously been realized at the Hoger Onderwijs Reactor (HOR) at the Reactor Institute Delft (RID) using a thermal neutron source. As part of the OYSTER project (Optimized Yield for Science, Technology, and Education of Radiation), a cold neutron source operating at $T=20 \unit{\kelvin}$ has been installed and additional improvements have been made to achieve an expected hundredfold improvement in measurement quality or time.
+
+In this report, the possibility for realizing a SEMSANS instrument at the new cold source at HOR will be explored through a combination of mathematical analysis, constrained optimization and Monte Carlo simulations using raytracing software package McStas \cite{willendrup2020}. An existing McStas simulation model \cite{bouwman2021b} is taken as a starting point and extended to include various design options such as precession devices different from foil flippers. 
+The goal is to bridge the gap between accessible length ranges of SANS and SEMSANS \cite{bouwman2021} and see if it is possible to access characteristic lengths from $10 \unit{\nano\meter}$ to $5 \unit{\micro\meter}$ in a single instrument by exploiting the advantage of greater wavelengths. This as an alternative to combining SANS and SEMSANS devices into one as has been proposed before \cite{bouwman2011}\cite{kusmin2017}. An application in the food industry that would benefit from such an instrument is the study of colloids such as casein micelles in (fat free) milk and derivatives like yoghurt and curd. The characteristic length scales of all of these would be accessible at an instrument with this target range, facilitating a better understanding of processes like milk turning into yoghurt. 

@@ -1,14 +1,26 @@
+# Python things
 .ipynb_checkpoints/
+__pycache__/
+
+# McStas compilation output
 *.c
 *.out
+
+# Data
 my_instrument*/
 *.zip
 data
-__pycache__/
+iso_data/
+foil_data/
+iwsp_data/
+scattering_data/
 data_*/
+
+# Generated scripts and text notes
 simulate.sh
 simulate-old.sh
 *.txt
+
 # Documentation related
 *.blg
 *.run.xml
@@ -18,7 +30,4 @@ simulate-old.sh
 *.log
 *.bcf
 *.pdf
-iso_data/
-foil_data/
-iwsp_data/
-scattering_data/
+*.toc

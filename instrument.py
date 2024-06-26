@@ -140,5 +140,5 @@ def print_latex_tables(instrs):
                 print(f"{instr.name} & {round(Q_max * 1e-10, 5)} & {r(delta_min)} & {r(delta_max)} \\\\")
 if __name__ == '__main__':
     import util
-    instrs = util.load_instruments('simulations_new.csv')
+    instrs = util.load_instruments('instruments.csv')
     print_latex_tables(instrs)
