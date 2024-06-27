@@ -78,9 +78,9 @@
     \RequirePackage[no-math]{fontspec} % Advanced font selection
 
     %% Use Arial as the main font and Roboto Slab as title fonts
-    \setmainfont{Arial}
-    \setmathsf{Arial}
-    \setmathtt{Arial}
+    %\setmainfont{Arial}
+    %\setmathsf{Arial}
+    %\setmathtt{Arial}
 
     \newfontfamily\titlestyle{Roboto Slab Light}
     \newfontfamily\largetitlestyle{Roboto Slab Thin}
