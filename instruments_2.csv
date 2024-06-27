@@ -1,0 +1,3 @@
+ID,L0 (Å),DL (Å),monochromator,device,theta0 (grad),B_min (mT),B_max (mT)
+2b,2,0.0002,PG(0.01),wsp,45,0.1,63
+2b,12,0.00012,PG(0.01),wsp,45,0.1,63

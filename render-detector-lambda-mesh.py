@@ -5,30 +5,34 @@ from plotoptix.utils import map_to_colors
 from definitions import *
 
 DENOISE = False
+DOF = False
 def main():
     R = 3000
-    path = f'scattering_data/{R}/0/det.dat'
+    path = f'scattering-modulation-data/0/det.dat'
     params = extract_parameters(path)
     y, _,_,_ = np.genfromtxt(path, delimiter=' ', usecols=(0,1,2,3), unpack=True)
 
-    N_lambda = 500
+    N_lambda = 100
     N_y = len(y)
     I = np.zeros((N_lambda, N_y))
     lambdas = np.zeros((N_lambda))
     # lambdas
     print(f"Visualizing with {N_y} y points and {N_lambda} lambda points")
     for i in range(N_lambda):
-        path = f'scattering_data/{R}/{i}/det.dat'
+        path = f'scattering-modulation-data/{i}/det.dat'
         params = extract_parameters(path)
-        y, _,_,I[i,:] = np.genfromtxt(path, delimiter=' ', usecols=(0,1,2,3), unpack=True)
+        y, I[i,:],_,_ = np.genfromtxt(path, delimiter=' ', usecols=(0,1,2,3), unpack=True)
         lambdas[i] = float(params['L0'])
     print(I.shape)
     # Y = I * 3e13
-    Y = I / 20000 * 75
-    x = lambdas
+    Y = I / 200000 * 7e17
+    x = lambdas * 2
+    y = y * 20
     # y = lambdas
     rx = (np.min(x), np.max(x))
     rz = (np.min(y), np.max(y)) 
+    print(np.min(Y), np.max(Y))
+
     print(rx, rz)
     print(rx, rz)
     # rz = (-10, 10)
@@ -47,10 +51,13 @@ def main():
                 #    floor_y=-1.75,
                 #    make_normals=True
                   )
-    rt.setup_camera("cam1", cam_type="DoF",
-                # eye=[-50, -7, -15], target=[0, 0, -1], up=[0, 1, 0],
-                aperture_radius=0.4, aperture_fract=0.2,
-                focal_scale=0.92, fov=35, glock=True)
+    if DOF:
+        rt.setup_camera("cam1", cam_type="DoF",
+                    # eye=[-50, -7, -15], target=[0, 0, -1], up=[0, 1, 0],
+                    aperture_radius=0.4, aperture_fract=0.2,
+                    focal_scale=0.92, fov=35, glock=True)
+    else:
+        rt.setup_camera("cam1")
 
     eye = rt.get_camera_eye()
     eye[1] = 0.5 * eye[2]
