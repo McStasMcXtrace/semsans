@@ -47,17 +47,17 @@ The optimized instruments and their parameters are given in Table \ref{tab:optim
 		Label & $g_2$ & $\lambda_0 ~[\unit{\angstrom}]$ & $\Delta\lambda ~[\unit{\angstrom}]$ & $L_1 ~[\unit{\meter}]$ & $L_2 ~[\unit{\meter}]$ & $L_s  ~[\unit{\meter}]$ & $L_{s,min}  ~[\unit{\meter}]$& $L_{s, max}  ~[\unit{\meter}]$\\
 		\midrule
 		FOIL PG & \num{0.629} & \num{3.01} & \num{0.0300} & \num{4.79} & \num{2.38} & \num{2.23} & \num{0.333} & \num{2.23} \\
-		WSP PG & \num{0.579} & \num{4.39} & \num{0.0440} & \num{4.73} & \num{0.497} & \num{0.337} & \num{0.333} & \num{0.342} \\
+		WP PG & \num{0.579} & \num{4.39} & \num{0.0440} & \num{4.73} & \num{0.497} & \num{0.337} & \num{0.333} & \num{0.342} \\
 		ISO PG & \num{0.346} & \num{4.38} & \num{0.0440} & \num{4.58} & \num{0.503} & \num{0.343} & \num{0.333} & \num{0.348} \\
 		FOIL VS & \num{0.610} & \num{8.06} & \num{0.806} & \num{3.15} & \num{1.57} & \num{1.41} & \num{0.333} & \num{1.41} \\
-		WSP VS & \num{0.610} & \num{9.35} & \num{0.935} & \num{4.33} & \num{2.07} & \num{1.21} & \num{0.333} & \num{1.92} \\
+		WP VS & \num{0.610} & \num{9.35} & \num{0.935} & \num{4.33} & \num{2.07} & \num{1.21} & \num{0.333} & \num{1.92} \\
 		ISO VS & \num{0.501} & \num{12.0} & \num{1.20} & \num{4.76} & \num{0.734} & \num{0.574} & \num{0.333} & \num{0.579} \\
 		\bottomrule
 	\end{tabular}
 	\caption{Optimized design parameters for each combination of precession device option and monochromator with their optimized value of objective function $g_2$. Also included are $L_{s,min}, L_{s,max}$, giving the range of alternate $L_s$ settings available.}
 	\label{tab:optimized-designs}
 \end{table}
-Comparing the $\delta$-ranges in Table \ref{tab:optimized-designs-performance} with those of the unoptimized designs in Table \ref{tab:designs-final-ranges}, a first obvious difference is that far lower $\delta_{min}$ values are accessible to the optimized instruments. This comes at the cost of $\delta_{max}$ however with the new instruments optimized for $g_2$ in every case having a lower $\delta_{max}$. Comparing Table \ref{tab:optimized-designs-delta-constraints} to \ref{tab:designs-delta-constraints} shows that in both cases $\delta_{min,s}$ is the limiting factor, meaning that with $L_s$ and other parameters being optimized as far as possible, $h_e$ appears to restrict both the original and the optimized designs. The trend that in the upper $\delta$-range instruments with a PG monochromator and smaller $\lambda_0$ are more limited by their precession devices ($\delta_{max,d}$) and instruments with a VS monochromator and larger $\lambda_0$ more by the modulation envelope narrowing ($\delta_{max,e}$) also remains, as can be seen in Table \ref{tab:optimized-designs-delta-constraints}. Another difference is in $\theta_a$, taken to be approximately $\arctan(h_e/(2L_s))$. The optimized designs WSP PG and ISO PG have $\theta_a \approx \SI{15}{\milli\radian}$ which is the used limit in optimization (see Section \ref{c3.5}).
+Comparing the $\delta$-ranges in Table \ref{tab:optimized-designs-performance} with those of the unoptimized designs in Table \ref{tab:designs-final-ranges}, a first obvious difference is that far lower $\delta_{min}$ values are accessible to the optimized instruments. This comes at the cost of $\delta_{max}$ however with the new instruments optimized for $g_2$ in every case having a lower $\delta_{max}$. Comparing Table \ref{tab:optimized-designs-delta-constraints} to \ref{tab:designs-delta-constraints} shows that in both cases $\delta_{min,s}$ is the limiting factor, meaning that with $L_s$ and other parameters being optimized as far as possible, $h_e$ appears to restrict both the original and the optimized designs. The trend that in the upper $\delta$-range instruments with a PG monochromator and smaller $\lambda_0$ are more limited by their precession devices ($\delta_{max,d}$) and instruments with a VS monochromator and larger $\lambda_0$ more by the modulation envelope narrowing ($\delta_{max,e}$) also remains, as can be seen in Table \ref{tab:optimized-designs-delta-constraints}. Another difference is in $\theta_a$, taken to be approximately $\arctan(h_e/(2L_s))$. The optimized designs WP PG and ISO PG have $\theta_a \approx \SI{15}{\milli\radian}$ which is the used limit in optimization (see Section \ref{c3.5}).
 
 \begin{table}[h!]
 	\centering
@@ -66,10 +66,10 @@ Comparing the $\delta$-ranges in Table \ref{tab:optimized-designs-performance} w
 		Label & $\delta_{\text{min,s}} ~[\unit{\nano\meter}]$ & $\delta_{\text{min,d}} ~[\unit{\nano\meter}]$ & $\delta_{\text{max,s}}~[\unit{\micro\meter}]$& $\delta_{\text{max,e}} ~[\unit{\micro\meter}]$ & $\delta_{\text{max,d}} ~[\unit{\micro\meter}]$ \\
 		\midrule
 		FOIL PG & \textbf{67.0} & \num{66.9} & \num{12.2} & \num{29.6} & \textbf{3.33} \\
-		WSP PG & \textbf{14.8} & \num{8.20} & \num{2.69} & \num{6.53} & \textbf{0.540} \\
+		WP PG & \textbf{14.8} & \num{8.20} & \num{2.69} & \num{6.53} & \textbf{0.540} \\
 		ISO PG & \textbf{15.0} & \num{7.80} & \num{2.73} & \num{6.61} & \textbf{0.130} \\
 		FOIL VS & \textbf{113.} & \num{107.} & \num{20.6} & \textbf{5.00} & \num{5.33} \\
-		WSP VS & \textbf{113.} & \num{17.0} & \num{20.6} & \textbf{5.00} & \num{5.13} \\
+		WP VS & \textbf{113.} & \num{17.0} & \num{20.6} & \textbf{5.00} & \num{5.13} \\
 		ISO VS & \textbf{68.8} & \num{66.5} & \num{12.5} & \num{3.04} & \textbf{1.54} \\
 		\bottomrule
 	\end{tabular}
@@ -84,10 +84,10 @@ Comparing the $\delta$-ranges in Table \ref{tab:optimized-designs-performance} w
 		Label & $Q_{\text{max}} ~[\unit{\angstrom^{-1}}]$ & $\theta_a~[\unit{\milli\radian}]$ & $\delta_{min}~[\unit{\nano\meter}]$ & $\delta_{max}~[\unit{\micro\meter}]$ & $\delta_{min,abs}~[\unit{\nano\meter}]$ & $\delta_{max,abs}~[\unit{\micro\meter}]$ \\
 		\midrule
 		FOIL PG & \num{0.00469} & \num{2.25} & \num{67.0} & \num{3.33} & \num{10.0} & \num{3.34} \\
-		WSP PG & \num{0.0212} & \num{14.8} & \num{14.8} & \num{0.540} & \num{14.6} & \num{0.550} \\
+		WP PG & \num{0.0212} & \num{14.8} & \num{14.8} & \num{0.540} & \num{14.6} & \num{0.550} \\
 		ISO PG & \num{0.0210} & \num{14.6} & \num{15.0} & \num{0.130} & \num{14.6} & \num{0.130} \\
 		FOIL VS & \num{0.00277} & \num{3.56} & \num{113.} & \num{5.00} & \num{26.9} & \num{5.02} \\
-		WSP VS & \num{0.00277} & \num{4.13} & \num{113.} & \num{5.00} & \num{31.2} & \num{7.92} \\
+		WP VS & \num{0.00277} & \num{4.13} & \num{113.} & \num{5.00} & \num{31.2} & \num{7.92} \\
 		ISO VS & \num{0.00457} & \num{8.71} & \num{68.8} & \num{1.54} & \num{39.9} & \num{1.55} \\
 		\bottomrule
 	\end{tabular}
@@ -106,10 +106,10 @@ The value for $h_e = \SI{10}{\milli\meter}$ introduced in Chapter \ref{c3} and t
 	Label & $g_2$ & $\lambda_0 ~[\unit{\angstrom}]$ & $\Delta\lambda ~[\unit{\angstrom}]$ & $L_1 ~[\unit{\meter}]$ & $L_2 ~[\unit{\meter}]$ & $L_s  ~[\unit{\meter}]$ & $L_{s,min}  ~[\unit{\meter}]$& $L_{s, max}  ~[\unit{\meter}]$\\
 	\midrule
 	FOIL PG B & \num{0.695} & \num{3.11} & \num{0.0310} & \num{4.59} & \num{3.44} & \num{3.28} & \num{1.00} & \num{3.28} \\
-	WSP PG B & \num{0.728} & \num{4.37} & \num{0.0440} & \num{4.79} & \num{1.16} & \num{1.00} & \num{1.00} & \num{1.00} \\
+	WP PG B & \num{0.728} & \num{4.37} & \num{0.0440} & \num{4.79} & \num{1.16} & \num{1.00} & \num{1.00} & \num{1.00} \\
 	ISO PG B & \num{0.498} & \num{4.40} & \num{0.0440} & \num{4.79} & \num{1.17} & \num{1.01} & \num{1.00} & \num{1.02} \\
 	FOIL VS B & \num{0.693} & \num{8.11} & \num{0.811} & \num{4.11} & \num{3.02} & \num{2.50} & \num{1.00} & \num{2.87} \\
-	\textbf{WSP VS B} & \textbf{0.787} & \num{9.50} & \num{0.950} & \num{3.80} & \num{1.35} & \num{1.19} & \num{1.00} & \num{1.20} \\
+	\textbf{WP VS B} & \textbf{0.787} & \num{9.50} & \num{0.950} & \num{3.80} & \num{1.35} & \num{1.19} & \num{1.00} & \num{1.20} \\
 	ISO VS B & \num{0.636} & \num{12.0} & \num{1.20} & \num{4.49} & \num{1.56} & \num{1.40} & \num{1.00} & \num{1.40} \\
 	\midrule
 	\textbf{FOIL2 PG} & \textbf{0.838} & \num{3.73} & \num{0.0370} & \num{1.79} & \num{0.897} & \num{0.737} & \num{0.333} & \num{0.742} \\
@@ -122,7 +122,7 @@ The value for $h_e = \SI{10}{\milli\meter}$ introduced in Chapter \ref{c3} and t
 \label{tab:optimized-designs-boost}
 \end{table}
 
-Looking at Table \ref{tab:optimized-designs-performance-detector-boost}, three promising designs can be identified: WSP VS B, FOIL 2 PG and FOIL2 PG B. In words, the first is an instrument with Wollaston prisms, a velocity selector set to $\lambda_0 = \SI{10.3}{\angstrom}$ and an effective detector height of $h_e = \SI{30}{\milli\meter}$, which can be accomplished using a wider beam and a larger detector. The second and third are instruments using improved foil flippers and a PG monochromator which selects a wavelength of $\lambda_0 = \SI{3.04}{\angstrom}$ and $\SI{3.39}{\angstrom}$ for the instruments with $h_e = \SI{10}{\milli\meter}$ and $h_e = \SI{30}{\milli\meter}$ respectively. This indicates that using a greater $h_e$, using improved precession devices or a combination of both can make it possible to measure almost the entire range of $\SI{10}{\nano\meter}$ to $ \SI{5}{\micro\meter}$ at a single sample to detector distance. 
+Looking at Table \ref{tab:optimized-designs-performance-detector-boost}, three promising designs can be identified: WP VS B, FOIL 2 PG and FOIL2 PG B. In words, the first is an instrument with Wollaston prisms, a velocity selector set to $\lambda_0 = \SI{10.3}{\angstrom}$ and an effective detector height of $h_e = \SI{30}{\milli\meter}$, which can be accomplished using a wider beam and a larger detector. The second and third are instruments using improved foil flippers and a PG monochromator which selects a wavelength of $\lambda_0 = \SI{3.04}{\angstrom}$ and $\SI{3.39}{\angstrom}$ for the instruments with $h_e = \SI{10}{\milli\meter}$ and $h_e = \SI{30}{\milli\meter}$ respectively. This indicates that using a greater $h_e$, using improved precession devices or a combination of both can make it possible to measure almost the entire range of $\SI{10}{\nano\meter}$ to $ \SI{5}{\micro\meter}$ at a single sample to detector distance. 
 
 It should be noted that the optimized $\delta$-ranges in this chapter are estimates based on the instrument model introduced in Chapter \ref{c3} and the constraints that were derived from it in Chapter \ref{c4:constraints}. Some constraints are based on estimates, such as limiting acceptance angles to $\theta_a = \SI{15}{\milli\radian}$, limiting the Gaussian modulation envelope width to $FWHM_E = \SI{2}{\milli\meter}$ ($\delta_{\text{max,e}}$) and requiring $5$ samples per modulation period ($\delta_{\text{max,s}}$). Relaxing or further constraining these values will impact the found values. Similarly, the additional constraint of $L_1 \leq \SI{5}{\meter}$ was chosen to ensure reasonable detector intensity (something which is otherwise not optimized for). Allowing for a greater instrument length at the cost of intensity could also make greater $\delta$-ranges accessible.
 
@@ -134,10 +134,10 @@ It should be noted that the optimized $\delta$-ranges in this chapter are estima
 		Label & $Q_{\text{max}} ~[\unit{\angstrom^{-1}}]$ & $\theta_a~[\unit{\milli\radian}]$ & $\delta_{min}~[\unit{\nano\meter}]$ & $\delta_{max}~[\unit{\micro\meter}]$ & $\delta_{min,abs}~[\unit{\nano\meter}]$ & $\delta_{max,abs}~[\unit{\micro\meter}]$ \\
 		\midrule
 		FOIL PG B & \num{0.00924} & \num{4.58} & \num{34.0} & \num{2.55} & \num{10.4} & \num{2.55} \\
-		WSP PG B & \num{0.0215} & \num{15.0} & \num{14.6} & \num{1.35} & \num{14.6} & \num{1.35} \\
+		WP PG B & \num{0.0215} & \num{15.0} & \num{14.6} & \num{1.35} & \num{14.6} & \num{1.35} \\
 		ISO PG B & \num{0.0212} & \num{14.8} & \num{14.8} & \num{0.330} & \num{14.7} & \num{0.330} \\
 		FOIL VS B & \num{0.00466} & \num{6.01} & \num{67.6} & \num{4.98} & \num{27.1} & \num{5.73} \\
-		\textbf{WSP VS B} & \num{0.00832} & \num{12.6} & \textbf{37.8} & \textbf{5.00} & \num{31.7} & \num{5.02} \\
+		\textbf{WP VS B} & \num{0.00832} & \num{12.6} & \textbf{37.8} & \textbf{5.00} & \num{31.7} & \num{5.02} \\
 		ISO VS B & \num{0.00561} & \num{10.7} & \num{56.0} & \num{2.91} & \num{40.0} & \num{2.92} \\
 		\midrule
 		\textbf{FOIL2 PG} & \num{0.0114} & \num{6.79} & \textbf{27.5} & \textbf{5.00} & \num{12.4} & \num{5.03} \\

@@ -51,7 +51,7 @@ In the second method, the RMS of $Pol(y)$ is computed as $RMS_{b,s}$ and again $
 
 %As discussed in Section \ref{c3.6}, this can be expected to result in an error proportional to the width of the $\lambda$-spectrum, as a range of $\delta$'s is effectively sampled, each having their own $G(\delta)$ and $\tau(\delta)$. And as discussed in Sections \ref{c3.4} and \ref{c4.4}, the limited $Q$-range of the detector will result in incomplete detection of scattering for samples with smaller radii like $R = 50 \unit{\nano\meter}$ and a greater $Q$-range, limiting the accuracy of $G_\text{exp}(\delta)$. For these reasons, the value of $P(\delta)$ computed is to be understood as an estimate.  
 \section{Results}
-The result of the described simulation and data analysis using both methods is shown in Figures \ref{fig:simulation-plot-gauss}, \ref{fig:simulation-plot-rms}, with each subfigure showing simulated measurements within the accessible $\delta$-ranges for each design together with computed $P_{exp}(\delta)$ and analytical $P(\delta)$. Additionally, Figure \ref{fig:simulation-raw-intensity} shows an example of how raw simulation data from a simulated measurement using WSP 8 is processed and fitted to $P_{exp}(\delta)$ in the two ways. The corresponding values are $P_{exp} = 0.52187 \pm 0.0002$ when using the Gauss method and $P_{exp} = 0.516 \pm 0.004$ when using the RMS. The analytical value is $P(\delta) = 0.501906$, which is incompatible with both estimates and their standard error. These values were computed from fitted amplitudes $A_b = 0.999905 \pm 8\cdot 10^{-6}$, $A_s = 0.5218 \pm 0.0002$ and RMS values $RMS_b = 0.9999226 \pm 4\cdot 10^{-7}$ and $RMS_s = 0.517 \pm 0.004$. In both cases, the uncertainty with a sample is much greater than without.
+The result of the described simulation and data analysis using both methods is shown in Figures \ref{fig:simulation-plot-gauss}, \ref{fig:simulation-plot-rms}, with each subfigure showing simulated measurements within the accessible $\delta$-ranges for each design together with computed $P_{exp}(\delta)$ and analytical $P(\delta)$. Additionally, Figure \ref{fig:simulation-raw-intensity} shows an example of how raw simulation data from a simulated measurement using WP 8 is processed and fitted to $P_{exp}(\delta)$ in the two ways. The corresponding values are $P_{exp} = 0.52187 \pm 0.0002$ when using the Gauss method and $P_{exp} = 0.516 \pm 0.004$ when using the RMS. The analytical value is $P(\delta) = 0.501906$, which is incompatible with both estimates and their standard error. These values were computed from fitted amplitudes $A_b = 0.999905 \pm 8\cdot 10^{-6}$, $A_s = 0.5218 \pm 0.0002$ and RMS values $RMS_b = 0.9999226 \pm 4\cdot 10^{-7}$ and $RMS_s = 0.517 \pm 0.004$. In both cases, the uncertainty with a sample is much greater than without.
 \begin{figure}[htbp]
 	\centering
 	\begin{subfigure}[b]{0.45\textwidth}
@@ -81,7 +81,7 @@ The result of the described simulation and data analysis using both methods is s
 		\caption{$Pol_b, Pol_s$ and fitted Gaussian modulations $Pol_{fit,b}, Pol_{fit,s}$}
 		\label{fig:simulation-raw-intensity-pol}
 	\end{subfigure}
-	\caption{An illustration of the detector intensity patterns recorded during simulations and how they are processed to a fit. The data corresponds to a simulated measurement using WSP 8 of the $R = \SI{300}{\nano\meter}$ sample with $B_1 = \SI{5.4}{\milli\tesla}, B_2 = \SI{10.8}{\milli\tesla}$, corresponding to $\delta = \SI{900}{\nano\meter}$. The fit values are shown in Figure \ref{fig:simulation-plot-gauss-WSP-8} and \ref{fig:simulation-plot-rms-WSP-8}. Figure \ref{fig:simulation-raw-intensity-up}, \ref{fig:simulation-raw-intensity-down} show the detector intensities overlaid with and without sample for both analyser settings (up and down). From these, signals are derived by adding and subtracting the up and down intensities. Finally, $Pol(y)$ is computed and from the $Pol(y)$ values in the middle $\SI{6}{\milli\meter}$ of the detector $P_{exp}(\delta)$ is computed by fitting modulation patterns with a Gaussian envelope or by computing the RMS.}
+	\caption{An illustration of the detector intensity patterns recorded during simulations and how they are processed to a fit. The data corresponds to a simulated measurement using WP 8 of the $R = \SI{300}{\nano\meter}$ sample with $B_1 = \SI{5.4}{\milli\tesla}, B_2 = \SI{10.8}{\milli\tesla}$, corresponding to $\delta = \SI{900}{\nano\meter}$. The fit values are shown in Figure \ref{fig:simulation-plot-gauss-WSP-8} and \ref{fig:simulation-plot-rms-WSP-8}. Figure \ref{fig:simulation-raw-intensity-up}, \ref{fig:simulation-raw-intensity-down} show the detector intensities overlaid with and without sample for both analyser settings (up and down). From these, signals are derived by adding and subtracting the up and down intensities. Finally, $Pol(y)$ is computed and from the $Pol(y)$ values in the middle $\SI{6}{\milli\meter}$ of the detector $P_{exp}(\delta)$ is computed by fitting modulation patterns with a Gaussian envelope or by computing the RMS.}
 	\label{fig:simulation-raw-intensity}
 \end{figure}
 
@@ -104,14 +104,14 @@ The result of the described simulation and data analysis using both methods is s
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{simulation-plot-gauss-WSP-4.321}
-		\caption{WSP 4.321}
+		\caption{WP 4.321}
 		\label{fig:simulation-plot-gauss-WSP-4.321}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{simulation-plot-gauss-WSP-8}
-		\caption{WSP 8}
+		\caption{WP 8}
 		\label{fig:simulation-plot-gauss-WSP-8}
 	\end{subfigure}
 	\centering
@@ -151,14 +151,14 @@ The result of the described simulation and data analysis using both methods is s
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{simulation-plot-rms-WSP-4.321}
-		\caption{WSP 4.321}
+		\caption{WP 4.321}
 		\label{fig:simulation-plot-rms-WSP-4.321}
 	\end{subfigure}
 	\hfill
 	\begin{subfigure}[b]{0.45\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{simulation-plot-rms-WSP-8}
-		\caption{WSP 8}
+		\caption{WP 8}
 		\label{fig:simulation-plot-rms-WSP-8}
 	\end{subfigure}
 	\centering
