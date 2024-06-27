@@ -12,8 +12,8 @@ Secondly, the mean wavelength $\lambda_0$ as well as the monochromator quality $
 \subsection{Detector sampling limitations}
 Using detector sampling frequency $f_s = \frac{1}{p}$, the Nyquist frequency is $f_n = f_s/2$ and this an exclusive upper-limit at two samples per modulation period, corresponding to 
 $$\delta_{max,n} = \frac{\lambda_0L_s}{2p}$$
-This can be derived from the form of $\delta$ that is independent of $\alpha$, $\delta = \lambda_0 fL_s$. In practice, modulation visibility is reduced when approaching this frequency. One way to reduce this is to set a bound for this effect and solve it numerically as done in \cite{kusmin2017}. A simple alternative to this is to require more samples per period, for instance $10$ instead of $2$ giving
-$$\delta_{max,s} = \frac{\lambda_0L_s}{10p}$$
+This can be derived from the form of $\delta$ that is independent of $\alpha$, $\delta = \lambda_0 fL_s$. In practice, modulation visibility is reduced when approaching this frequency. One way to reduce this is to set a bound for this effect and solve it numerically as done in \cite{kusmin2017}. A simple alternative to this is to require more samples per period, for instance $5$ instead of $2$ giving
+$$\delta_{max,s} = \frac{\lambda_0L_s}{5p}$$
 Similarly, the requirement that at least 1 modulation period is visible on the detector restricts the frequency to a minimum of $f_{min} = \frac{1}{h_d}$, corresponding to 
 $$\delta_{min,s} = \frac{\lambda_0L_s}{h_d}$$
 An alternative and equivalent way of deriving this is through considering the detected $Q$-range, using $Q_{max}$ and $\theta_a$ as described in Section \ref{c3.4}. This gives 
