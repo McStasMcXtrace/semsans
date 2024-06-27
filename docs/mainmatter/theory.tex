@@ -8,16 +8,14 @@ In this chapter, a review is given of relevant theory related to SEMSANS and the
 \label{c2.1}
 Neutrons are spin $s=\frac{1}{2}$ particles with a spin angular momentum vector $\vec{S}$, the direction of $\vec{S}$ being the spin polarization $\vec{P}$. When a neutron passes through a uniform $\vec{B}$-field, $\vec{P}$ will precess by a certain angle $\phi$ over time. The frequency at which this occurs is given by
 $$\omega = \gamma |B_\perp|$$
-with $B_\perp$ the magnetic field strength perpendicular to the plane $\vec{P}$ is in and $\gamma$ the neutron gyromagnetic ratio. 
-
-In addition to spin, a neutron has a wavelength $\lambda$ corresponding to a speed $v = \frac{h}{m\lambda}$, $m$ being the neutron mass. This means that it will pass through a uniform (perpendicular) field $B$ of length $L$ in time $t = \frac{Lm\lambda}{h}$. From this it can be seen that the total precession will be 
+with $B_\perp$ the magnetic field strength perpendicular to the plane $\vec{P}$ is in and $\gamma$ the neutron gyromagnetic ratio. In addition to spin, a neutron has a wavelength $\lambda$ corresponding to a speed $v = \frac{h}{m\lambda}$, $m$ being the neutron mass. This means that it will pass through a uniform (perpendicular) field $B$ of length $L$ in time $t = \frac{Lm\lambda}{h}$. From this it can be seen that the total precession will be 
 \begin{equation}
 	\phi = \frac{\gamma B L m\lambda}{h} = c\lambda B L \label{eq:larmor-prec}
 \end{equation}
 with $c = \frac{\gamma m}{h}$ being the Larmor constant \cite{bouwman2021b}.   
 \section{Modulating a neutron beam using precession}
 \label{c2.2}
-Using the concepts of polarized neutrons and Larmor precession, the basic concept of a SEMSANS instrument can be described, deferring a detailed discussion of the source and monochromator for now. The instrument takes a neutron beamline as a source, meaning that with the choice of axes used in this research neutrons can be assumed to move in the $z$-direction with a slight divergence in the $xy$-plane. A polarizer is used to polarize the beam in the $+x$ direction. Next, the beam passes through two precession devices  that give neutrons at wavelength $\lambda$ in the beam a $y$-dependent precession angle in the $xz$-plane due to an applied $B_y$-field %at distance $L_1, L_2$ from the detector
+Using the concepts of polarized neutrons and Larmor precession, the basic concept of a SEMSANS instrument can be described, deferring a detailed discussion of the source and monochromator for now. The instrument takes a neutron beamline as a source, meaning that with the choice of axes used in this research, neutrons can be assumed to move in the $z$-direction with a slight divergence in the $xy$-plane. A polarizer is used to polarize the beam in the $+x$ direction. Next, the beam passes through two precession devices  that give neutrons at wavelength $\lambda$ in the beam a $y$-dependent precession angle in the $xz$-plane due to an applied $B_y$-field %at distance $L_1, L_2$ from the detector
 \begin{equation}
 	\phi = 2\pi\alpha\lambda y \label{eq:precession-freq}
 \end{equation}
@@ -30,11 +28,11 @@ Finally, the modulation is created by applying an analyser to the beam afterward
 where $I_{b,s}, A_{b,s}$ are experimentally observed quantities in the base case of an empty instrument ($b$) and for an instrument with a sample ($s$) and the sign of the modulation depending on the $\pm x$ analyser setting \cite{parnell2023}. 
 \section{Spin-echo length $\delta$ and measurement interpretation}
 \label{c2.3}
-When adding a sample to the instrument after the analyser at distance $L_s$ from the detector, a length scale known as the spin-echo length $\delta$ is accessed \cite{bouwman2011}, given by 
+When adding a sample to the instrument after the analyser at distance $L_s$ from the detector, a correlation length known as the spin-echo length $\delta$ is accessed \cite{bouwman2011}, given by 
 \begin{equation}
 	\delta = \lambda_0^2L_s\alpha \label{eq:delta}
 \end{equation}
-Assuming a measurement along the $y$-axis, it can be derived from the wave-vector transfer $Q_y$ using the small-angle expression $Q_y = \frac{2\pi}{\lambda}\frac{y}{L_s}$, using which $\phi$ can be rewritten to $\phi = \delta Q_y$ with $\delta$ as given. It is the same spin-echo length as used in the analysis and interpretation of SESANS \cite{rekveldt1996}\cite{krouglov2003}\cite{andersson2008}. Whereas in SESANS a decrease in overall beam polarization is used, SEMSANS considers the reduction of intensity modulation amplitude or equivalently visibility upon adding a sample, which can be shown to be related to $\delta$ through the formula \cite{parnell2023}
+Assuming a measurement along the $y$-axis, the above can be derived from the wave-vector transfer $Q_y$ using the small-angle expression $Q_y = \frac{2\pi}{\lambda}\frac{y}{L_s}$. In this way, $\phi$ can be rewritten to $\phi = \delta Q_y$ with $\delta$ as given. It is the same spin-echo length as used in the analysis and interpretation of SESANS \cite{rekveldt1996}\cite{krouglov2003}\cite{andersson2008}. Whereas in SESANS a decrease in overall beam polarization is used, SEMSANS considers the reduction of intensity modulation amplitude or equivalently visibility upon adding a sample, which can be shown to be related to $\delta$ through the formula \cite{parnell2023}
 \begin{equation}
 	\frac{A_s(\delta)}{A_b(\delta)} = P(\delta) = e^{G(\delta) - \tau} \label{eq:sample-pol-reduction}
 \end{equation}
@@ -51,7 +49,7 @@ For isotropic samples, radial integration is possible without loss of informatio
 
 \section{Mono-disperse reference sample and its $G(\delta)$}
 \label{c2.4}
-Expressions for $\tau$ and $G(\delta)$ exist and can be derived for many different sample geometries \cite{andersson2008}. In the context of analysing colloidal systems, a simple commonly used model is a dilute mono-disperse solution of solid spheres \cite{tromp2007}. Although poly-disperse models such as log-normal distributions of spheres appear to better match real samples \cite{heijkamp2011}, a mono-disperse sample is used as a reference in this work as it is also implemented in McStas in the form of the \texttt{SANS\_spheres2} component (see \cite{parnell2024} for a validation of this sample in the context of SESANS) in addition to being a simpler model for samples of various characteristic lengths. Such a mono-disperse sample is characterized by sphere radius $R$, scattering length density contrast $\Delta\rho$, volume fraction $\phi$ and lastly sample thickness $t$. The scattering power $\tau$ for such a sample is given by
+Expressions for $\tau$ and $G(\delta)$ exist and can be derived for many different sample geometries \cite{andersson2008}. In the context of analysing colloidal systems, a simple commonly used model is a dilute mono-disperse solution of solid spheres \cite{tromp2007}. Although poly-disperse models such as log-normal distributions of spheres appear to better match real samples \cite{heijkamp2011}, a mono-disperse sample is used as a reference in this work as it is also implemented in McStas in the form of the \texttt{SANS\_spheres2} component (see \cite{parnell2024} for a validation of this sample in the context of SESANS) in addition to being a simpler model for samples of various characteristic lengths. Such a mono-disperse sample is characterized by sphere radius $R$, scattering length density contrast $\Delta\rho$, volume fraction $\phi$ and sample thickness $t$. The scattering power $\tau$ for such a sample is given by
 \begin{equation}
 	\tau = \frac{3}{2}\phi (1 - \phi) (\Delta\rho)^2\lambda_0^2tR \label{eq:sample-tau}
 \end{equation}
