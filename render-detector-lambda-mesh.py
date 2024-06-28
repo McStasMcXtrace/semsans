@@ -5,14 +5,14 @@ from plotoptix.utils import map_to_colors
 from definitions import *
 
 DENOISE = False
-DOF = False
+DOF = True
 def main():
     R = 3000
     path = f'scattering-modulation-data/0/det.dat'
     params = extract_parameters(path)
     y, _,_,_ = np.genfromtxt(path, delimiter=' ', usecols=(0,1,2,3), unpack=True)
 
-    N_lambda = 100
+    N_lambda = 500
     N_y = len(y)
     I = np.zeros((N_lambda, N_y))
     lambdas = np.zeros((N_lambda))
@@ -25,7 +25,7 @@ def main():
         lambdas[i] = float(params['L0'])
     print(I.shape)
     # Y = I * 3e13
-    Y = I / 200000 * 7e17
+    Y = I / 200000 * 12e17
     x = lambdas * 2
     y = y * 20
     # y = lambdas
@@ -39,14 +39,14 @@ def main():
 
     rt = TkOptiX() # create and configure, show the window later
 
-    rt.set_param(max_accumulation_frames=1000)  # accumulate up to 50 frames
+    rt.set_param(max_accumulation_frames=2000)  # accumulate up to 50 frames
     rt.set_background(0) # black background
     rt.set_ambient(1.0) # some ambient light
 
     # try commenting out optional arguments
     rt.set_data_2d("surface", Y,
                    range_x=rx, range_z=rz,
-                   c=map_to_colors(Y, "cividis"),
+                   c=map_to_colors(Y, "viridis"),
                 #    floor_c=[0.0,0.0,0.0],
                 #    floor_y=-1.75,
                 #    make_normals=True
@@ -54,7 +54,7 @@ def main():
     if DOF:
         rt.setup_camera("cam1", cam_type="DoF",
                     # eye=[-50, -7, -15], target=[0, 0, -1], up=[0, 1, 0],
-                    aperture_radius=0.4, aperture_fract=0.2,
+                    aperture_radius=0.1, aperture_fract=0.2,
                     focal_scale=0.92, fov=35, glock=True)
     else:
         rt.setup_camera("cam1")
@@ -64,7 +64,7 @@ def main():
     rt.update_camera("cam1", eye=eye)
 
     d = np.linalg.norm(rt.get_camera_target() - eye)
-    rt.setup_light("light1", color=8, radius=0.3 * d)
+    #rt.setup_light("light1", color=8, radius=0.3 * d)
 
     if DENOISE:
     # AI denoiser includes exposure and gamma corection, configured with the
