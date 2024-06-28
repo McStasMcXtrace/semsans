@@ -13,9 +13,10 @@ This can be used to derive $\delta$ restrictions from the range of modulation fr
 Finally, an upper $\delta$ limit for which the envelope FWHM of the modulation on the detector reaches a tolerated minimum $FWHM_{e,min}$ is derived from Equation \eqref{eq:poly-base-modulation-env} in Subsection \ref{c4.1.3}. This limit has the unique property that it only depends on $L_s, \Delta\lambda$ and $\lambda_0$, meaning that it is related to the monochromator.
 
 \subsection{Detector sampling limitations}
+\label{c4.1.2}
 Using detector sampling frequency $f_s = \frac{1}{p}$, the Nyquist frequency is $f_n = f_s/2$ and this is an exclusive upper limit at two samples per modulation period, corresponding to 
 $$\delta_{max,n} = \frac{\lambda_0L_s}{2p}$$
-This can be derived from the form of $\delta$ that is independent of $\alpha$, $\delta = \lambda_0 fL_s$. In practice, modulation visibility is reduced when approaching this frequency. One way to reduce this is to set a bound for this effect and solve it numerically as done in \cite{kusmin2017}. A simple alternative to this is to require more samples per period, for instance $5$ instead of $2$ giving
+This can be derived from Equation \eqref{eq:delta-f}. In practice, modulation visibility is reduced when approaching this frequency. One way to avoid this is to set a bound for this effect and solve it numerically as done in \cite{kusmin2017}. A simple alternative to this is to require more samples per period, for instance $5$ instead of $2$ giving
 $$\delta_{max,s} = \frac{\lambda_0L_s}{5p}$$
 Similarly, the requirement that at least 1 modulation period is visible on the detector restricts the frequency to a minimum of $f_{min} = \frac{1}{h_e}$, corresponding to 
 $$\delta_{min,s} = \frac{\lambda_0L_s}{h_e}$$
@@ -24,15 +25,17 @@ $$Q_{max} = \frac{\pi h_s}{\lambda_0 L_s}$$
 This is equivalent to $\delta_{min,s}$ as it satisfies $\delta_{min,s} Q_{max} = \pi$. It also provides an idea of the $Q$-range that reaches the detector, providing a coarse upper limit for $Q$ and accessible characteristic sample lengths. 
 
 \subsection{Modulation envelope width}
+\label{c4.1.3}
 As discussed before, the modulation can be described by a Gaussian envelope with a FWHM as given by Equation \eqref{eq:poly-base-modulation-fwhm}. Using $\delta = \lambda_0^2L_s\alpha$ and given a $FWHM_{e,min}$, this can be rewritten to a maximum $\delta$ value
 $$\delta_{max,e} = \frac{\sqrt{2\ln 2}\lambda_0^2 L_s}{\pi\sigma FWHM_{e,min}}$$
 In this way, the intuitive notion that the envelope should not become too narrow to measure enough signal can be translated to a concrete limit by choosing $FWHM_{e,min}$. For monochromators with a low $\Delta\lambda$ and a corresponding low $\sigma$ such as PG monochromators, this will in practice not normally be a limit but it can be when using velocity selectors. The chosen value in this work for $FWHM_{e,min}$ is $\SI{2}{\milli\meter}$, so $20$\% of the effective detector height $h_e$ and it is somewhat permissive.  
 
 \subsection{Precession device limitations}
-In terms of instrument design, the engineering of precession devices with a high $\alpha$ and optimizing their positions from the detector $L_1, L_2$ perhaps has the greatest impact on $\delta$-range. The importance of $L_1, L_2$ comes from the focussing condition, which is $B_1L_1 = -B_2L_2$ for two devices. As $\alpha\propto B_1 + B_2$ and $B_1, B_2$ are each limited by device-specific $B_{min}, B_{max}$ as given by Table \ref{tab:device-properties}, $B_1 + B_2$ is bounded by
+\label{c4.1.1}
+In terms of instrument design, the engineering of precession devices with a high $\alpha$ and optimizing their positions from the detector $L_1, L_2$ perhaps has the greatest impact on the $\delta$-range. The importance of $L_1, L_2$ comes from the focussing condition, which is $B_1L_1 = -B_2L_2$ for two devices. $\alpha\propto B_1 + B_2$ and $B_1, B_2$ are each limited by device-specific $B_{min}, B_{max}$ as given by Table \ref{tab:device-properties}. It follows that $B_1 + B_2$ is bounded by
 $$(B_1 + B_2)_{min} = (\frac{L_1}{L_2} - 1)B_{min}$$
 $$(B_1 + B_2)_{max} = (1 - \frac{L_2}{L_1})B_{max}$$
-For the minimum value, $B_1 = B_{min}$ and for the maximum value, $B_2 = B_{max}$ with the other set accordingly. Using $\alpha = \frac{c(B_1+B_2)}{\pi\tan\theta_0}$, the following $\delta$ constraints can be derived
+For the minimum value, $B_1 = B_{min}$ and for the maximum value, $B_2 = B_{max}$ with the other set accordingly. Using $\alpha = \frac{c(B_1+B_2)}{\pi\tan\theta_0}$ and $\delta = \lambda_0^2L_s\alpha$, the found $B_1 + B_2$ limitations translate to two $\delta$ constraints
 $$\delta_{min, f} = \lambda_0^2 L_s \frac{c(\frac{L_1}{L_2} - 1)B_{min}}{\pi\tan\theta_0}$$
 $$\delta_{max, f} = \lambda_0^2 L_s \frac{c(1 - \frac{L_2}{L_1})B_{max}}{\pi\tan\theta_0}$$
 
