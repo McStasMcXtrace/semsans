@@ -18,7 +18,7 @@ Using the concepts of polarized neutrons and Larmor precession, the basic concep
 \begin{equation}
 	\phi = 2\pi\alpha\lambda y \label{eq:precession-freq}
 \end{equation}
-with $\alpha$ being a constant specific to the used precession device that together with $\lambda$ determines the precession frequency. This precession can be thought of as $\vec{P}$ being rotated over a $y$-dependent angle $\phi$. Such a $y$-dependent $\phi$ is in practice created by using $B_y$-fields with interfaces at an angle $\theta_0$ with the beam axis $z$. Different precession devices exist which can create such fields as will be analyzed and discussed in Section \ref{c3.3}.
+with $\alpha$ being a constant specific to the used precession device that together with $\lambda$ determines the precession frequency. This precession can be thought of as $\vec{P}$ being rotated over a $y$-dependent angle $\phi$. Such a $y$-dependent $\phi$ is in practice created by using $B_y$-fields with interfaces at an angle $\theta_0$ with the beam axis $z$, causing $L$ in Equation \eqref{eq:larmor-prec} to vary with $y$. Different precession devices exist which can create such fields as will be analyzed and discussed in Section \ref{c3.3}.
 
 Finally, the modulation is created by applying an analyzer to the beam afterwards \cite{mezei1972}. This again polarizes the beam in either the $+x$ or the $-x$ direction depending on the analyzer setting. Assuming a perfectly monochromatic source with wavelength $\lambda = \lambda_0$, this creates an intensity modulation pattern on the position-sensitive detector at frequency $f_0 = \alpha\lambda_0$ of the form
 \begin{equation}
@@ -33,7 +33,7 @@ When adding a sample to the instrument after the analyzer at distance $L_s$ from
 \end{equation}
 Assuming a measurement along the $y$-axis, the above can be derived from the wave-vector transfer $Q_y$ using the small-angle expression $Q_y = \frac{2\pi}{\lambda}\frac{y}{L_s}$. In this way, $\phi$ can be rewritten to $\phi = \delta Q_y$ with $\delta$ as given. It is the same spin-echo length as used in the analysis and interpretation of SESANS \cite{rekveldt1996}\cite{krouglov2003}\cite{andersson2008}. Whereas in SESANS a decrease in overall beam polarization is used, SEMSANS considers the reduction of intensity modulation amplitude or equivalently visibility upon adding a sample, which can be shown to be related to $\delta$ through the formula \cite{parnell2023}
 \begin{equation}
-	\frac{A_s(\delta) I_{0,b}}{A_b(\delta)I_{0,s}} = P(\delta) = e^{G(\delta) - \tau} \label{eq:sample-pol-reduction}
+	\frac{A_s(\delta)}{A_b(\delta)} = P(\delta) = e^{G(\delta) - \tau} \label{eq:sample-pol-reduction}
 \end{equation}
 with $\tau = \sigma t$ being the scattering power, which corresponds to the average number of scattering events for a neutron traversing the sample. $t$ is the sample thickness and $\sigma$ is the total scattering cross-section defined by 
 \begin{equation}
