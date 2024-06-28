@@ -1,4 +1,4 @@
-\chapter{$\delta$-constraints and intensity in instrument design}
+\chapter{Spin-echo length constraints and intensity in instrument design}
 \label{chapter:constraints}
 \label{c4:constraints}
 Two key parameters in SEMSANS instrument design are the accessible $\delta$-range and the intensity at the detector. The first determines the range of samples that can be measured and the second the amount of signal per unit time, which determines how well you can measure in given time or similarly the measurement time needed for a required measurement quality. In this chapter, building on the analysis presented in Chapter \ref{c3}, a system of constraints will be presented that together limit the accessible $\delta$ range for each of the designs listed in Table \ref{tab:design-variants}. After discussing the $\delta$-ranges, a coarse estimate for the intensity at the detector for the two source options will be presented. Lastly, the effect of intensity loss due to SANS scattering is discussed by using a very primitive model for scattering based on the sample form factor $P(Q)$, the goal being to understand the lower $\delta$-limit of the presented instruments better.
@@ -7,8 +7,6 @@ Two key parameters in SEMSANS instrument design are the accessible $\delta$-rang
 Three main sources of limitations can be recognized. Firstly, the effective detector height $h_e$ and pixel size $p$ as well as the distance from detector to sample $L_s$ will limit which modulation frequencies can be sampled as well as the accessible $Q$-range, limiting $\delta$ in various ways.
 Secondly, the mean wavelength $\lambda_0$ as well as the monochromator quality $\frac{d\lambda}{\lambda_0}$ (and corresponding wavelength $\sigma$) shape the modulation envelope and determine how quickly it will become too narrow as $\alpha$ increases due to increasing field strengths, with $\lambda_0$ also playing a role in all other bounds. Lastly, the basic characteristics of precession devices as well as their positions relative to the detector limit the range of $\alpha$ and how strong the precession gradient is along the $y$-axis. 
 
-% Discuss sources of constraints, linking them to the theory in previous chapters. Ideally refer to equation numbers to avoid repetition and make it sound really solid. 
-% Emphasize that these constraints serve as a starting point for estimating limitations for given instruments
 \subsection{Detector sampling limitations}
 Using detector sampling frequency $f_s = \frac{1}{p}$, the Nyquist frequency is $f_n = f_s/2$ and this an exclusive upper-limit at two samples per modulation period, corresponding to 
 $$\delta_{max,n} = \frac{\lambda_0L_s}{2p}$$
@@ -50,9 +48,10 @@ $$\delta_{max, f} = \lambda_0^2 L_s \frac{c(1 - \frac{L_2}{L_1})B_{max}}{\pi\tan
 	\caption{Calculated $\delta$ constraints for the designs with the constraints limiting the final $\delta$-range listed in Table \ref{tab:designs-final-ranges} marked in bold for each design. Many values are identical due to most parameters such as lengths $L_1, L_2, L_s$ being the same. These are included for each design to facilitate comparison with the optimized designs presented in Chapter \ref{c5:optimization}.}
 	\label{tab:designs-delta-constraints}
 \end{table}
+
 \section{Computed $\delta$ constraints and design $\delta$ ranges}
 \label{c4.2}
-The computed $\delta$-constraints for the designs are given in Table \ref{tab:designs-delta-constraints}. From these together, $\delta$-ranges can be calculated for each design as given in Table \ref{tab:designs-final-ranges} together with their $Q_{max}$. %These values were computed using $L_s = 1.8\unit\meter$, which is approximately the maximal $L_s$ setting available. This means that shorter $\delta_{min}$ is accessible by reducing $L_s$ but $\delta_{max}$ is the maximal spin-echo length that can be measured.
+The computed $\delta$-constraints for the designs are given in Table \ref{tab:designs-delta-constraints}. From these together, $\delta$-ranges can be calculated for each design as given in Table \ref{tab:designs-final-ranges} together with their $Q_{max}$.
 \begin{table}[h!]
 	\centering
 	\begin{tabular}{c | c c c c | cc}
@@ -73,17 +72,8 @@ ISO 8 & \num{0.00218} & \num{2.78} & \num{144.} & \num{3.50} & \num{26.7} & \num
 \subsection{Discussion of design constraints}
 The computed $\delta$-ranges and $Q_{max}$ give a first understanding of for what samples the designs can be used to estimate $G(\delta)$ through $G_{\text{exp}}(\delta)$. $\delta$ limits the range of $G(\delta)$'s that can be estimated and $Q_{max}$ gives an indication of how well the bounded integral will approximate the true value. It can be seen that instruments at $\lambda_0 = \SI{4.321}{\angstrom}$ have a wider $Q$-range given the same $L_s, h_e$ as was to be expected from $Q_{max} \propto 1/\lambda_0$ and correspondingly a lower $\delta_{min}$, making them better able to characterize samples of $\delta \approx \SI{100}{\nano\meter}$. For instruments with triangles and prisms, the condition that at least one modulation period must fit on the detector with effective height $h_e$ is a limiting factor, whereas for foils the devices and their positions $L_1, L_2$ limit $\delta$. Another observation that can be made is that instruments at $\lambda_0 = \SI{4.321}{\angstrom}$ with a narrower $\lambda$ spectrum are limited more strongly by the upper sampling limit due to detector pixel size $p$ whereas with a wider spectrum at $\lambda_0 = \SI{8}{\angstrom}$ the narrowing of the modulation envelope becomes a limiting factor. With exception of FOIL 8, the upper $\delta$ limit is in these instruments determined by device characteristics together with $L_1, L_2, L_s$ as well as the specific $\lambda_0$ operating point. 
 
-
 \subsection{Limitations of constraint scheme}
 Together, the constraints above give an impression of various factors limiting the achievable $\delta$-range for SEMSANS instruments with $2$ precession devices. It makes it possible to quickly evaluate designs such as those given and identify possibilities to improve them by making the necessary changes. There are some key limitations however, in particular related to the beam and the detector $Q$-range. As mentioned in Section \ref{c3.4} it is assumed that the beam covers an effective detector height of $h_e$ which translates to requirements for the beam width and/or divergence. The intensity across the beam is assumed to be uniform, which means that the used Gaussian modulation pattern might be too simple of a model for the modulation envelope. As for the $Q$-range, the lower limit imposed by sampling and the precession devices might be too permissive as in practice at the smallest $\delta$, $Q_{max}$ can be too low and $G_\text{exp}(\delta)$ can significantly deviate from $G(\delta)$, this will be discussed in Section \ref{c4.4}. $B$-resolution limitations and how these could influence the $\delta$-resolution were also not considered. Lastly, all computed constraints are derived from values as listed in Table \ref{tab:device-properties} and elsewhere meaning that if say improved precession devices are available with greater $B_{max}$ or different $\theta_0$, the constraints need to be reevaluated.  
-%Some factors that were not taken into account are errors in $G_\text{exp}$ for the lowest $\delta$ values where the $Q$-range might be insufficient as well as more acc
-
-
-% Discuss things that are missing
-%Also very important: discuss the softer constraints: why should the envelope FWHM be 3mm and not 2mm or 4mm? What determines this other than vibes. Indicate how they could be made more/less flexible		
-
-
-
 
 \section{Intensity estimate}
 \label{c4.3}
