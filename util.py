@@ -71,6 +71,6 @@ def load_instruments(path='simulations_new.csv'):
         theta_0 = np.deg2rad(float(r[5]))
         By_min = float(r[6]) * 1e-3
         By_max = float(r[7]) * 1e-3
-        instr = Instrument(id, name, prec, L0, DL, theta_0, By_min, By_max)
+        instr = Instrument(id, name, prec, L0, DL, theta_0, By_min, By_max,detector_size=10e-3)
         instrs.append(instr)
     return instrs

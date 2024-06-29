@@ -121,7 +121,7 @@ class Instrument:
     \tPrecession device: {self.prec_type_long()}; theta_0 = {round(self.theta_0,2)} rad; By_min = {self.By_min * 1e3}mT; By_max = {self.By_max * 1e3}mT
     \tL_1 = {round(self.L_1, 2)}m; L_2 = {round(self.L_2, 2)}m;  L_s = {round(self.L_s, 2)}m
     \tδ range from precession devices: {round(delta_min_field * 1e9,1)} - {round(d_max_field * 1e9, 1)}nm
-    \tmin δ for 1 period on detector with height {detector_size * 1e3}mm: {round(d_min * 1e9,1)}nm 
+    \tmin δ for 1 period on detector with effective height {self.detector_size * 1e3}mm: {round(d_min * 1e9,1)}nm 
     \tmax δ for sampling at 10s/period (f_0 = {round(f_s / 10 *1e-3)}mm^-1): {round(delta_max_ten_samples * 1e9,1)}nm
     \tmax δ for envelope FWHM due to wavelength spread >= {FWHM_env_min*1e3}mm: {round(delta_max_env * 1e9,1)}nm
     \tQ_max as determined by detector height and distance: {round(Q_max * 1e-10, 7)} Å-1
