@@ -24,6 +24,12 @@ def main():
         y, I[i,:],_,_ = np.genfromtxt(path, delimiter=' ', usecols=(0,1,2,3), unpack=True)
         lambdas[i] = float(params['L0'])
     print(I.shape)
+    # Average out the data
+    # Reshape to (250, 2, 500, 2) and take the mean across axis 1 and 3
+    I_smooth = (I[:,::2][:,:-1] + I[:,1::2])/2
+    I = I_smooth
+    I_smooth = (I[::2,:] + I[1::2,:])/2
+    I = I_smooth
     # Y = I * 3e13
     Y = I / 200000 * 12e17
     x = lambdas * 2
