@@ -14,6 +14,7 @@ iso_data/
 foil_data/
 iwsp_data/
 scattering_data/
+scattering-modulation-data/
 data_*/
 
 # Generated scripts and text notes
