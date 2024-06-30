@@ -1,0 +1,70 @@
+DEFINE INSTRUMENT SEMSANS_FOIL(L0=2.165, DL=0.02, By=4.68e-3, AnaSign=1, R = 10000, t = 0.001, theta0=0.095993, L_s=1.8, L_1=4, L_2=2, h_e=0.03)
+
+DECLARE
+%{
+%}
+
+INITIALIZE
+%{
+%}
+
+TRACE
+
+COMPONENT origin = Progress_bar()
+AT (0, 0, 0) RELATIVE ABSOLUTE
+
+COMPONENT src = Source_simple(
+    yheight=h_e, 
+    xwidth=h_e, 
+    dist=5, 
+    focus_xw=h_e, 
+    focus_yh=h_e, 
+    lambda0=L0, 
+    dlambda=DL,
+    gauss=1)
+AT (0, 0, 0) RELATIVE PREVIOUS
+
+COMPONENT set_pol = Set_pol(
+    px=1)
+AT (0, 0, 0) RELATIVE PREVIOUS
+
+COMPONENT f1 = Foil_flipper_magnet(
+    xwidth=0.1, 
+    yheight=0.1, 
+    zdepth=0.3, 
+    phi=theta0, 
+    foilthick=3.0, 
+    Bx=0, 
+    By=By, 
+    Bz=0, 
+    foil_in=1, verbose=0)
+AT (0, 0, 5 - L_1) RELATIVE src
+
+COMPONENT f2 = COPY(f1)(By=2*By)
+AT (0, 0, 5 - L_2) RELATIVE src
+
+COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
+AT (0, 0, 5 - L_2 + 0.16) RELATIVE src
+
+COMPONENT sans_spheres = SANS_spheres2(xwidth=2*h_e, 
+    yheight=2*h_e, 
+	zthick=t, 
+	dsdw_inc=0.0, 
+	sc_aim=0.8, 
+	sans_aim=0.95, 
+	R=R, 
+    drho=1.8e10,
+	phi=0.015, 
+	singlesp=0,
+	Qmind = 0.1 / R,
+	Qmaxd = 10 / R)
+AT (0, 0, 5 - L_s) RELATIVE src
+
+COMPONENT det = PSD_monitor(xwidth=0.033, yheight=0.033, filename="det",ny=3000, nx=1)
+AT(0,0,5) RELATIVE src
+
+FINALLY
+%{
+%}
+
+END
