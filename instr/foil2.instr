@@ -40,7 +40,7 @@ COMPONENT f1 = Foil_flipper_magnet(
     foil_in=1, verbose=0)
 AT (0, 0, 5 - L_1) RELATIVE src
 
-COMPONENT f2 = COPY(f1)(By=2*By)
+COMPONENT f2 = COPY(f1)(By=L_1/L_2*By)
 AT (0, 0, 5 - L_2) RELATIVE src
 
 COMPONENT ana = PolAnalyser_ideal(mx=AnaSign)
