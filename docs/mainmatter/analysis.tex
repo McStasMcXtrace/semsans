@@ -119,7 +119,7 @@ The position sensitive detector considered is $11\times11~\unit{\milli\meter}$ w
 
 The detector is placed at distance $L_s$ from the sample, meaning that ignoring divergence and assuming a straight beam, scattering from point $s_y = 0$ on the sample will be limited to angle $\theta_a = h_e/(2L_s)$ in small-angle approximation, resulting in a maximum wave-vector transfer of $Q_\text{max} \approx \frac{2\pi}{\lambda_0}\theta_a$. A fuller discussion of which angles are accepted by each point $y$ on the detector depending on beam collimation, sample size, and detector characteristics is given in \cite{kusmin2017}. Generally speaking, it can be seen that a detector can be used to integrate an experimental estimate $G_\text{exp}(\delta)$ of $G(\delta)$ as given in Equation \eqref{eq:G-analytical} limited by such a $Q_\text{max}$, given by 
 \begin{equation}
-	G_\text{exp}(\delta) = \frac{t}{k_0^2}\int_{-Q_\text{max}}^{Q_\text{max}}\int_{-Q_\text{max}}^{Q_\text{max}}\dfrac{d\sigma(\vec{Q})}{d\Omega}\cos(Q_y \delta)dQ_xdQ_y  \label{eq:G-experimental}
+	G_\text{exp}(\delta) = \frac{t}{k_0^2}\int_{-Q_\text{max}}^{Q_\text{max}}\int_{-Q_\text{max}}^{Q_\text{max}}\dfrac{d\Sigma(\vec{Q})}{d\Omega}\cos(Q_y \delta)dQ_xdQ_y  \label{eq:G-experimental}
 \end{equation}
 assuming a symmetric detector with an equal $Q$-range for $x,y$. For samples with significant scattering with $Q > Q_{max}$, the error of $G_\text{exp}(\delta)$ as estimator of $G(\delta)$ can be expected to be significant whereas for samples with larger characteristic lengths and scattering over lower $Q$-ranges, the error will be negligible with most scattered neutrons being picked up by the detector \cite{rekveldt1996} so that $G_\text{exp}(\delta)$ approximates $G(\delta)$ well. 
 
