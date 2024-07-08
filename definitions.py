@@ -72,6 +72,8 @@ def G(z, R):
     xi = z/R
     return s_t(R) * G_0(xi)
 
+def form_factor(Q, R):
+    return (3 * (np.sin(Q * R) - Q * R * np.cos(Q * R))/ (Q * R) ** 3)**2
 
 def P_analytical(z, R, t, wavelength):
     xi = z/R
