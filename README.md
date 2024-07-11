@@ -1,4 +1,4 @@
-# SEMSANS at a cold source 
+# Design and analysis of a SEMSANS instrument for a cold source
 
 Repository for my bachelor thesis project about the analysis, design and optimization of a spin-echo modulated small angle neutron scattering (SEMSANS) instrument to potentially be realized at the new cold source at the Reactor Institute in Delft. The goal of the project is to explore the possibility for an instrument that can measure at characteristic lengths from 20 nm to 5 μm at a single sample to detector range, making it possible to study time processes such as milk turning into yoghurt or curd that span this entire range without moving the sample during measurement.
 
