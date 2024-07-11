@@ -130,30 +130,3 @@ class Instrument:
     \tL_s range: {round(L_s_min, 2)} - {round(L_s_max, 2)} m
     \tfinal δ range: {round(d_min * 1e9,1)} - {round(d_max * 1e9, 1)}nm ({min_name} - {max_name} limited)
     \tfinal δ range with variable L_s: {round(delta_min_var * 1e9,1)} - {round(delta_max_var * 1e9, 1)}nm"""
-    
-def print_latex_tables(instrs):
-    for i in [0,1]:
-        for instr in instrs[3:-6]:
-            print(instr)
-            delta_max_field = instr.delta_max_B_field()
-            delta_max_env = instr.delta_max_envelope()
-            delta_max_ten_samples = instr.delta_max_sampling()
-            # print(F"Max delta ideal sampling (10 samples per period) (f_0 = {round(f_ten_samples*1e-3)}mm^-1: {round(delta_max_ten_samples * 1e9,2)}nm")
-            maxes = [(delta_max_ten_samples, 'sampling'), (delta_max_env, 'envelope'), (delta_max_field, 'precession devices') ]
-            (delta_max, max_name) = min(maxes)
-            delta_min_field = instr.delta_min_B_field()
-            delta_min_single_period = instr.delta_min_detector()
-            mins = [(delta_min_single_period, 'detector size'), (delta_min_field, 'precession devices')]
-            (delta_min, min_name) = max(mins)
-            # print(min_max)
-            Q_max = instr.Q_max()
-            # print(f"{a}")
-            r = lambda x: round(x * 1e9,2)
-            if i==0:
-                print(f"{instr.name} & {r(delta_min_single_period)} & {r(delta_min_field)} & {r(delta_max_ten_samples)} & {r(delta_max_env)} & {r(delta_max_field)} \\\\")
-            else:
-                print(f"{instr.name} & {round(Q_max * 1e-10, 5)} & {r(delta_min)} & {r(delta_max)} \\\\")
-if __name__ == '__main__':
-    import util
-    instrs = util.load_instruments('instruments.csv')
-    print_latex_tables(instrs)
