@@ -28,6 +28,7 @@ mv "$dir_name" "${dir_name}_${timestamp}"
 zip -r "${dir_name}_${timestamp}.zip" "${dir_name}_${timestamp}"
 
 # Remove the original directory
+# Commenting out this line enables automatic archiving of simulation data
 rm -rf "${dir_name}_${timestamp}"
     
 mkdir -p data/up
